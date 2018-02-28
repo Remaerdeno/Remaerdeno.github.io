@@ -160,6 +160,94 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-最大似然估计理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/28/最大似然估计理解/">最大似然估计理解</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/28/最大似然估计理解/" class="archive-article-date">
+  	<time datetime="2018-02-28T09:16:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先假设线性回归<strong>模型</strong>具有如下形式：</p>
+<p>其中<img src="https://www.zhihu.com/equation?tex=%5Cmathbf+x+%5Cin+%5Cmathbb+R%5E%7B1+%5Ctimes+d%7D" alt="\mathbf x \in \mathbb R^{1 \times d}">，<img src="https://www.zhihu.com/equation?tex=%5Cmathbf+w+%5Cin+%5Cmathbb+R%5E%7B1+%5Ctimes+d%7D" alt="\mathbf w \in \mathbb R^{1 \times d}">，<strong>误差</strong><img src="https://www.zhihu.com/equation?tex=%5Cepsilon+%5Cin+%5Cmathbb+R" alt="\epsilon \in \mathbb R">。</p>
+<p>当前已知<img src="https://www.zhihu.com/equation?tex=%5Cmathbf+X%3D%28%5Cmathbf+x_1+%5Ccdots+%5Cmathbf+x_n%29%5E%5Cintercal+%5Cin+%5Cmathbb+R%5E%7Bn+%5Ctimes+d%7D" alt="\mathbf X=(\mathbf x_1 \cdots \mathbf x_n)^\intercal \in \mathbb R^{n \times d}">，<img src="https://www.zhihu.com/equation?tex=%5Cmathbf+y+%5Cin+%5Cmathbb+R%5E%7Bn+%5Ctimes+1%7D" alt="\mathbf y \in \mathbb R^{n \times 1}">，怎样求<img src="https://www.zhihu.com/equation?tex=%5Cmathbf+w" alt="\mathbf w">呢？</p>
+<p><strong>策略</strong>1. 假设<img src="https://www.zhihu.com/equation?tex=%5Cepsilon_i+%5Csim+%5Cmathcal%7BN%7D%280%2C+%5Csigma%5E2%29" alt="\epsilon_i \sim \mathcal{N}(0, \sigma^2)">，也就是说<img src="https://www.zhihu.com/equation?tex=%5Cmathbf+y_i+%5Csim+%5Cmathcal%7BN%7D%28%5Cmathbf+x_i+%5Cmathbf+w%5E%5Cintercal%2C+%5Csigma%5E2%29" alt="\mathbf y_i \sim \mathcal{N}(\mathbf x_i \mathbf w^\intercal, \sigma^2)">，那么用最大似然估计推导：</p>
+<p>这不就是最小二乘么。</p>
+<p><strong>策略</strong>2. 假设<img src="https://www.zhihu.com/equation?tex=%5Cepsilon_i+%5Csim+%5Cmathcal%7BN%7D%280%2C+%5Csigma%5E2%29" alt="\epsilon_i \sim \mathcal{N}(0, \sigma^2)">，<img src="https://www.zhihu.com/equation?tex=%5Cmathbf+w_i+%5Csim+%5Cmathcal%7BN%7D%280%2C+%5Ctau%5E2%29" alt="\mathbf w_i \sim \mathcal{N}(0, \tau^2)">，那么用最大后验估计推导：</p>
+<p>这不就是 Ridge 回归么？</p>
+<p><strong>策略</strong>3. 假设<img src="https://www.zhihu.com/equation?tex=%5Cepsilon_i+%5Csim+%5Cmathcal%7BN%7D%280%2C+%5Csigma%5E2%29" alt="\epsilon_i \sim \mathcal{N}(0, \sigma^2)">，<img src="https://www.zhihu.com/equation?tex=%5Cmathbf+w_i+%5Csim+%5Ctext%7BLaplace%7D%280%2C+b%29" alt="\mathbf w_i \sim \text{Laplace}(0, b)">，同样用最大后验估计推导：</p>
+<p>这不就是 LASSO 么？</p>
+<p>不知大家看懂没，简直是完美统一啊。</p>
+<p>作业：）</p>
+<ol>
+<li>策略1和2最终的目标函数都是常规的极值问题，试求出解析解。</li>
+<li>有一种常见的回归通篇没有提到，也可以纳入上述体系，试找出策略4并推导之</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数学之美//" class="article-tag-list-link color5">数学之美</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/28/最大似然估计理解/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SMO算法理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1292,130 +1380,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/02/07/朴素贝叶斯总结/">more >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-bagging和boosting" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/07/bagging和boosting/">bagging和boosting</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/07/bagging和boosting/" class="archive-article-date">
-  	<time datetime="2018-02-07T03:24:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>一、集成学习法（Ensemble Learning）</strong></p>
-<p>首先，让我们先来了解一下，什么是集成学习法。</p>
-<p>①  将多个分类方法聚集在一起，以提高分类的准确率。</p>
-<p>（这些算法可以是不同的算法，也可以是相同的算法。）</p>
-<p>②  集成学习法由训练数据构建一组基分类器，然后通过对每个基分类器的预测进行投票来进行分类</p>
-<p>③  严格来说，集成学习并不算是一种分类器，而是一种分类器结合的方法。</p>
-<p>④  通常一个集成分类器的分类性能会好于单个分类器</p>
-<p>⑤  如果把单个分类器比作一个决策者的话，集成学习的方法就相当于多个决策者共同进行一项决策。</p>
-<p><img src="http://img.blog.csdn.net/20160529160422989?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>(集成学习法图解）</p>
-<p>要掌握集成学习法，我们会提出以下两个问题：</p>
-<p>1）怎么训练每个算法？</p>
-<p>2）怎么融合每个算法？</p>
-<p>因此，bagging方法和boosting方法应运而生</p>
-<p><strong>二、bagging（装袋）方法</strong></p>
-<p>①  Bagging又叫自助聚集，是一种根据均匀概率分布从数据中重复抽样（有放回）的技术。</p>
-<p>②  每个抽样生成的自助样本集上，训练一个基分类器；对训练过的分类器进行投票，将测试样本指派到得票最高的类中。</p>
-<p>③  每个自助样本集都和原数据一样大</p>
-<p>④  有放回抽样，一些样本可能在同一训练集中出现多次，一些可能被忽略。</p>
-<p><img src="http://img.blog.csdn.net/20160529161032109" alt="img"></p>
-<p>（bagging方法图解）</p>
-<p>为了让大家更好地理解bagging方法，这里提供一个例子。</p>
-<p>X 表示一维属性，Y 表示类标号（1或-1）测试条件：当x&lt;=k时，y=？；当x&gt;k时，y=？；k为最佳分裂点</p>
-<p>下表为属性x对应的唯一正确的y类别</p>
-<p><img src="http://img.blog.csdn.net/20160529161330519" alt="img"><br>现在进行5轮随机抽样，结果如下</p>
-<p><img src="http://img.blog.csdn.net/20160529161434352" alt="img"><img src="http://img.blog.csdn.net/20160529161503037" alt="img"></p>
-<p>每一轮随机抽样后，都生成一个分类器</p>
-<p>然后再将五轮分类融合</p>
-<p><img src="http://img.blog.csdn.net/20160529161710774" alt="img"></p>
-<p>对比符号和实际类，我们可以发现：在该例子中，Bagging使得准确率可达90%</p>
-<p>由此，总结一下bagging方法：</p>
-<p>①  Bagging通过降低基分类器的方差，改善了泛化误差<br>②  其性能依赖于基分类器的稳定性；如果基分类器不稳定，bagging有助于降低训练数据的随机波动导致的误差；如果稳定，则集成分类器的误差主要由基分类器的偏倚引起<br>③  由于每个样本被选中的概率相同，因此bagging并不侧重于训练数据集中的任何特定实例</p>
-<p><strong>三、boosting（提升）方法</strong></p>
-<p>①  boosting是一个迭代的过程，用于自适应地改变训练样本的分布，使得基分类器聚焦在那些很难分的样本上</p>
-<p>②  boosting会给每个训练样本赋予一个权值，而且可以再每轮提升过程结束时自动地调整权值。开始时，所有的样本都赋予相同的权值1/N，从而使得它们被选作训练的可能性都一样。根据训练样本的抽样分布来抽取样本，得到新的样本集。然后，由该训练集归纳一个分类器，并用它对原数据集中的所有样本进行分类。每轮提升结束时，更新训练集样本的权值。增加被错误分类的样本的权值，减小被正确分类的样本的权值，这使得分类器在随后的迭代中关注那些很难分类的样本。</p>
-<p><strong>四、由此我们可以对比Bagging和Boosting</strong></p>
-<p>①  bagging的训练集是随机的，各训练集是独立的；而boosting训练集的选择不是独立的，每一次选择的训练集都依赖于上一次学习的结果</p>
-<p>②  bagging的每个预测函数都没有权重；而boosting根据每一次训练的训练误差得到该次预测函数的权重</p>
-<p>③  bagging的各个预测函数可以并行生成；而boosting只能顺序生成。（对于神经网络这样极为耗时的学习方法，bagging可通过并行训练节省大量时间开销）</p>
-<p>然而，Bagging和Boosting都可以视为比较传统的集成学习思路。 现在常用的Random Forest，GBDT（迭代决策树），GBRank其实都是更加精细化，效果更好的方法。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">集成学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/机器学习//" class="article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/07/bagging和boosting/">more >></a>
         </p>
       
 

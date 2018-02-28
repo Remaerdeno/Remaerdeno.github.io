@@ -160,6 +160,130 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-bagging和boosting" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/07/bagging和boosting/">bagging和boosting</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/07/bagging和boosting/" class="archive-article-date">
+  	<time datetime="2018-02-07T03:24:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一、集成学习法（Ensemble Learning）</strong></p>
+<p>首先，让我们先来了解一下，什么是集成学习法。</p>
+<p>①  将多个分类方法聚集在一起，以提高分类的准确率。</p>
+<p>（这些算法可以是不同的算法，也可以是相同的算法。）</p>
+<p>②  集成学习法由训练数据构建一组基分类器，然后通过对每个基分类器的预测进行投票来进行分类</p>
+<p>③  严格来说，集成学习并不算是一种分类器，而是一种分类器结合的方法。</p>
+<p>④  通常一个集成分类器的分类性能会好于单个分类器</p>
+<p>⑤  如果把单个分类器比作一个决策者的话，集成学习的方法就相当于多个决策者共同进行一项决策。</p>
+<p><img src="http://img.blog.csdn.net/20160529160422989?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<p>(集成学习法图解）</p>
+<p>要掌握集成学习法，我们会提出以下两个问题：</p>
+<p>1）怎么训练每个算法？</p>
+<p>2）怎么融合每个算法？</p>
+<p>因此，bagging方法和boosting方法应运而生</p>
+<p><strong>二、bagging（装袋）方法</strong></p>
+<p>①  Bagging又叫自助聚集，是一种根据均匀概率分布从数据中重复抽样（有放回）的技术。</p>
+<p>②  每个抽样生成的自助样本集上，训练一个基分类器；对训练过的分类器进行投票，将测试样本指派到得票最高的类中。</p>
+<p>③  每个自助样本集都和原数据一样大</p>
+<p>④  有放回抽样，一些样本可能在同一训练集中出现多次，一些可能被忽略。</p>
+<p><img src="http://img.blog.csdn.net/20160529161032109" alt="img"></p>
+<p>（bagging方法图解）</p>
+<p>为了让大家更好地理解bagging方法，这里提供一个例子。</p>
+<p>X 表示一维属性，Y 表示类标号（1或-1）测试条件：当x&lt;=k时，y=？；当x&gt;k时，y=？；k为最佳分裂点</p>
+<p>下表为属性x对应的唯一正确的y类别</p>
+<p><img src="http://img.blog.csdn.net/20160529161330519" alt="img"><br>现在进行5轮随机抽样，结果如下</p>
+<p><img src="http://img.blog.csdn.net/20160529161434352" alt="img"><img src="http://img.blog.csdn.net/20160529161503037" alt="img"></p>
+<p>每一轮随机抽样后，都生成一个分类器</p>
+<p>然后再将五轮分类融合</p>
+<p><img src="http://img.blog.csdn.net/20160529161710774" alt="img"></p>
+<p>对比符号和实际类，我们可以发现：在该例子中，Bagging使得准确率可达90%</p>
+<p>由此，总结一下bagging方法：</p>
+<p>①  Bagging通过降低基分类器的方差，改善了泛化误差<br>②  其性能依赖于基分类器的稳定性；如果基分类器不稳定，bagging有助于降低训练数据的随机波动导致的误差；如果稳定，则集成分类器的误差主要由基分类器的偏倚引起<br>③  由于每个样本被选中的概率相同，因此bagging并不侧重于训练数据集中的任何特定实例</p>
+<p><strong>三、boosting（提升）方法</strong></p>
+<p>①  boosting是一个迭代的过程，用于自适应地改变训练样本的分布，使得基分类器聚焦在那些很难分的样本上</p>
+<p>②  boosting会给每个训练样本赋予一个权值，而且可以再每轮提升过程结束时自动地调整权值。开始时，所有的样本都赋予相同的权值1/N，从而使得它们被选作训练的可能性都一样。根据训练样本的抽样分布来抽取样本，得到新的样本集。然后，由该训练集归纳一个分类器，并用它对原数据集中的所有样本进行分类。每轮提升结束时，更新训练集样本的权值。增加被错误分类的样本的权值，减小被正确分类的样本的权值，这使得分类器在随后的迭代中关注那些很难分类的样本。</p>
+<p><strong>四、由此我们可以对比Bagging和Boosting</strong></p>
+<p>①  bagging的训练集是随机的，各训练集是独立的；而boosting训练集的选择不是独立的，每一次选择的训练集都依赖于上一次学习的结果</p>
+<p>②  bagging的每个预测函数都没有权重；而boosting根据每一次训练的训练误差得到该次预测函数的权重</p>
+<p>③  bagging的各个预测函数可以并行生成；而boosting只能顺序生成。（对于神经网络这样极为耗时的学习方法，bagging可通过并行训练节省大量时间开销）</p>
+<p>然而，Bagging和Boosting都可以视为比较传统的集成学习思路。 现在常用的Random Forest，GBDT（迭代决策树），GBRank其实都是更加精细化，效果更好的方法。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">集成学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/机器学习//" class="article-tag-list-link color5">机器学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/07/bagging和boosting/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-GBDT算法原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2127,250 +2251,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/02/06/L0-L1和L2范数/">more >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-卷积神经网络4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/05/卷积神经网络4/">特殊应用和神经网络转换</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/05/卷积神经网络4/" class="archive-article-date">
-  	<time datetime="2018-02-05T08:48:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Part-1：人脸识别"><a href="#Part-1：人脸识别" class="headerlink" title="Part 1：人脸识别"></a><strong>Part 1：人脸识别</strong></h2><h2 id="1-人脸验证和人脸识别"><a href="#1-人脸验证和人脸识别" class="headerlink" title="1. 人脸验证和人脸识别"></a><strong>1. 人脸验证和人脸识别</strong></h2><p><strong>人脸验证（Verification）：</strong></p>
-<ul>
-<li>Input：图片、名字/ID；</li>
-<li>Output：输入的图片是否是对应的人；</li>
-<li>1 to 1 问题。</li>
-</ul>
-<p><strong>人脸识别（Recognition）：</strong></p>
-<ul>
-<li>拥有一个具有K个人的数据库；</li>
-<li>输入一副人脸图片；</li>
-<li>如果图片是任意这K个人中的一位，则输出对应人的ID。</li>
-</ul>
-<p>人脸识别问题对于人脸验证问题来说，具有更高的难度。如对于一个验证系统来说，如果我们拥有 <img src="http://www.zhihu.com/equation?tex=99%5C%25" alt="99\%"> 的精确度，那么这个验证系统已经具有了很高的精度；但是假设在另外一个识别系统中，如果我们把这个验证系统应用在具有K个人的识别系统中，那么系统犯错误的机会就变成了K倍。所以如果我们想在识别系统中得到更高的精度，那么就需要得到一个具有更高精度的验证系统。</p>
-<h2 id="2-one-shot-learning"><a href="#2-one-shot-learning" class="headerlink" title="2. one shot learning"></a><strong>2. one shot learning</strong></h2><p>对于大多数的人脸识别系统都存在的一个问题就是one shot learning。</p>
-<p><strong>什么是 one shot learning：</strong></p>
-<p>对于一个人脸识别系统，我们需要仅仅通过先前的一张人脸的图片或者说一个人脸的样例，就能够实现该人的识别，那么这样的问题就是 one shot 问题。对于存在于数据库中的人脸图片，系统能够识别到对应的人；而不在数据库中的人脸图片，则系统给出无法通过识别的结果。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-f99ac74d722d0dad67ddfe4ddb0d4173_hd.jpg" alt="img"></p>
-<p>对于one shot learning 问题，因为只有单个样本，是不足以训练一个稳健的卷积神经网络来进行不同人的识别过程。而且，在有新的样本成员加入的时候，往往还需要对网络进行重新训练。所以我们不能以传统的方法来实现识别系统。</p>
-<p><strong>Similarity 函数：</strong></p>
-<p>为了能够让人脸识别系统实现一次学习，需要让神经网络学习 <strong>Similarity </strong>函数：</p>
-<ul>
-<li>d(img1, img2)：两幅图片之间的差异度</li>
-<li>输入：两幅图片</li>
-<li>输出：两者之间的差异度</li>
-<li>如果 <img src="http://www.zhihu.com/equation?tex=d%28img1%2C+img2%29+%5Cleqslant+%5Ctau" alt="d(img1, img2) \leqslant \tau"> ，则输出“same”;</li>
-</ul>
-<p>如果 <img src="http://www.zhihu.com/equation?tex=d%28img1%2C+img2%29+%3E+%5Ctau" alt="d(img1, img2) &gt; \tau"> ，则输出“different”.</p>
-<p>对于人脸识别系统，通过将输入的人脸图片与数据库中所拥有的图片成对输入Similarity函数，两两对比，则可解决one shot problem。如果有新的人加入团队，则只需将其图片添加至数据库即可。</p>
-<h2 id="3-Siamese-网络"><a href="#3-Siamese-网络" class="headerlink" title="3. Siamese 网络"></a><strong>3. Siamese 网络</strong></h2><p>利用Siamese 网络来实现 Similarity 函数。</p>
-<p><strong>构建网络：</strong></p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-f6939ce709933cee586636484584267e_hd.jpg" alt="img"></p>
-<p>对于一个卷积神经网络结构，我们去掉最后的softmax层，将图片样本1输入网络，最后由网络输出一个N维的向量（图中实例以128表示），这N维向量则代表输入图片样本1的编码。将不同人的图片样本输入相同参数的网络结构，得到各自相应的图片编码。</p>
-<p><strong>Similarity 函数实现：</strong></p>
-<p>将Similarity 函数表示成两幅图片编码之差的范数：</p>
-<p><img src="http://www.zhihu.com/equation?tex=d%28x1%2C+x2%29+%3D+%7C%7Cf%28x1%29-f%28x2%29%7C%7C_%7B2%7D%5E%7B2%7D" alt="d(x1, x2) = ||f(x1)-f(x2)||_{2}^{2}"></p>
-<p>那么也就是说：</p>
-<ul>
-<li>我们的神经网络的参数定义了图片的编码；</li>
-<li>学习网络的参数，使我们得到好的Similarity 函数：</li>
-</ul>
-<p>- 如果 <img src="http://www.zhihu.com/equation?tex=x_%7B1%7D%EF%BC%8Cx_%7B2%7D" alt="x_{1}，x_{2}"> 是同一个人的图片，那么得到的 <img src="http://www.zhihu.com/equation?tex=%7C%7Cf%28x1%29-f%28x2%29%7C%7C%5E%7B2%7D" alt="||f(x1)-f(x2)||^{2}"> 很小；</p>
-<p>- 如果 <img src="http://www.zhihu.com/equation?tex=x_%7B1%7D%EF%BC%8Cx_%7B2%7D" alt="x_{1}，x_{2}"> 不是同一个人的图片，那么得到的 <img src="http://www.zhihu.com/equation?tex=%7C%7Cf%28x1%29-f%28x2%29%7C%7C%5E%7B2%7D" alt="||f(x1)-f(x2)||^{2}"> 很大。</p>
-<h2 id="4-Triplet-损失"><a href="#4-Triplet-损失" class="headerlink" title="4. Triplet 损失"></a><strong>4. Triplet 损失</strong></h2><p>如何通过学习神经网络的参数，得到优质的人脸图片的编码？方法之一就是定义 Triplet 损失函数，并在其之上运用梯度下降。</p>
-<p><strong>学习目标：</strong></p>
-<p>为了使用Triplet 损失函数，我们需要比较成对的图像（三元组术语）：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-a7ff8e78c52501e38564b545bcc5dce7_hd.jpg" alt="img"></p>
-<ul>
-<li>Anchor （A）： 目标图片；</li>
-<li>Positive（P）：与Anchor 属于同一个人的图片；</li>
-<li>Negative（N）：与Anchor不属于同一个人的图片。</li>
-</ul>
-<p>对于Anchor 和 Positive，我们希望二者编码的差异小一些；对于Anchor 和Negative，我们希望他们编码的差异大一些。所以我们的目标以编码差的范数来表示为：</p>
-<p><img src="http://www.zhihu.com/equation?tex=d%28A%2CP%29%3D%7C%7Cf%28A%29+-+f%28P%29%7C%7C%5E%7B2%7D+%5Cleqslant+%7C%7Cf%28A%29+-+f%28N%29%7C%7C%5E%7B2%7D+%3D+d%28A%2CN%29" alt="d(A,P)=||f(A) - f(P)||^{2} \leqslant ||f(A) - f(N)||^{2} = d(A,N)"></p>
-<p>也就是：</p>
-<p><img src="http://www.zhihu.com/equation?tex=%7C%7Cf%28A%29+-+f%28P%29%7C%7C%5E%7B2%7D+-+%7C%7Cf%28A%29+-+f%28N%29%7C%7C%5E%7B2%7D+%5Cleqslant+0" alt="||f(A) - f(P)||^{2} - ||f(A) - f(N)||^{2} \leqslant 0"></p>
-<p>上面的公式存在一个问题就是，当 <img src="http://www.zhihu.com/equation?tex=f%28A%29%3Df%28P%29%3Df%28N%29%3D0" alt="f(A)=f(P)=f(N)=0"> 时，也就是神经网络学习到的函数总是输出0时，或者 <img src="http://www.zhihu.com/equation?tex=f%28A%29%3Df%28P%29%3Df%28N%29" alt="f(A)=f(P)=f(N)"> 时，也满足上面的公式，但却不是我们想要的目标结果。所以为了防止出现这种情况，我们对上式进行修改，使得两者差要小于一个较小的负数：</p>
-<p><img src="http://www.zhihu.com/equation?tex=%7C%7Cf%28A%29+-+f%28P%29%7C%7C%5E%7B2%7D+-+%7C%7Cf%28A%29+-+f%28N%29%7C%7C%5E%7B2%7D+%5Cleqslant+-+%5Calpha" alt="||f(A) - f(P)||^{2} - ||f(A) - f(N)||^{2} \leqslant - \alpha"></p>
-<p>一般将 <img src="http://www.zhihu.com/equation?tex=%5Calpha" alt="\alpha"> 写成 <img src="http://www.zhihu.com/equation?tex=%2B%5Calpha" alt="+\alpha"> ，称为“margin”，即：</p>
-<p><img src="http://www.zhihu.com/equation?tex=%7C%7Cf%28A%29+-+f%28P%29%7C%7C%5E%7B2%7D+-+%7C%7Cf%28A%29+-+f%28N%29%7C%7C%5E%7B2%7D+%2B+%5Calpha+%5Cleqslant+0" alt="||f(A) - f(P)||^{2} - ||f(A) - f(N)||^{2} + \alpha \leqslant 0"></p>
-<p>不同 <strong>margin </strong>值的设置对模型学习具有不同的效果，margin 的作用就是拉大了 Anchor与Positive 图片对 和 Anchor与Negative 图片对之间的差距。</p>
-<p><strong>Triplet 损失函数：</strong></p>
-<p>Triplet 损失函数的定义基于三张图片：Anchor、Positive、Negative。</p>
-<p><img src="http://www.zhihu.com/equation?tex=L%28A%2CP%2CN%29+%3D+%5Cmax+%28%7C%7Cf%28A%29+-+f%28P%29%7C%7C%5E%7B2%7D+-+%7C%7Cf%28A%29+-+f%28N%29%7C%7C%5E%7B2%7D+%2B+%5Calpha%2C+%5C+0%29" alt="L(A,P,N) = \max (||f(A) - f(P)||^{2} - ||f(A) - f(N)||^{2} + \alpha, \ 0)"></p>
-<p><strong>整个网络的代价函数：</strong></p>
-<p><img src="http://www.zhihu.com/equation?tex=J+%3D+%5Csum%5Climits_%7Bi%3D1%7D%5E%7Bm%7DL%28A%5E%7B%28i%29%7D%2CP%5E%7B%28i%29%7D%2CN%5E%7B%28i%29%7D%29" alt="J = \sum\limits_{i=1}^{m}L(A^{(i)},P^{(i)},N^{(i)})"></p>
-<p>假设我们有一个10000张片的训练集，里面是1000个不同的人的照片样本。我们需要做的就是从这10000张训练集中抽取图片生成（A,P,N）的三元组，来训练我们的学习算法，并在Triplet 损失函数上进行梯度下降。</p>
-<p>注意：为了训练我们的网络，我们必须拥有Anchor和Positive对，所以这里我们必须有每个人的多张照片，而不能仅仅是一张照片，否则无法训练网络。</p>
-<p><strong>三元组（A,P,N）的选择：</strong></p>
-<p>在训练的过程中，如果我们随机地选择图片构成三元组（A,P,N），那么对于下面的条件是很容易满足的：</p>
-<p><img src="http://www.zhihu.com/equation?tex=d%28A%2CP%29+%2B+%5Calpha+%5Cleqslant+d%28A%2CN%29" alt="d(A,P) + \alpha \leqslant d(A,N)"></p>
-<p>所以，为了更好地训练网络，我们需要选择那些训练有“难度”的三元组，也就是选择的三元组满足：</p>
-<p><img src="http://www.zhihu.com/equation?tex=d%28A%2CP%29+%5Capprox+d%28A%2CN%29" alt="d(A,P) \approx d(A,N)"></p>
-<ul>
-<li>算法将会努力使得 <img src="http://www.zhihu.com/equation?tex=d%28A%2CN%29" alt="d(A,N)"> 变大，或者使得 <img src="http://www.zhihu.com/equation?tex=d%28A%2CN%29+%2B+%5Calpha" alt="d(A,N) + \alpha"> 变小，从而使两者之间至少有一个 <img src="http://www.zhihu.com/equation?tex=%5Calpha" alt="\alpha"> 的间隔；</li>
-<li>增加学习算法的计算效率，避免那些太简单的三元组。</li>
-</ul>
-<p>最终通过训练，我们学习到的参数，会使得对于同一个人的图片，编码的距离很小；对不同人的图片，编码的距离就很大。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-66e71bb3504c077cc01c2b0842a73a56_hd.jpg" alt="img"></p>
-<p>对于大型的人脸识别系统，常常具有上百万甚至上亿的训练数据集，我们并我容易得到。所以对于该领域，我们常常是下载别人在网上上传的预训练模型，而不是从头开始。</p>
-<h2 id="5-脸部验证和二分类"><a href="#5-脸部验证和二分类" class="headerlink" title="5. 脸部验证和二分类"></a><strong>5. 脸部验证和二分类</strong></h2><p>除了利用 Triplet 损失函数来学习人脸识别卷积网络参数的方法外，还有其他的方式。我们可以将人脸识别问题利用Siamese网络当成一个二分类问题，同样可以实现参数的学习。</p>
-<p><strong>Siamese 二分类改进：</strong></p>
-<p>对两张图片应用Siamese 网络，计算得到两张图片的N维编码，然后将两个编码输入到一个logistic regression 单元中，然后进行预测。如果是相同的人，那么输出是1；如果是不同的人，输出是0。那么这里我们就将人脸识别的问题，转化为一个二分类问题。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-d57edc4f3b7a44456304a1409250f9a2_hd.jpg" alt="img"></p>
-<p>对于最后的sigmoid函数，我们可以进行如下计算：</p>
-<p><img src="http://www.zhihu.com/equation?tex=%5Chat+y+%3D+%5Csigma%28%5Csum%5Climits_%7Bk%3D1%7D%5E%7BN%7D+w_%7Bi%7D%7Cf%28x%5E%7B%28i%29%7D%29_%7Bk%7D+-+f%28x%5E%7B%28j%29%7D%29_%7Bk%7D+%7C+%2B+b%29" alt="\hat y = \sigma(\sum\limits_{k=1}^{N} w_{i}|f(x^{(i)})_{k} - f(x^{(j)})_{k} | + b)"></p>
-<p>其中， <img src="http://www.zhihu.com/equation?tex=f%28x%5E%7B%28i%29%7D%29" alt="f(x^{(i)})"> 代表图片 <img src="http://www.zhihu.com/equation?tex=x%5E%7B%28i%29%7D" alt="x^{(i)}"> 的编码，下标 <img src="http://www.zhihu.com/equation?tex=k" alt="k"> 代表选择N维编码向量中的第 <img src="http://www.zhihu.com/equation?tex=k" alt="k"> 个元素。</p>
-<p>我们以两个图片编码向量对应元素之间的差值作为特征输入到logistic regression 的单元中，增加参数 <img src="http://www.zhihu.com/equation?tex=w_%7Bi%7D" alt="w_{i}"> 和 <img src="http://www.zhihu.com/equation?tex=b" alt="b"> ，通过训练得到合适的参数权重和偏置，进而判断两张图片是否为同一个人。</p>
-<p>同时输入逻辑回归单元的特征可以进行更改，如还可以是：</p>
-<p><img src="http://www.zhihu.com/equation?tex=%5Cdfrac%7B%28f%28x%5E%7B%28i%29%7D%29_%7Bk%7D+-+f%28x%5E%7B%28j%29%7D%29_%7Bk%7D%29%5E%7B2%7D%7D%7Bf%28x%5E%7B%28i%29%7D%29_%7Bk%7D+%2B+f%28x%5E%7B%28j%29%7D%29_%7Bk%7D%7D" alt="\dfrac{(f(x^{(i)})_{k} - f(x^{(j)})_{k})^{2}}{f(x^{(i)})_{k} + f(x^{(j)})_{k}}"></p>
-<p>上式也被称为 <img src="http://www.zhihu.com/equation?tex=%5Cchi" alt="\chi"> 方公式，有时也称为 <img src="http://www.zhihu.com/equation?tex=%5Cchi" alt="\chi"> 方相似度。</p>
-<p>在实际的人脸验证系统中，我们可以对数据库的人脸图片进行预计算，存储卷积网络得到的编码。当有图片进行识别时，运用卷积网络计算新图片的编码，与预计算保存好的编码输入到逻辑回归单元中进行预测。这样可以提高我们系统预测的效率，节省计算时间。</p>
-<p><strong>总结：</strong></p>
-<p>利用Siamese 网络，我们可以将人脸验证当作一个监督学习，创建成对的训练集和是否同一个人的输出标签。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-27a30af7b011078e36550c4d90822619_hd.jpg" alt="img"></p>
-<p>我们利用不同的图片对，使用反向传播的算法对Siamese网络进行训练，进而得到人脸验证系统。</p>
-<hr>
-<h2 id="Part-2：神经风格迁移"><a href="#Part-2：神经风格迁移" class="headerlink" title="Part 2：神经风格迁移"></a><strong>Part 2：神经风格迁移</strong></h2><h2 id="6-深度网络学习内容可视化"><a href="#6-深度网络学习内容可视化" class="headerlink" title="6. 深度网络学习内容可视化"></a><strong>6. 深度网络学习内容可视化</strong></h2><p><strong>如何可视化：</strong></p>
-<p>假设我们训练了一个卷积神经网络如下所示：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-7d88dd1be307864f0d913624906ad685_hd.jpg" alt="img"></p>
-<p>我们希望看到不同层的隐藏单元的计算结果。依次对各个层进行如下操作：</p>
-<ul>
-<li>在当前层挑选一个隐藏单元；</li>
-<li>遍历训练集，找到最大化地激活了该运算单元的图片或者图片块；</li>
-<li>对该层的其他运算单元执行操作。</li>
-</ul>
-<p>对于在第一层的隐藏单元中，其只能看到卷积网络的小部分内容，也就是最后我们找到的那些最大化激活第一层隐层单元的是一些小的图片块。我们可以理解为第一层的神经单元通常会寻找一些简单的特征，如边缘或者颜色阴影等。</p>
-<p><strong>各层网络可视化：</strong></p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-5ffb8a100d2d392a5e55204452292727_hd.jpg" alt="img"></p>
-<p>对于卷积网络的各层单元，随着网络深度的增加，隐藏层计算单元随着层数的增加，从简单的事物逐渐到更加复杂的事物。</p>
-<h2 id="7-神经风格迁移代价函数"><a href="#7-神经风格迁移代价函数" class="headerlink" title="7. 神经风格迁移代价函数"></a><strong>7. 神经风格迁移代价函数</strong></h2><p><strong>代价函数：</strong></p>
-<p>为了实现神经风格迁移，我们需要为生成的图片定义一个代价函数。</p>
-<p>对于神经风格迁移，我们的目标是由内容图片C和风格图片S，生成最终的风格迁移图片G：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-8c42dfc92fc1310b95dbdf8d01cceefb_hd.jpg" alt="img"></p>
-<p>所以为了实现神经风格迁移，我们需要定义关于G的代价函数J，以用来评判生成图片的好坏：</p>
-<p><img src="http://www.zhihu.com/equation?tex=J%28G%29+%3D+%5Calpha+J_%7Bcontent%7D%28C%2C+G%29+%2B+%5Cbeta+J_%7Bstyle%7D%28S%2CG%29" alt="J(G) = \alpha J_{content}(C, G) + \beta J_{style}(S,G)"></p>
-<p>其中</p>
-<ul>
-<li><img src="http://www.zhihu.com/equation?tex=J_%7Bcontent%7D%28C%2C+G%29+" alt="J_{content}(C, G) "> 代表生成图片G的内容和内容图片C的内容的相似度；</li>
-<li><img src="http://www.zhihu.com/equation?tex=+J_%7Bstyle%7D%28S%2CG%29" alt=" J_{style}(S,G)"> 代表生成图片G的内容和风格图片S的内容的相似度；</li>
-<li><img src="http://www.zhihu.com/equation?tex=%5Calpha%E3%80%81%5Cbeta" alt="\alpha、\beta"> 两个超参数用来表示以上两者之间的权重。</li>
-</ul>
-<p><strong>执行过程：</strong></p>
-<ul>
-<li>随机初始化生成图片G，如大小为 <img src="http://www.zhihu.com/equation?tex=100%5Ctimes100%5Ctimes3" alt="100\times100\times3"> ；</li>
-<li>使用梯度下降算法最小化上面定义的代价函数 J(G)， <img src="http://www.zhihu.com/equation?tex=G%EF%BC%9A%3D+G+-+%5Cdfrac%7B%5Cpartial%7D%7B%5Cpartial+G%7DJ%28G%29" alt="G：= G - \dfrac{\partial}{\partial G}J(G)"> ；</li>
-</ul>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-ffcbd5e984c3af324601256db6c10531_hd.jpg" alt="img"></p>
-<p>对于上图的内容图片C和风格图片S，通过梯度下降算法一次次的徐训练，我们可以由初始的噪声图片得到最终的风格迁移图片G。</p>
-<h2 id="8-内容代价函数（Content-cost）"><a href="#8-内容代价函数（Content-cost）" class="headerlink" title="8. 内容代价函数（Content cost）"></a><strong>8. 内容代价函数（Content cost）</strong></h2><ul>
-<li>假设我们使用隐藏层 <img src="http://www.zhihu.com/equation?tex=l" alt="l"> 来计算内容代价。（如果选择的$l$ 太小，那么代价函数就会使得我们的生成图片G在像素上非常接近内容图片；然而用很深的网络，那么生成图片G中就会产生与内容图片中所拥有的物体。所以对于 <img src="http://www.zhihu.com/equation?tex=l" alt="l"> 一般选在网络的中间层，既不深也不浅）；</li>
-<li>使用一个预训练的卷积网络。（如，VGG或其他）；</li>
-<li>令 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%28C%29%7D" alt="a^{[l](C)}"> 和 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%28G%29%7D" alt="a^{[l](G)}"> 分别代表内容图片C和生成图片G的 <img src="http://www.zhihu.com/equation?tex=l" alt="l"> 层的激活值；</li>
-<li>如果 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%28C%29%7D" alt="a^{[l](C)}"> 和 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%28G%29%7D" alt="a^{[l](G)}"> 相似，那么两张图片就有相似的内容；</li>
-</ul>
-<p>定义内容代价函数如下：</p>
-<p><img src="http://www.zhihu.com/equation?tex=J_%7Bcontent%7D%28C%2C+G%29+%3D+%5Cdfrac%7B1%7D%7B2%7D%7C%7Ca%5E%7B%5Bl%5D%28C%29%7D+-+a%5E%7B%5Bl%5D%28G%29%7D+%7C%7C%5E%7B2%7D" alt="J_{content}(C, G) = \dfrac{1}{2}||a^{[l](C)} - a^{[l](G)} ||^{2}"></p>
-<p>在对代价函数运行梯度下降算法时，会激励这里的内容代价函数，努力使得生成图片G隐含层<img src="http://www.zhihu.com/equation?tex=l" alt="l"> 的激活值和内容图片C隐含层<img src="http://www.zhihu.com/equation?tex=l" alt="l"> 的激活值相似。</p>
-<h2 id="9-风格代价函数（Style-cost）"><a href="#9-风格代价函数（Style-cost）" class="headerlink" title="9. 风格代价函数（Style cost）"></a><strong>9. 风格代价函数（Style cost）</strong></h2><p><strong>“Style”的含义：</strong></p>
-<p>对于一个卷积网络中，我们选择网络的中间层 <img src="http://www.zhihu.com/equation?tex=l" alt="l"> ， 定义“Style”表示 <img src="http://www.zhihu.com/equation?tex=+l" alt=" l"> 层的各个通道激活项之间的相关性。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-2eb6aa70a73a023343d5e9e79db7b628_hd.jpg" alt="img"></p>
-<p><strong>相关性大小的度量：</strong></p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-fdd5fb6f3ebbd35408f69b1938579205_hd.jpg" alt="img"></p>
-<p>上面是我们选出的 <img src="http://www.zhihu.com/equation?tex=l" alt="l"> 层的激活项，对于不同的通道值，代表不同的神经元所学习到的特征，这里假如红色的通道可以找到图片中含有垂直纹理特征的区域，黄色通道可以找出橙色的区域。</p>
-<p>而相关性大小的含义就是，如假设中，图片出现垂直纹理特征的区域显示橙色可能的大小。</p>
-<p>我们将相关系数应用到风格图片S和生成图片G的对应通道上，就可以度量风格图片和生成图片的相似度。</p>
-<p><strong>Style 矩阵：</strong></p>
-<ul>
-<li>令 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%7D_%7Bi%2Cj%2Ck%7D" alt="a^{[l]}_{i,j,k}"> 表示在（i,j,k）位置的激活值，其中i、j、k分别代表激活值的高、宽、通道；</li>
-<li><img src="http://www.zhihu.com/equation?tex=G%5E%7B%5Bl%5D%7D" alt="G^{[l]}"> 是一个 <img src="http://www.zhihu.com/equation?tex=n_%7Bc%7D%5E%7Bl%7D%5Ctimes+n_%7Bc%7D%5E%7Bl%7D" alt="n_{c}^{l}\times n_{c}^{l}"> 大小的矩阵：</li>
-</ul>
-<p><img src="http://www.zhihu.com/equation?tex=G%5E%7B%5Bl%5D%28S%29%7D_%7Bkk%27%7D+%3D+%5Csum%5Climits_%7Bi%3D1%7D%5E%7Bn_%7Bh%7D%5E%7B%5Bl%5D%7D%7D%5Csum%5Climits_%7Bj%3D1%7D%5E%7Bn_%7Bw%7D%5E%7B%5Bl%5D%7D%7Da%5E%7B%5Bl%5D%28S%29%7D_%7Bi%2Cj%2Ck%7Da%5E%7B%5Bl%5D%28S%29%7D_%7Bi%2Cj%2Ck%27%7D" alt="G^{[l](S)}_{kk&#39;} = \sum\limits_{i=1}^{n_{h}^{[l]}}\sum\limits_{j=1}^{n_{w}^{[l]}}a^{[l](S)}_{i,j,k}a^{[l](S)}_{i,j,k&#39;}"></p>
-<p><img src="http://www.zhihu.com/equation?tex=G%5E%7B%5Bl%5D%28G%29%7D_%7Bkk%27%7D+%3D+%5Csum%5Climits_%7Bi%3D1%7D%5E%7Bn_%7Bh%7D%5E%7B%5Bl%5D%7D%7D%5Csum%5Climits_%7Bj%3D1%7D%5E%7Bn_%7Bw%7D%5E%7B%5Bl%5D%7D%7Da%5E%7B%5Bl%5D%28G%29%7D_%7Bi%2Cj%2Ck%7Da%5E%7B%5Bl%5D%28G%29%7D_%7Bi%2Cj%2Ck%27%7D" alt="G^{[l](G)}_{kk&#39;} = \sum\limits_{i=1}^{n_{h}^{[l]}}\sum\limits_{j=1}^{n_{w}^{[l]}}a^{[l](G)}_{i,j,k}a^{[l](G)}_{i,j,k&#39;}"></p>
-<p>上面的矩阵在线性代数中又称为Gram 矩阵，这里称为风格矩阵。</p>
-<p><strong>代价函数：</strong></p>
-<p><img src="http://www.zhihu.com/equation?tex=J%5E%7B%5Bl%5D%7D_%7Bstyle%7D%28S%2C+G%29+%3D+%5Cdfrac%7B1%7D%7B2n%5E%7B%5Bl%5D%7D_%7Bh%7Dn%5E%7B%5Bl%5D%7D_%7Bw%7Dn%5E%7B%5Bl%5D%7D_%7Bc%7D%7D%7C%7CG%5E%7B%5Bl%5D%28S%29%7D+-+G%5E%7B%5Bl%5D%28G%29%7D+%7C%7C%5E%7B2%7D_%7BF%7D+%3D+%5Cdfrac%7B1%7D%7B2n%5E%7B%5Bl%5D%7D_%7Bh%7Dn%5E%7B%5Bl%5D%7D_%7Bw%7Dn%5E%7B%5Bl%5D%7D_%7Bc%7D%7D%5Csum_%7Bk%7D%5Csum_%7Bk%27%7D%28G%5E%7B%5Bl%5D%28S%29%7D_%7Bkk%27%7D+-+G%5E%7B%5Bl%5D%28G%29%7D_%7Bkk%27%7D%29%5E%7B2%7D" alt="J^{[l]}_{style}(S, G) = \dfrac{1}{2n^{[l]}_{h}n^{[l]}_{w}n^{[l]}_{c}}||G^{[l](S)} - G^{[l](G)} ||^{2}_{F} = \dfrac{1}{2n^{[l]}_{h}n^{[l]}_{w}n^{[l]}_{c}}\sum_{k}\sum_{k&#39;}(G^{[l](S)}_{kk&#39;} - G^{[l](G)}_{kk&#39;})^{2}"></p>
-<p>内容代价函数和风格代价函数前面的归一化可以加也可以不加，因为总体的代价函数前面有权重系数。</p>
-<p>如果对各层都使用风格代价函数，那么会让结果变得更好：</p>
-<p><img src="http://www.zhihu.com/equation?tex=J_%7Bstyle%7D%28S%2CG%29+%3D+%5Csum_%7Bl%7D%5Clambda%5E%7B%5Bl%5D%7DJ_%7Bstyle%7D%5E%7B%5Bl%5D%7D%28S%2CG%29" alt="J_{style}(S,G) = \sum_{l}\lambda^{[l]}J_{style}^{[l]}(S,G)"></p>
-<h2 id="10-1D-to-3D-卷积"><a href="#10-1D-to-3D-卷积" class="headerlink" title="10. 1D to 3D 卷积"></a><strong>10. 1D to 3D 卷积</strong></h2><p>在我们上面学过的卷积中，多数是对图形应用2D的卷积运算。同时，我们所应用的卷积运算还可以推广到1D和3D的情况。</p>
-<p><strong>2D和1D卷积：</strong></p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-dcbcc494a2faa24d6ed3dbaf5ef9a6cd_hd.jpg" alt="img"></p>
-<ul>
-<li>2D卷积： <img src="http://www.zhihu.com/equation?tex=14%5Ctimes14%5Ctimes3%2A+5%5Ctimes5%5Ctimes3+%E2%80%94%E2%80%94%3E10%5Ctimes10%5Ctimes+n_%7Bc%7D" alt="14\times14\times3* 5\times5\times3 ——&gt;10\times10\times n_{c}"> ;</li>
-<li>1D卷积： <img src="http://www.zhihu.com/equation?tex=14%5Ctimes1%2A+5%5Ctimes1+%E2%80%94%E2%80%94%3E10%5Ctimes+n_%7Bc%7D" alt="14\times1* 5\times1 ——&gt;10\times n_{c}"> 。</li>
-</ul>
-<p><strong>3D卷积：</strong></p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-f3d2c7c5d3ce175a00c985955b0681cb_hd.jpg" alt="img"></p>
-<ul>
-<li>3D卷积： <img src="http://www.zhihu.com/equation?tex=14%5Ctimes14%5Ctimes14%5Ctimes1+%2A+5%5Ctimes5%5Ctimes5%5Ctimes1%E2%80%94%E2%80%94%3E10%5Ctimes10%5Ctimes10%5Ctimes+n_%7Bc%7D" alt="14\times14\times14\times1 * 5\times5\times5\times1——&gt;10\times10\times10\times n_{c}">；</li>
-<li>3D数据：如医疗CT扫描中的即可产生身体的3D模型；电影切片也属于3D数据。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/深度学习//" class="article-tag-list-link color5">深度学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/05/卷积神经网络4/">more >></a>
         </p>
       
 
