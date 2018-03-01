@@ -160,6 +160,147 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-神经网络和深度学习笔记4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/05/神经网络和深度学习笔记4/">深层神经网络</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/05/神经网络和深度学习笔记4/" class="archive-article-date">
+  	<time datetime="2018-02-05T08:31:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-矩阵的维度"><a href="#1-矩阵的维度" class="headerlink" title="1. 矩阵的维度"></a><strong>1. 矩阵的维度</strong></h2><p>DNN结构示意图如图所示：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-1b3bd333055cdfc4701fcb5de81311d4_hd.jpg" alt="img"></p>
+<p>对于第 <img src="https://www.zhihu.com/equation?tex=l" alt="l"> 层神经网络，单个样本其各个参数的矩阵维度为：</p>
+<ul>
+<li><img src="https://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D" alt="W^{[l]}"> ： <img src="https://www.zhihu.com/equation?tex=%28n%5E%7B%5Bl%5D%7D%2Cn%5E%7B%5Bl-1%5D%7D%29" alt="(n^{[l]},n^{[l-1]})"></li>
+<li><img src="https://www.zhihu.com/equation?tex=b%5E%7B%5Bl%5D%7D" alt="b^{[l]}"> ： <img src="https://www.zhihu.com/equation?tex=%28n%5E%7B%5Bl%5D%7D%2C1%29" alt="(n^{[l]},1)"></li>
+<li><img src="https://www.zhihu.com/equation?tex=dW%5E%7B%5Bl%5D%7D" alt="dW^{[l]}"> ： <img src="https://www.zhihu.com/equation?tex=%28n%5E%7B%5Bl%5D%7D%2Cn%5E%7B%5Bl-1%5D%7D%29" alt="(n^{[l]},n^{[l-1]})"></li>
+<li><img src="https://www.zhihu.com/equation?tex=db%5E%7B%5Bl%5D%7D" alt="db^{[l]}"> ： <img src="https://www.zhihu.com/equation?tex=%28n%5E%7B%5Bl%5D%7D%2C1%29" alt="(n^{[l]},1)"></li>
+<li><img src="https://www.zhihu.com/equation?tex=Z%5E%7B%5Bl%5D%7D" alt="Z^{[l]}"> ： <img src="https://www.zhihu.com/equation?tex=%28n%5E%7B%5Bl%5D%7D%2C1%29" alt="(n^{[l]},1)"></li>
+<li><img src="https://www.zhihu.com/equation?tex=A%5E%7B%5Bl%5D%7D%3DZ%5E%7B%5Bl%5D%7D" alt="A^{[l]}=Z^{[l]}"> ： <img src="https://www.zhihu.com/equation?tex=%28n%5E%7B%5Bl%5D%7D%2C1%29" alt="(n^{[l]},1)"></li>
+</ul>
+<h2 id="2-为什么使用深层表示"><a href="#2-为什么使用深层表示" class="headerlink" title="2. 为什么使用深层表示"></a><strong>2. 为什么使用深层表示</strong></h2><p><strong>人脸识别和语音识别：</strong></p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-07b30fc02b2b2decaa66edcbff69f6b5_hd.jpg" alt="img"></p>
+<p>对于人脸识别，神经网络的第一层从原始图片中提取人脸的轮廓和边缘，每个神经元学习到不同边缘的信息；网络的第二层将第一层学得的边缘信息组合起来，形成人脸的一些局部的特征，例如眼睛、嘴巴等；后面的几层逐步将上一层的特征组合起来，形成人脸的模样。随着神经网络层数的增加，特征也从原来的边缘逐步扩展为人脸的整体，由整体到局部，由简单到复杂。层数越多，那么模型学习的效果也就越精确。</p>
+<p>对于语音识别，第一层神经网络可以学习到语言发音的一些音调，后面更深层次的网络可以检测到基本的音素，再到单词信息，逐渐加深可以学到短语、句子。</p>
+<p>所以从上面的两个例子可以看出随着神经网络的深度加深，模型能学习到更加复杂的问题，功能也更加强大。</p>
+<p><strong>电路逻辑计算：</strong></p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-d912f368562a4abdb0cf7b69589fdc64_hd.jpg" alt="img"></p>
+<p>假定计算异或逻辑输出：</p>
+<p><img src="https://www.zhihu.com/equation?tex=y%3Dx_%7B1%7D%5Coplus+x_%7B2%7D%5Coplus+x_%7B3%7D%5Coplus+%5Ccdots%5Coplus+x_%7Bn%7D" alt="y=x_{1}\oplus x_{2}\oplus x_{3}\oplus \cdots\oplus x_{n}"></p>
+<p>对于该运算，若果使用深度神经网络，每层将前一层的相邻的两单元进行异或，最后到一个输出，此时整个网络的层数为一个树形的形状，网络的深度为 <img src="https://www.zhihu.com/equation?tex=O%28%5Clog_%7B2%7D%28n%29%29" alt="O(\log_{2}(n))"> ，共使用的神经元的个数为：</p>
+<p><img src="https://www.zhihu.com/equation?tex=1%2B2%2B%5Ccdot%2B2%5E%7B%5Clog_%7B2%7D%28n%29-1%7D%3D1%5Ccdot+%5Cdfrac%7B1-2%5E%7B%5Clog_%7B2%7D%28n%29%7D%7D%7B1-2%7D%3D2%5E%7B%5Clog_%7B2%7D%28n%29%7D-1%3Dn-1" alt="1+2+\cdot+2^{\log_{2}(n)-1}=1\cdot \dfrac{1-2^{\log_{2}(n)}}{1-2}=2^{\log_{2}(n)}-1=n-1"></p>
+<p>即输入个数为n，输出个数为n-1。</p>
+<p>但是如果不适用深层网络，仅仅使用单隐层的网络（如右图所示），需要的神经元个数为 <img src="https://www.zhihu.com/equation?tex=2%5E%7Bn-1%7D" alt="2^{n-1}"> 个 。同样的问题，但是深层网络要比浅层网络所需要的神经元个数要少得多。</p>
+<h2 id="3-前向和反向传播"><a href="#3-前向和反向传播" class="headerlink" title="3. 前向和反向传播"></a><strong>3. 前向和反向传播</strong></h2><p>首先给定DNN的一些参数：</p>
+<ul>
+<li>L：DNN的总层数；</li>
+<li><img src="https://www.zhihu.com/equation?tex=+n%5E%7B%5Bl%5D%7D" alt=" n^{[l]}">：表示第 <img src="https://www.zhihu.com/equation?tex=l" alt="l"> 层的包含的单元个数；</li>
+<li><img src="https://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%7D" alt="a^{[l]}"> ：表示第 <img src="https://www.zhihu.com/equation?tex=l" alt="l"> 层激活函数的输出；</li>
+<li><img src="https://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D" alt="W^{[l]}"> ：表示第 <img src="https://www.zhihu.com/equation?tex=l" alt="l"> 层的权重；</li>
+<li>输入 <img src="https://www.zhihu.com/equation?tex=x" alt="x"> 记为 <img src="https://www.zhihu.com/equation?tex=a%5E%7B%5B0%5D%7D" alt="a^{[0]}"> ，输出 <img src="https://www.zhihu.com/equation?tex=%5Chat+y" alt="\hat y"> 记为 <img src="https://www.zhihu.com/equation?tex=a%5E%7B%5BL%5D%7D" alt="a^{[L]}"> 。</li>
+</ul>
+<p><strong>前向传播（Forward propagation）</strong></p>
+<p>Input： <img src="https://www.zhihu.com/equation?tex=a%5E%7B%5Bl-1%5D%7D" alt="a^{[l-1]}"></p>
+<p>Output： <img src="https://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%7D" alt="a^{[l]}"> ， <img src="https://www.zhihu.com/equation?tex=%5Crm+cache%28z%5E%7B%5Bl%5D%7D%29" alt="\rm cache(z^{[l]})"></p>
+<ul>
+<li>公式：</li>
+</ul>
+<p><img src="https://www.zhihu.com/equation?tex=z%5E%7B%5Bl%5D%7D%3D+W%5E%7B%5Bl%5D%7D%5Ccdot+a%5E%7B%5Bl-1%5D%7D%2Bb%5E%7B%5Bl%5D%7D%5C%5Ca%5E%7B%5Bl%5D%7D%3Dg%5E%7B%5Bl%5D%7D%28z%5E%7B%5Bl%5D%7D%29" alt="z^{[l]}= W^{[l]}\cdot a^{[l-1]}+b^{[l]}\\a^{[l]}=g^{[l]}(z^{[l]})"></p>
+<ul>
+<li>向量化程序：</li>
+</ul>
+<p><img src="https://www.zhihu.com/equation?tex=Z%5E%7B%5Bl%5D%7D%3DW%5E%7B%5Bl%5D%7D%5Ccdot+A%5E%7B%5Bl-1%5D%7D%2Bb%5E%7B%5Bl%5D%7D%5C%5CA%5E%7B%5Bl%5D%7D%3Dg%5E%7B%5Bl%5D%7D%28Z%5E%7B%5Bl%5D%7D%29" alt="Z^{[l]}=W^{[l]}\cdot A^{[l-1]}+b^{[l]}\\A^{[l]}=g^{[l]}(Z^{[l]})"></p>
+<p><strong>反向传播（Backward propagation）</strong></p>
+<p>Input： <img src="https://www.zhihu.com/equation?tex=da%5E%7B%5Bl%5D%7D" alt="da^{[l]}"></p>
+<p>Output： <img src="https://www.zhihu.com/equation?tex=da%5E%7B%5Bl-1%5D%7D" alt="da^{[l-1]}"> ， <img src="https://www.zhihu.com/equation?tex=dW%5E%7B%5Bl%5D%7D" alt="dW^{[l]}"> ，<img src="https://www.zhihu.com/equation?tex=db%5E%7B%5Bl%5D%7D" alt="db^{[l]}"></p>
+<ul>
+<li>公式：</li>
+</ul>
+<p><img src="https://www.zhihu.com/equation?tex=dz%5E%7B%5Bl%5D%7D%3Dda%5E%7B%5Bl%5D%7D+%2A+g%5E%7B%5Bl%5D%7D%7B%27%7D%28z%5E%7B%5Bl%5D%7D%29%5C%5CdW%5E%7B%5Bl%5D%7D%3Ddz%5E%7B%5Bl%5D%7D%5Ccdot+a%5E%7B%5Bl-1%5D%7D%5C%5Cdb%5E%7B%5Bl%5D%7D%3Ddz%5E%7B%5Bl%5D%7D%5C%5Cda%5E%7B%5Bl-1%5D%7D%3DW%5E%7B%5Bl%5D%7D%7B%5ET%7D%5Ccdot+dz%5E%7B%5Bl%5D%7D" alt="dz^{[l]}=da^{[l]} * g^{[l]}{&#39;}(z^{[l]})\\dW^{[l]}=dz^{[l]}\cdot a^{[l-1]}\\db^{[l]}=dz^{[l]}\\da^{[l-1]}=W^{[l]}{^T}\cdot dz^{[l]}"></p>
+<p>将 <img src="https://www.zhihu.com/equation?tex=da%5E%7B%5Bl-1%5D%7D+" alt="da^{[l-1]} "> 代入 <img src="https://www.zhihu.com/equation?tex=dz%5E%7B%5Bl%5D%7D" alt="dz^{[l]}"> ，有：</p>
+<p><img src="https://www.zhihu.com/equation?tex=dz%5E%7B%5Bl%5D%7D%3DW%5E%7B%5Bl%2B1%5D%7D%7B%5ET%7D%5Ccdot+dz%5E%7B%5Bl%2B1%5D%7D%2A+g%5E%7B%5Bl%5D%7D%7B%27%7D%28z%5E%7B%5Bl%5D%7D%29%5C%5C" alt="dz^{[l]}=W^{[l+1]}{^T}\cdot dz^{[l+1]}* g^{[l]}{&#39;}(z^{[l]})\\"></p>
+<ul>
+<li>向量化程序：</li>
+</ul>
+<p><img src="https://www.zhihu.com/equation?tex=dZ%5E%7B%5Bl%5D%7D%3DdA%5E%7B%5Bl%5D%7D+%2A+g%5E%7B%5Bl%5D%7D%7B%27%7D%28Z%5E%7B%5Bl%5D%7D%29%5C%5CdW%5E%7B%5Bl%5D%7D%3D%5Cdfrac%7B1%7D%7Bm%7DdZ%5E%7B%5Bl%5D%7D%5Ccdot+A%5E%7B%5Bl-1%5D%7D%5C%5Cdb%5E%7B%5Bl%5D%7D%3D%5Cdfrac%7B1%7D%7Bm%7Dnp.sum%28dZ%5E%7B%5Bl%5D%7D%2Caxis%3D1%2Ckeepdims+%3D+True%29%5C%5CdA%5E%7B%5Bl-1%5D%7D%3DW%5E%7B%5Bl%5D%7D%7B%5ET%7D%5Ccdot+dZ%5E%7B%5Bl%5D%7D" alt="dZ^{[l]}=dA^{[l]} * g^{[l]}{&#39;}(Z^{[l]})\\dW^{[l]}=\dfrac{1}{m}dZ^{[l]}\cdot A^{[l-1]}\\db^{[l]}=\dfrac{1}{m}np.sum(dZ^{[l]},axis=1,keepdims = True)\\dA^{[l-1]}=W^{[l]}{^T}\cdot dZ^{[l]}"></p>
+<h2 id="4-参数和超参数"><a href="#4-参数和超参数" class="headerlink" title="4. 参数和超参数"></a><strong>4. 参数和超参数</strong></h2><p><strong>参数：</strong></p>
+<p>参数即是我们在过程中想要模型学习到的信息， <img src="https://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D" alt="W^{[l]}"> ， <img src="https://www.zhihu.com/equation?tex=b%5E%7B%5Bl%5D%7D" alt="b^{[l]}"> 。</p>
+<p><strong>超参数：</strong></p>
+<p>超参数即为控制参数的输出值的一些网络信息，也就是超参数的改变会导致最终得到的参数 <img src="https://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D" alt="W^{[l]}"> ， <img src="https://www.zhihu.com/equation?tex=b%5E%7B%5Bl%5D%7D" alt="b^{[l]}"> 的改变。</p>
+<p>举例：</p>
+<ul>
+<li>学习速率：<img src="https://www.zhihu.com/equation?tex=%5Calpha" alt="\alpha"></li>
+<li>迭代次数： <img src="https://www.zhihu.com/equation?tex=N" alt="N"></li>
+<li>隐藏层的层数：<img src="https://www.zhihu.com/equation?tex=L+" alt="L "></li>
+<li>每一层的神经元个数： <img src="https://www.zhihu.com/equation?tex=n%5E%7B%5B1%5D%7D" alt="n^{[1]}"> ， <img src="https://www.zhihu.com/equation?tex=n%5E%7B%5B2%5D%7D" alt="n^{[2]}"> , <img src="https://www.zhihu.com/equation?tex=%5Ccdots" alt="\cdots"></li>
+<li>激活函数 <img src="https://www.zhihu.com/equation?tex=g%28z%29" alt="g(z)"> 的选择</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/深度学习//" class="article-tag-list-link color5">深度学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/05/神经网络和深度学习笔记4/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-神经网络和深度学习笔记3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1276,15 +1417,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">范数</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
+                <a href="javascript:void(0)" class="js-tag color4">PCA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">范数</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1292,11 +1433,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SVM</a>
+                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
+                <a href="javascript:void(0)" class="js-tag color4">SVM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1305,6 +1446,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">概率统计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
               </li>
              
               <li class="article-tag-list-item">
