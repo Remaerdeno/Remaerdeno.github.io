@@ -160,6 +160,281 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-机器学习之线性代数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/06/机器学习之线性代数/">机器学习之线性代数</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/06/机器学习之线性代数/" class="archive-article-date">
+  	<time datetime="2018-02-06T11:46:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="标量、向量、矩阵和张量"><a href="#标量、向量、矩阵和张量" class="headerlink" title="标量、向量、矩阵和张量"></a>标量、向量、矩阵和张量</h2><ul>
+<li><strong>标量：</strong>一个标量就是一个单独的数，一般用<strong>小写</strong>的变量名称表示。当然，当我们介绍标量时，要<strong>明确它们是哪种类型的数值</strong>。这个在写论文时要注意，比如：在定义自然数标量时，我们可能会说”令n ∈ N表示元素的数目”。</li>
+<li><strong>向量：</strong>在物理学和工程学中，几何向量更常被称为矢量，这个学过高中数学和物理的就知道，但在线性代数中，经过进一步的抽象，大小和方向的概念亦不一定适用，但我们可以<strong>简单的理解为一列数，通过这列数中的索引，我们可以确定每个单独的数</strong>。通常会赋予向量<strong>粗体的小写</strong>名称。当我们需要明确表示向量中的元素时，我们会将元素排列成一个方括号包围的纵柱（如下图）：</li>
+</ul>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-824f0739982920b1502ca01588d35e21_hd.jpg" alt="img"></p>
+<ul>
+<li><strong>矩阵：</strong>矩阵是<strong>二维数组</strong>，其中的每一个元素被两个索引而非一个所确定。我们通常会赋予矩阵粗体的大写变量名称，比如<strong>A</strong>。 如果一个实数矩阵高度为m，宽度为n，那么我们说<strong><img src="https://www.zhihu.com/equation?tex=A%5Cepsilon+R%5E%7Bm%5Ctimes+n%7D+" alt="A\epsilon R^{m\times n} "></strong>，当我们到明确表达矩阵的时候，我们将它们写在用方括号包围起来的数组中，如下图：</li>
+</ul>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-dd3017aa861f53973da40d860ec93732_hd.jpg" alt="img"></p>
+<ul>
+<li><strong>张量：</strong>线性代数或几何代数中定义的<strong>张量是基于向量和矩阵的推广，通俗一点理解的话，我们可以将标量视为零阶张量，向量（矢量）视为一阶张量，那么矩阵就是二阶张量</strong>。例如，可以将任意一张彩色图片表示成一个三阶张量（就像C语言中的三维数组），三个维度分别是图片的高度、宽度和色彩数据。 使用字体<strong> A </strong>来表示张量 “A’’。张量 <strong>A</strong> 中坐标为 (i, j, k) 的元素记作 <img src="https://www.zhihu.com/equation?tex=A_%7Bi%2Cj%2Ck%7D" alt="A_{i,j,k}"> 。</li>
+</ul>
+<blockquote>
+<p>上面的知识重要性不言而喻，这些都不知道就别说学过机器学习了…几乎一切运算都是基于向量矩阵来进行的，而在tensorflow中，用张量来表示一切数据，并用来运算。</p>
+</blockquote>
+<h2 id="矩阵向量的运算"><a href="#矩阵向量的运算" class="headerlink" title="矩阵向量的运算"></a>矩阵向量的运算</h2><p><strong>矩阵乘法：</strong>是矩阵运算中最重要的操作之一。两个矩阵<strong> A</strong> 和 <strong>B</strong> 的 矩阵乘积(matrix product)是第三个矩阵 <strong>C</strong>。为了使乘法定义良好,矩阵 <strong>A</strong> 的列数必须和矩阵 <strong>B</strong> 的行数相等。如果矩阵 <strong>A</strong>的形状是 m × n,矩阵 <strong>B</strong> 的形状是 n × p,那么矩阵C 的形状是 m × p。我们可以通过将两个或多个矩阵并列放置以书写矩阵乘法,例如<strong>C </strong>=<strong> AB.</strong></p>
+<p>具体地,该乘法操作定义为 ：<img src="https://www.zhihu.com/equation?tex=C_%7Bi%2Cj%7D%3D%5Csum_%7Bk%7D%5E%7B%7D%7BA_%7Bi%2Ck%7DB_%7Bk%2Cj%7D%7D" alt="C_{i,j}=\sum_{k}^{}{A_{i,k}B_{k,j}}"></p>
+<p>举个例子,如下所示：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-a30d59ec32fa6cdd8ea63b160d4f584c_hd.jpg" alt="img"></p>
+<p>需要注意的是，两个矩阵的标准乘积不是指两个矩阵中对应元素的乘积。 不过，那样的矩阵操作确实是存在的，被称为元素对应乘积或者Hadamard乘积，记为<strong>A <img src="https://www.zhihu.com/equation?tex=%5Codot" alt="\odot"> B</strong></p>
+<blockquote>
+<p>特别地，两个相同维数的向量 <img src="https://www.zhihu.com/equation?tex=x+" alt="x "> 和 <img src="https://www.zhihu.com/equation?tex=y" alt="y"> 的 点积(dot product)可看作是矩阵乘积 <img src="https://www.zhihu.com/equation?tex=x%5E%7BT%7Dy" alt="x^{T}y"> 。我们可以把矩阵乘积 <strong>C </strong>=<strong>AB</strong> 中计算 <img src="https://www.zhihu.com/equation?tex=C_%7Bi%2Cj%7D" alt="C_{i,j}"> 的步骤看作是 <strong>A</strong> 的第 i 行和<strong> B</strong> 的第 j 列之间的点积。注意，我们有时候也加两个向量的乘积为<strong>内积</strong></p>
+</blockquote>
+<p>矩阵乘积服从分配律:<strong>A(B + C)</strong> =<strong> AB + AC</strong></p>
+<p>矩阵乘积也服从结合律：<strong>A(BC)</strong> =<strong> (AB)C</strong></p>
+<p>但不同于标量乘积,矩阵乘积并不满足交换律(<strong>AB</strong> =<strong> BA </strong>的情况并非总是满足)。</p>
+<p>然而,两个向量的 点积(dot product)满足交换律 ：<img src="https://www.zhihu.com/equation?tex=x%5E%7BT%7Dy%3Dy%5E%7BT%7Dx" alt="x^{T}y=y^{T}x"></p>
+<p><strong>矩阵转置：</strong></p>
+<ul>
+<li>矩阵转置的结果为 <img src="https://www.zhihu.com/equation?tex=a_%7Bi%2Cj%7D%3D%28a_%7Bi%2Cj%7D%29%5E%7BT%7D" alt="a_{i,j}=(a_{i,j})^{T}"></li>
+<li><img src="https://www.zhihu.com/equation?tex=R%5Cbullet+R%5E%7BT%7D" alt="R\bullet R^{T}"> 结果为对称矩阵，由 <img src="https://www.zhihu.com/equation?tex=R%5Cbullet+R%5E%7BT%7D%3D%28R%5Cbullet+R%5E%7BT%7D%29%5E%7BT%7D" alt="R\bullet R^{T}=(R\bullet R^{T})^{T}"> ,得证 <img src="https://www.zhihu.com/equation?tex=R%5Cbullet+R%5E%7BT%7D" alt="R\bullet R^{T}"> 结果为对称矩阵</li>
+</ul>
+<blockquote>
+<p>矩阵的乘法和其他运算有必要深究，比如矩阵乘法的意义。在机器学习中，很多运算就是矩阵和向量的运算，而Hadamard乘积在反向传播推导中也有应用。</p>
+</blockquote>
+<h2 id="单位矩阵和逆矩阵"><a href="#单位矩阵和逆矩阵" class="headerlink" title="单位矩阵和逆矩阵"></a>单位矩阵和逆矩阵</h2><p>线性代数提供了被称为矩阵逆的强大工具。 对于大多数矩阵<strong>A</strong>，我们都能通过矩阵逆解析地求解。</p>
+<p>为了描述矩阵逆，我们首先需要定义单位矩阵的概念。 任意向量和单位矩阵相乘，都不会改变。 我们将保持 <img src="https://www.zhihu.com/equation?tex=n" alt="n"> 维向量不变的单位矩阵记作 <img src="https://www.zhihu.com/equation?tex=I_%7Bn%7D" alt="I_{n}"> 。 形式上 <img src="https://www.zhihu.com/equation?tex=I_%7Bn%7D%5Cin+R%5E%7Bn%7D" alt="I_{n}\in R^{n}"></p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cforall+x%5Cin+R%5E%7Bn%7D%2CI_%7Bn%7Dx%3Dx" alt="\forall x\in R^{n},I_{n}x=x"> 。</p>
+<p>单位矩阵的结构很简单：所有沿主对角线的元素都是1，而所有其他位置的元素都是0。 如</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-76f5c3a9d7d10fea474c58cd308bdae5_hd.jpg" alt="img"></p>
+<p>矩阵<strong>A</strong>的矩阵逆记作 <img src="https://www.zhihu.com/equation?tex=A%5E%7B-1%7D" alt="A^{-1}"> ，其定义的矩阵满足如下条件</p>
+<p><img src="https://www.zhihu.com/equation?tex=A%5E%7B-1%7DA%3DI_%7Bn%7D" alt="A^{-1}A=I_{n}"></p>
+<p>现在我们可以通过以下步骤求解：</p>
+<p>由<img src="https://www.zhihu.com/equation?tex=Ax%3Db" alt="Ax=b"> 得 <img src="https://www.zhihu.com/equation?tex=A%5E%7B-1%7DAx%3DA%5E%7B-1%7Db" alt="A^{-1}Ax=A^{-1}b"></p>
+<p>由 <img src="https://www.zhihu.com/equation?tex=A%5E%7B-1%7DA%3DI_%7Bn%7D" alt="A^{-1}A=I_{n}">得<img src="https://www.zhihu.com/equation?tex=I_%7Bn%7Dx%3DA%5E%7B-1%7Db" alt="I_{n}x=A^{-1}b"></p>
+<p>最终： <img src="https://www.zhihu.com/equation?tex=x%3DA%5E%7B-1%7Db+" alt="x=A^{-1}b "></p>
+<p>求一个矩阵的逆矩阵比较简单，但是更加重要还有更加有用的是判断一个矩阵是否存在逆矩阵，这是一个重点难点，由于判别方式也非常的多种，这里就简述一些简单方法：</p>
+<ul>
+<li>一切不是方阵（行数不等于列数）的矩阵都没有逆矩阵</li>
+<li>可逆矩阵就是非奇异矩阵，非奇异矩阵也是可逆矩阵（奇异矩阵涉及到秩的运算，不是很必要学啊，但推荐去了解吧，如果不想学，那知道这句就好）</li>
+<li>行列式等于0的方阵是奇异矩阵，也就是说行列式不等于0等价于是可逆矩阵</li>
+</ul>
+<blockquote>
+<p>矩阵的求逆运算在机器学习中也有非常广泛的应用，比如逻辑回归，比如SVM等等，也是非常重要的，各类的论文中也会涉及到很多这样的运算，所以真的必不可少！</p>
+</blockquote>
+<h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><p><strong>行列式,记作 det(A)：</strong>是一个将方阵 A 映射到实数的函数。行列式等于矩阵特征值的乘积。行列式的绝对值可以用来衡量矩阵参与矩阵乘法后空间扩大或者缩小了多少。如果行列式是 0,那么空间至少沿着某一维完全收缩了,使其失去了所有的体积。如果行列式是 1,那么这个转换保持空间体积不变。</p>
+<blockquote>
+<p>行列式也是一个很大的概念，深究起来非常方，如果不想了解很多，那只需要知道概念就好吧。</p>
+</blockquote>
+<h2 id="方差，标准差，协方差"><a href="#方差，标准差，协方差" class="headerlink" title="方差，标准差，协方差"></a>方差，标准差，协方差</h2><p><strong>方差：</strong>是衡量随机变量或一组数据时离散程度的度量，方差计算公式：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-1abb9c1049d755992a77c15f8acb96db_hd.jpg" alt="img"></p>
+<p>其中 <img src="https://www.zhihu.com/equation?tex=%5Csigma%5E%7B2%7D" alt="\sigma^{2}"> 为总体方差， <img src="https://www.zhihu.com/equation?tex=X" alt="X"> 为变量， <img src="https://www.zhihu.com/equation?tex=%5Cmu" alt="\mu"> 为总体均值， <img src="https://www.zhihu.com/equation?tex=N" alt="N"> 为总体例数。下面的标准差公式中亦相同。</p>
+<p><strong>标准差：</strong>也被称为标准偏差，或者实验标准差，公式为</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-e716c62e213b641b836667438a7de4c3_hd.jpg" alt="img"></p>
+<p>标准差是方差的算术平方根。标准差能反映一个数据集的离散程度。平均数相同的两组数据，标准差未必相同。</p>
+<p><strong>为什么需要协方差？</strong></p>
+<p>我们知道，标准差和方差一般是用来描述一维数据的，但现实生活我们常常遇到含有多维数据的数据集，最简单的 大家上学时免不了要统计多个学科的考试成绩。面对这样的数据集，我们当然可以按照每一维独立的计算其方差，但是通常我们还想了解更多，比如，一个男孩子的 猥琐程度跟他受女孩子欢迎程度是否存在一些联系。<strong>协方差就是这样一种用来度量两个随机变量关系的统计量。</strong></p>
+<p><strong>协方差矩阵</strong></p>
+<p>理解协方差矩阵的关键就在于牢记<strong>它计算的是不同维度之间的协方差，而不是不同样本之间，</strong>拿到一个样本矩阵，我们最先要明确的就是一行是一个样本还是一个维度，心中明确这个整个计算过程就会顺流而下，这么一来就不会迷茫了</p>
+<p>举个例子（例子来自<a href="https://link.zhihu.com/?target=http%3A//www.zipperary.com/2014/01/12/covariance/" target="_blank" rel="noopener">这篇文章</a>）：</p>
+<p>问题：</p>
+<p>有一组数据（如下），分别为二维向量，这四个数据对应的协方差矩阵是多少？</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-ac80e8101583c1b7d70b8caf4d6ea514_hd.jpg" alt="img"></p>
+<p>解答：</p>
+<p>由于数据是二维的，所以协方差矩阵是一个2*2的矩阵，矩阵的每个元素为：</p>
+<p>元素(i,j) = (第 i 维所有元素 - 第 i 维的均值) * (第 j 维所有元素 - 第 j 维的均值) 。</p>
+<p>其中「*」代表向量内积符号，即两个向量求内积，对应元素相乘之后再累加。</p>
+<p>我们首先列出第一维：</p>
+<p>D1: (1,3,4,5) 均值：3.25<br>D2: (2,6,2,2) 均值：3</p>
+<p>下面计算协方差矩阵第(1,2)个元素：</p>
+<p>元素(1,2)=(1-3.25,3-3.25,4-3.25,5-3.25)*(2-3,6-3,2-3,2-3)=-1</p>
+<p>类似的，我们可以把2*2个元素都计算出来：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-eb00efd47533b0702b8d75d82e3f36eb_hd.jpg" alt="img"></p>
+<p>这个题目的最终结果就是：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-2e9fe85ba4b3a5e17191c15a60d1aa71_hd.jpg" alt="img"></p>
+<p>我们来分析一下上面的例子。首先看一下元素(1,1)的计算过程：</p>
+<p>把所有数据的第一个维度拿出来，求出均值，之后的求解过程完全是我们熟悉的「方差」的求法。也就是说，这完完全全就是在求所有数据第一维元素（共4个）的方差（8.75）嘛。类似地，元素(2,2)求的是第二维(共4个)元素的方差（12）。</p>
+<p>再来看元素(1,2)，这分明就是我们高数里面学的求 x 和 y 的协方差，不再单独计算某一维度的分散程度，而是把两个维度的分散值结合起来，这里才真正体现了「协方差矩阵」中「协方差」的意味。从计算过程和计算结果都能看出，元素(2,1)与元素(1,2)是一样的。也就是说，所有协方差矩阵都是一个对称阵。</p>
+<p>总结一下协方差矩阵的特点：</p>
+<ul>
+<li>对角线元素(i,i)为数据第 i 维的方差。</li>
+<li>非对角线元素(i,j)为第 i 维和第 j 维的协方差。</li>
+<li>协方差矩阵是对称阵。</li>
+</ul>
+<p>现在只需要了解这些就够了。</p>
+<blockquote>
+<p>这些知识也是非常基础的，在各个算法中都有涉及，像偏方差权衡，RL中的方差问题和解决，还有协方差矩阵在二元高斯分布（在下面一片概率论中会讲述）中决定了它的形状，<a href="https://link.zhihu.com/?target=http%3A//www.zipperary.com/2014/01/12/covariance/" target="_blank" rel="noopener">详细演示</a>。</p>
+</blockquote>
+<h2 id="范数"><a href="#范数" class="headerlink" title="范数"></a>范数</h2><p>什么是范数，听得那么术语..其实就是衡量一个向量大小的单位。在机器学习中，我们也经常使用被称为范数(norm) 的函数衡量矩阵大小</p>
+<p><img src="https://www.zhihu.com/equation?tex=L%5E%7BP%7D" alt="L^{P}"> 范数如下：</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cleft%7C+%5Cleft%7C+x+%5Cright%7C+%5Cright%7C+_%7Bp%7D%5E%7B%7D+%3D%5Cleft%28+%5Csum_%7Bi%7D%5E%7B%7D%7B%5Cleft%7C+x_%7Bi%7D+%5Cright%7C+%5E%7Bp%7D+%7D+%5Cright%29+_%7B%7D%5E%7B%5Cfrac%7B1%7D%7Bp%7D+%7D+" alt="\left| \left| x \right| \right| _{p}^{} =\left( \sum_{i}^{}{\left| x_{i} \right| ^{p} } \right) _{}^{\frac{1}{p} } "></p>
+<p>（为什么是这样的，不要管了，要扯就扯偏了，记得是衡量向量或者矩阵大小的就行了）</p>
+<p>常见的：</p>
+<p><img src="https://www.zhihu.com/equation?tex=L%5E%7B1%7D" alt="L^{1}"> 范数<img src="https://www.zhihu.com/equation?tex=%5Cleft%7C+%5Cleft%7C+x+%5Cright%7C+%5Cright%7C+" alt="\left| \left| x \right| \right| ">：为x向量各个元素绝对值之和；</p>
+<p><img src="https://www.zhihu.com/equation?tex=L%5E%7B2%7D" alt="L^{2}"> 范数<img src="https://www.zhihu.com/equation?tex=%5Cleft%7C+%5Cleft%7C+x+%5Cright%7C+%5Cright%7C+_%7B2%7D+" alt="\left| \left| x \right| \right| _{2} ">：为x向量各个元素平方和的开方，这个也就是两点直线距离嘛，回忆初高中的知识！</p>
+<p>注意：当 p = 2 时, <img src="https://www.zhihu.com/equation?tex=L%5E%7B2%7D" alt="L^{2}"> 范数被称为<strong> 欧几里得范数(Euclidean norm)</strong>。它表示从原点</p>
+<p>出发到向量 x 确定的点的欧几里得距离。 <img src="https://www.zhihu.com/equation?tex=L%5E%7B2%7D+" alt="L^{2} "> 范数在机器学习中出现地十分频繁</p>
+<p>经常简化表示为 ∥x∥,略去了下标 2。平方 <img src="https://www.zhihu.com/equation?tex=L%5E%7B2%7D" alt="L^{2}"> 范数也经常用来衡量向量的大小,可以</p>
+<p>简单地通过点积 <img src="https://www.zhihu.com/equation?tex=x%5E%7BT%7Dx" alt="x^{T}x"> 计算。</p>
+<blockquote>
+<p>这些知识在各大算法（如SVM）中亦有涉及，而且在距离量度中的欧式距离，华盛顿距离都有密切关系。</p>
+</blockquote>
+<h2 id="特殊类型的矩阵和向量"><a href="#特殊类型的矩阵和向量" class="headerlink" title="特殊类型的矩阵和向量"></a>特殊类型的矩阵和向量</h2><p>有些特殊类型的矩阵和向量是特别有用的,也相当于一些术语，比如一些文章直接说是XX矩阵或者XX向量，这个时候我们应该要明白这些矩阵或者向量是什么样子的，还有什么样的性质！</p>
+<p><strong>对角矩阵(diagonal matrix)：</strong>只在主对角线上含有非零元素,其他位置都是零。形式上,矩阵 是对角矩阵,当且仅当对于所有的 <img src="https://www.zhihu.com/equation?tex=i%3Dj%EF%BC%8CD_%7Bi%2Cj%7D%E4%B8%8D%E7%AD%89%E4%BA%8E0" alt="i=j，D_{i,j}不等于0"></p>
+<p>特殊的：<strong>单位矩阵</strong>是对角元素全部是 1的对角矩阵。</p>
+<p><strong>单位向量：</strong>指模等于1（具有 单位范数）的向量。由于是非<a href="https://link.zhihu.com/?target=https%3A//baike.baidu.com/item/%25E9%259B%25B6%25E5%2590%2591%25E9%2587%258F" target="_blank" rel="noopener">零向量</a>，单位向量具有确定的方向。单位向量有无数个。</p>
+<p>也就是说：对于单位向量，有 <img src="https://www.zhihu.com/equation?tex=%7C%7Cx%7C%7C_%7B2%7D" alt="||x||_{2}"> = 1.</p>
+<p><strong>对称矩阵:</strong>是转置和自己相等的矩阵： <img src="https://www.zhihu.com/equation?tex=A%3DA%5E%7BT%7D" alt="A=A^{T}"></p>
+<p>当某些不依赖参数顺序的双参数函数生成元素时，对称矩阵经常会出现， 例如，如果<strong>A</strong>是一个距离度量矩阵， <img src="https://www.zhihu.com/equation?tex=A_%7Bi%2Cj%7D" alt="A_{i,j}"> 表示点 <img src="https://www.zhihu.com/equation?tex=i+" alt="i "> 到点 <img src="https://www.zhihu.com/equation?tex=j+" alt="j "> 的距离，那么 <img src="https://www.zhihu.com/equation?tex=A_%7Bi%2Cj%7D%3DA_%7Bj%2Ci%7D" alt="A_{i,j}=A_{j,i}"> ，因为距离函数是对称的。</p>
+<p><strong>正交矩阵:</strong>是指行向量和列向量是分别标准正交的方阵： <img src="https://www.zhihu.com/equation?tex=A%5E%7BT%7DA%3DAA%5E%7BT%7D%3DI" alt="A^{T}A=AA^{T}=I"></p>
+<p>这意味着 <img src="https://www.zhihu.com/equation?tex=A%5E%7B-1%7D%3DA%5E%7BT%7D" alt="A^{-1}=A^{T}"></p>
+<p>所以正交矩阵受到关注是因为求逆计算代价小。 我们需要注意正交矩阵的定义。 违反直觉的是，正交矩阵的行向量不仅是正交的，还是标准正交的。 对于行向量或列向量互相正交但不是标准正交的矩阵，没有对应的专有术语。</p>
+<h2 id="特征分解以及其意义"><a href="#特征分解以及其意义" class="headerlink" title="特征分解以及其意义"></a>特征分解以及其意义</h2><p>许多数学对象可以通过将它们分解成多个组成部分，或者找到它们的一些属性而更好地理解，这些属性是通用的，而不是由我们选择表示它们的方式引起的。</p>
+<p>例如:整数可以分解为质数。 我们可以用十进制或二进制等不同方式表示整数12，但质因数分解永远是对的12=2×3×3。 从这个表示中我们可以获得一些有用的信息，比如12不能被5整除，或者12的倍数可以被3整除。</p>
+<p>正如我们可以通过分解质因数来发现整数的一些内在性质，我们也可以通过<strong>分解矩阵来发现矩阵表示成数组元素时不明显的函数性质。</strong></p>
+<ul>
+<li>特征分解是使用最广的矩阵分解之一，即我们将矩阵分解成一组特征向量和特征值。</li>
+<li>一个变换（或者说矩阵）的特征向量就是这样一种向量，它经过这种特定的变换后保持方向不变，只是进行长度上的伸缩而已。</li>
+</ul>
+<p>特征向量的原始定义： <img src="https://www.zhihu.com/equation?tex=AX%3DCX" alt="AX=CX"></p>
+<p>可以很容易看出， <img src="https://www.zhihu.com/equation?tex=CX" alt="CX"> 是<strong>方阵 </strong><img src="https://www.zhihu.com/equation?tex=A" alt="A"> 对向量 <img src="https://www.zhihu.com/equation?tex=X+" alt="X "> 进行变换后的结果，显然 <img src="https://www.zhihu.com/equation?tex=CX" alt="CX"> 和 <img src="https://www.zhihu.com/equation?tex=X" alt="X"> 的方向相同<strong>。</strong> <img src="https://www.zhihu.com/equation?tex=X" alt="X"> 是特征向量的话， <img src="https://www.zhihu.com/equation?tex=C" alt="C">表示的就是特征值。</p>
+<p><strong>求解：</strong>令 <strong>A</strong> 是一个 <em>N</em>×<em>N</em> 的方阵，且有 <em>N</em> 个线性无关的特征向量 <img src="https://www.zhihu.com/equation?tex=q_%7Bi%7D%28i%3D1....N%29" alt="q_{i}(i=1....N)"></p>
+<p>这样， <strong>A</strong> 可以被分解</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-98ac381ac0b5792669c994bf2f7c3146_hd.jpg" alt="img"></p>
+<p>其中 <strong>Q</strong> 是<em>N</em>×<em>N</em>方阵，且其第 <em>i</em>列为 <strong>A</strong> 的特征向量 。 <strong>Λ</strong> 是对角矩阵，其对角线上的元素为对应的特征值，也即 <img src="https://www.zhihu.com/equation?tex=%5Cwedge+_%7Bii%7D%3DC_%7Bi%7D" alt="\wedge _{ii}=C_{i}"></p>
+<p>这里需要注意只有可对角化矩阵才可以作特征分解。比如</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-bd712ecbcd7d67dde271764a136627d1_hd.jpg" alt="img"></p>
+<p>不能被对角化，也就不能特征分解。</p>
+<p><strong>特征值及特征向量的几何意义和物理意义：</strong></p>
+<p>在空间中，对一个变换而言，特征向量指明的方向才是很重要的，特征值不那么重要。虽然我们求这两个量时先求出特征值，但特征向量才是更本质的东西！特征向量是指经过指定变换（与特定矩阵相乘）后不发生方向改变的那些向量，特征值是指在经过这些变换后特征向量的伸缩的倍数,也就是说<strong>矩阵对某一个向量或某些向量只发生伸缩变换，不对这些向量产生旋转的效果</strong>，那么这些向量就称为这个矩阵的特征向量，伸缩的比例就是特征值。</p>
+<p>物理的含义就是图像的运动：特征向量在一个矩阵的作用下作伸缩运动，伸缩的幅度由特征值确定。特征值大于1，所有属于此特征值的特征向量身形暴长；特征值大于0小于1，特征向量身形猛缩；特征值小于0，特征向量缩过了界，反方向到0点那边去了。</p>
+<blockquote>
+<p>注意：常有教科书说特征向量是在矩阵变换下不改变方向的向量，实际上当特征值小于零时，矩阵就会把特征向量完全反方向改变，当然特征向量还是特征向量。我也赞同特征向量不改变方向的说法：特征向量永远不改变方向，改变的只是特征值（方向反转特征值为负值了）。特征向量也是线性不变量。</p>
+</blockquote>
+<p><strong>特征分解的重要应用–PCA（主成分分析）：</strong></p>
+<p>举个栗子：机器学习中的分类问题，给出178个葡萄酒样本，每个样本含有13个参数，比如酒精度、酸度、镁含量等，这些样本属于3个不同种类的葡萄酒。任务是提取3种葡萄酒的特征，以便下一次给出一个新的葡萄酒样本的时候，能根据已有数据判断出新样本是哪一种葡萄酒。</p>
+<p>原数据有13维，但这之中含有冗余，减少数据量最直接的方法就是<strong>降维</strong>。做法：把数据集赋给一个178行13列的矩阵<strong>R</strong>，减掉均值并归一化，它的协方差矩阵<strong>C</strong>是13行13列的矩阵，对<strong>C</strong>进行特征分解，对角化，其中<strong>U</strong>是特征向量组成的矩阵，<strong>D</strong>是特征值组成的对角矩阵，并按由大到小排列。然后，另<strong>R’ =RU</strong>，就实现了数据集在特征向量这组正交基上的投影。嗯，重点来了，<strong>R’</strong>中的数据列是按照对应特征值的大小排列的，后面的列对应小特征值，去掉以后对整个数据集的影响比较小。比如，现在我们直接去掉后面的7列，只保留前6列，就完成了降维。</p>
+<p>这个降维方法就叫<strong>PCA（Principal Component Analysis）</strong>。降维以后分类错误率与不降维的方法相差无几，但需要处理的数据量减小了一半（不降维需要处理13维，降维后只需要处理6维）。在深度学习之前，图像处理是很常用到PCA的，PCA是一个非常不错的降维方法！</p>
+<h2 id="奇异值分解及其意义"><a href="#奇异值分解及其意义" class="headerlink" title="奇异值分解及其意义"></a>奇异值分解及其意义</h2><p>奇异值分解就是将矩阵 A 分解成三个矩阵的乘积: <img src="https://www.zhihu.com/equation?tex=A%3DUDV%5E%7BT%7D" alt="A=UDV^{T}"></p>
+<p>假设 <strong>A</strong> 是一个 m × n 的矩阵,那么 U 是一个 m × m 的矩阵,D 是一个 m × n的矩阵,V 是一个 n × n 矩阵。这些矩阵中的每一个经定义后都拥有特殊的结构。矩阵 U 和 V 都被定义为正交矩阵,而矩阵 D 被定义为对角矩阵。<strong>注意:</strong>矩阵 D 不一定是方阵。</p>
+<blockquote>
+<p>求解比较复杂，详细推荐查看这篇<a href="https://link.zhihu.com/?target=http%3A//nbviewer.jupyter.org/github/zlotus/notes-LSJU-machine-learning/blob/master/chapter15.ipynb" target="_blank" rel="noopener">奇异值分解</a></p>
+</blockquote>
+<p><strong>奇异值分解的意义：</strong></p>
+<p>奇异值分解的含义是，把一个矩阵A看成线性变换（当然也可以看成是数据矩阵或者样本矩阵），那么这个线性变换的作用效果是这样的，<strong>我们可以在原空间找到一组标准正交基V，同时可以在对应空间找到一组标准正交基U，我们知道，看一个矩阵的作用效果只要看它在一组基上的作用效果即可，</strong>在内积空间上，我们更希望看到它在一组标准正交基上的作用效果。而矩阵A在标准正交基V上的作用效果恰好可以表示为在U的对应方向上只进行纯粹的伸缩！这就大大简化了我们对矩阵作用的认识，因为我们知道，我们面前不管是多么复杂的矩阵，它在某组 标准正交基上的作用就是在另外一组标准正交基上进行伸缩而已。</p>
+<blockquote>
+<p>更加详细的讲述请看：<a href="https://link.zhihu.com/?target=http%3A//blog.csdn.net/redline2005/article/details/24100293" target="_blank" rel="noopener">奇异值的意义</a></p>
+</blockquote>
+<p>特征分解也是这样的，也可以简化我们对矩阵的认识。对于可对角化的矩阵，该线性变换的作用就是将某些方向（特征向量方向）在该方向上做伸缩。</p>
+<p>有了上述认识，当我们要看该矩阵对任一向量x的作用效果的时候，在特征分解的视角下，我们可以把x往特征向量方向上分解，然后每个方向上做伸缩，最后再把结果加起来即可；在奇异值分解的视角下，我们可以把x往V方向上分解，然后将各个分量分别对应到U方向上做伸缩，最后把各个分量上的结果加起来即可。</p>
+<p>奇异值分解和上面所讲的特征分解有很大的关系，而我的理解是：</p>
+<ul>
+<li>不是所有的矩阵都能对角化（对称矩阵总是可以），而所有矩阵总是可以做奇异值分解的。那么多类型的矩阵，我们居然总是可以从一个统一且简单的视角去看它，我们就会感叹奇异值分解是多么奇妙了！</li>
+<li>协方差矩阵（或 <img src="https://www.zhihu.com/equation?tex=X%5E%7BT%7DX" alt="X^{T}X"> ）的奇异值分解结果和特征值分解结果一致。所以在PCA中，SVD是一种实现方式</li>
+</ul>
+<blockquote>
+<p>上面的知识可能需要其他的一些前置知识，但我认为也不必要非学，用的不多，可以遇到再学吧，我们知道其主要公式，意义和应用就好，重要性也一目了然，对于矩阵的变换运算，比如<strong>降维（PCA）</strong>或<strong>推荐系统</strong>中都有其重要的作用。</p>
+</blockquote>
+<h2 id="Moore-Penrose-伪逆"><a href="#Moore-Penrose-伪逆" class="headerlink" title="Moore-Penrose 伪逆"></a>Moore-Penrose 伪逆</h2><p>对于非方矩阵而言，其逆矩阵没有定义。假设在下面问题中，我们想通过矩阵A的左逆B来求解线性方程：</p>
+<p><img src="https://www.zhihu.com/equation?tex=Ax%3Dy" alt="Ax=y"></p>
+<p>等式两边同时左乘左逆B后，得到：</p>
+<p><img src="https://www.zhihu.com/equation?tex=x%3DBy" alt="x=By"></p>
+<p>是否存在唯一的映射将A映射到B取决于问题的形式。</p>
+<p>如果矩阵A的行数大于列数，那么上述方程可能没有解；如果矩阵A的行数小于列数，那么上述方程可能有多个解。</p>
+<p>Moore-Penrose伪逆使我们能够解决这种情况，矩阵A的伪逆定义为：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-1581c66947da5c30172f4ef80dd0b70f_hd%20%281%29.jpg" alt="img"></p>
+<p>但是计算伪逆的实际算法没有基于这个式子，而是使用下面的公式：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-2845b623dc537e3bae0db22c4938e9c1_hd.jpg" alt="img"></p>
+<p>其中，矩阵U，D 和V 是矩阵A奇异值分解后得到的矩阵。对角矩阵D 的伪逆D+ 是其非零元素取倒之后再转置得到的。</p>
+<blockquote>
+<p>注意，这里的伪逆也是应用奇异值分解来求得的，这就很好体现知识是联系的啦，伪逆的应用在机器学习中也是大量存在的，比如最简单的线性回归中求广义逆矩阵，也就是伪逆。</p>
+</blockquote>
+<h2 id="迹运算"><a href="#迹运算" class="headerlink" title="迹运算"></a>迹运算</h2><p>迹运算返回的是矩阵对角元素的和：</p>
+<p><img src="https://www.zhihu.com/equation?tex=Tr%28A%29%3D%5Csum_%7Bi%7D%5E%7B%7D%7BA_%7Bi%2Cj%7D%7D" alt="Tr(A)=\sum_{i}^{}{A_{i,j}}"></p>
+<p>迹运算因为很多原因而有用。 若不使用求和符号，有些矩阵运算很难描述，而通过矩阵乘法和迹运算符号可以清楚地表示。 例如，迹运算提供了另一种描述矩阵Frobenius 范数的方式：<img src="https://www.zhihu.com/equation?tex=%7C%7CA%7C%7C_%7BF%7D%3D%5Csqrt%7BTr%28AA%5E%7BT%7D%29%7D" alt="||A||_{F}=\sqrt{Tr(AA^{T})}"></p>
+<p>(不必知道是什么，只要知道有这样的运算就好，如果有兴趣，当然可以去了解)</p>
+<p>用迹运算表示表达式，我们可以使用很多有用的等式巧妙地处理表达式。 例如，迹运算在转置运算下是不变的： <img src="https://www.zhihu.com/equation?tex=Tr%28A%29%3DTr%28A%5E%7BT%7D%29" alt="Tr(A)=Tr(A^{T})"></p>
+<p>多个矩阵相乘得到的方阵的迹，和将这些矩阵中的最后一个挪到最前面之后相乘的迹是相同的。 当然，我们需要考虑挪动之后矩阵乘积依然定义良好：<strong>Tr</strong>(<strong>ABC</strong>) =<strong> Tr</strong>(<strong>CAB</strong>) =<strong> Tr</strong>(<strong>BCA</strong>).</p>
+<blockquote>
+<p>迹运算也是常用的数学知识，比如这些知识在<strong>正规方程组</strong>计算中就有着重要的作用。</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">线性代数</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/机器学习//" class="article-tag-list-link color5">机器学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/06/机器学习之线性代数/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-L0-L1和L2范数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2078,276 +2353,6 @@
 
 
   
-    <article id="post-改善深层神经网络1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/05/改善深层神经网络1/">深度学习的使用程面</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/05/改善深层神经网络1/" class="archive-article-date">
-  	<time datetime="2018-02-05T08:34:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-训练、验证、测试集"><a href="#1-训练、验证、测试集" class="headerlink" title="1. 训练、验证、测试集"></a><strong>1. 训练、验证、测试集</strong></h2><p>对于一个需要解决的问题的样本数据，在建立模型的过程中，我们会将问题的<strong>data</strong>划分为以下几个部分：</p>
-<ul>
-<li>训练集（train set）：用训练集对算法或模型进行训练过程；</li>
-<li>验证集（development set）：利用验证集或者又称为简单交叉验证集（hold-out cross validation set）进行交叉验证，选择出最好的模型；</li>
-<li>测试集（test set）：最后利用测试集对模型进行测试，获取模型运行的无偏估计。</li>
-</ul>
-<p><strong>小数据时代：</strong></p>
-<p>在小数据量的时代，如：100、1000、10000的数据量大小，可以将<strong>data</strong>做以下划分：</p>
-<ul>
-<li>无验证集的情况：70% / 30%；</li>
-<li>有验证集的情况：60% / 20% / 20%；</li>
-</ul>
-<p>通常在小数据量时代，以上比例的划分是非常合理的。</p>
-<p><strong>大数据时代：</strong></p>
-<p>但是在如今的大数据时代，对于一个问题，我们拥有的<strong>data</strong>的数量可能是百万级别的，所以验证集和测试集所占的比重会趋向于变得更小。</p>
-<p>验证集的目的是为了验证不同的算法哪种更加有效，所以验证集只要足够大能够验证大约2-10种算法哪种更好就足够了，不需要使用20%的数据作为验证集。如百万数据中抽取1万的数据作为验证集就可以了。</p>
-<p>测试集的主要目的是评估模型的效果，如在单个分类器中，往往在百万级别的数据中，我们选择其中1000条数据足以评估单个模型的效果。</p>
-<ul>
-<li>100万数据量：98% / 1% / 1%；</li>
-<li>超百万数据量：99.5% / 0.25% / 0.25%（或者99.5% / 0.4% / 0.1%）</li>
-</ul>
-<p><strong>Notation：</strong></p>
-<ul>
-<li>建议验证集和测试集来自于同一个分布，这样可以使得机器学习算法变得更快；</li>
-<li>如果不需要用无偏估计来评估模型的性能，则可以不需要测试集。</li>
-</ul>
-<h2 id="2-偏差、方差"><a href="#2-偏差、方差" class="headerlink" title="2. 偏差、方差"></a><strong>2. 偏差、方差</strong></h2><p>对于下图中两个类别分类边界的分割：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-780fcc9466d6e335241727e0725c61fd_hd.jpg" alt="img"></p>
-<p>从图中我们可以看出，在欠拟合（underfitting）的情况下，出现高偏差（high bias）的情况；在过拟合（overfitting）的情况下，出现高方差（high variance）的情况。</p>
-<p>在 bias-variance tradeoff 的角度来讲，我们利用训练集对模型进行训练就是为了使得模型在train集上使 <strong>bias</strong>最小化，避免出现 underfitting 的情况；</p>
-<p>但是如果模型设置的太复杂，虽然在train集上 bias 的值非常小，模型甚至可以将所有的数据点正确分类，但是当将训练好的模型应用在dev 集上的时候，却出现了较高的错误率。这是因为模型设置的太复杂则没有排除一些train集数据中的噪声，使得模型出现overfitting的情况，在dev 集上出现高<strong>variance</strong>的现象。</p>
-<p>所以对于bias和variance的权衡问题，对于模型来说是一个十分重要的问题。</p>
-<p><strong>例子：</strong></p>
-<p>几种不同的情况：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-ef626d89314943c7701c0462fce443a9_hd.jpg" alt="img"></p>
-<p>以上为在人眼判别误差在0%的情况下，该最优误差通常也称为“贝叶斯误差”，如果“贝叶斯误差”大约为15%，那么图中第二种情况就是一种比较好的情况。</p>
-<p><strong>High bias and high variance的情况</strong></p>
-<p>上图中第三种bias和variance的情况出现的可能如下：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-d31a17414aa07f477be2d1c94fb411ed_hd.jpg" alt="img"></p>
-<p>没有找到边界线，但却在部分数据点上出现了过拟合，则会导致这种高偏差和高方差的情况。</p>
-<p>虽然在这里二维的情况下可能看起来较为奇怪，出现的可能性比较低；但是在高维的情况下，出现这种情况就成为可能。</p>
-<h2 id="3-机器学习的基本方法"><a href="#3-机器学习的基本方法" class="headerlink" title="3. 机器学习的基本方法"></a><strong>3. 机器学习的基本方法</strong></h2><p>在训练机器学习模型的过程中，解决High bias 和High variance 的过程：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-69ee1d22e22e3509ecd0f87554e7ba02_hd.jpg" alt="img"></p>
-<ul>
-<li><p>\1. 是否存在<strong>High bias</strong> ?</p>
-</li>
-<li><ul>
-<li>增加网络结构，如增加隐藏层数目；</li>
-<li>训练更长时间；</li>
-<li>寻找合适的网络架构，使用更大的NN结构；</li>
-</ul>
-</li>
-<li><p>\2. 是否存在<strong>High variance</strong>？</p>
-</li>
-<li><ul>
-<li>获取更多的数据；</li>
-<li>正则化（ regularization）；</li>
-<li>寻找合适的网络结构；</li>
-</ul>
-</li>
-</ul>
-<p>在大数据时代，深度学习对监督式学习大有裨益，使得我们不用像以前一样太过关注如何平衡偏差和方差的权衡问题，通过以上方法可以使得再不增加另一方的情况下减少一方的值。</p>
-<h2 id="4-正则化（regularization）"><a href="#4-正则化（regularization）" class="headerlink" title="4. 正则化（regularization）"></a><strong>4. 正则化（regularization）</strong></h2><p>利用正则化来解决High variance 的问题，正则化是在 Cost function 中加入一项正则化项，惩罚模型的复杂度。</p>
-<p><strong>Logistic regression</strong></p>
-<p>加入正则化项的代价函数：</p>
-<p><img src="http://www.zhihu.com/equation?tex=J%28w%2Cb%29%3D%5Cdfrac%7B1%7D%7Bm%7D%5Csum%5Climits_%7Bi%3D1%7D%5E%7Bm%7Dl%28%5Chat+y%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29%2B%5Cdfrac%7B%5Clambda%7D%7B2m%7D%7C%7Cw%7C%7C_%7B2%7D%5E%7B2%7D" alt="J(w,b)=\dfrac{1}{m}\sum\limits_{i=1}^{m}l(\hat y^{(i)},y^{(i)})+\dfrac{\lambda}{2m}||w||_{2}^{2}"></p>
-<p>上式为逻辑回归的L2正则化。</p>
-<ul>
-<li>L2正则化： <img src="http://www.zhihu.com/equation?tex=%5Cdfrac%7B%5Clambda%7D%7B2m%7D%7C%7Cw%7C%7C_%7B2%7D%5E%7B2%7D+%3D+%5Cdfrac%7B%5Clambda%7D%7B2m%7D%5Csum%5Climits_%7Bj%3D1%7D%5E%7Bn_%7Bx%7D%7D+w_%7Bj%7D%5E%7B2%7D%3D%5Cdfrac%7B%5Clambda%7D%7B2m%7Dw%5E%7BT%7Dw" alt="\dfrac{\lambda}{2m}||w||_{2}^{2} = \dfrac{\lambda}{2m}\sum\limits_{j=1}^{n_{x}} w_{j}^{2}=\dfrac{\lambda}{2m}w^{T}w"></li>
-<li>L1正则化： <img src="http://www.zhihu.com/equation?tex=%5Cdfrac%7B%5Clambda%7D%7B2m%7D%7C%7Cw%7C%7C_%7B1%7D%3D%5Cdfrac%7B%5Clambda%7D%7B2m%7D%5Csum%5Climits_%7Bj%3D1%7D%5E%7Bn_%7Bx%7D%7D%7Cw_%7Bj%7D%7C" alt="\dfrac{\lambda}{2m}||w||_{1}=\dfrac{\lambda}{2m}\sum\limits_{j=1}^{n_{x}}|w_{j}|"></li>
-</ul>
-<p>其中 <img src="http://www.zhihu.com/equation?tex=%5Clambda" alt="\lambda"> 为正则化因子。</p>
-<p><strong>注意</strong>：<em>lambda </em>在python中属于保留字，所以在编程的时候，用“<strong>lambd</strong>”代表这里的正则化因子 <img src="http://www.zhihu.com/equation?tex=%5Clambda" alt="\lambda"> 。</p>
-<p><strong>Neural network</strong></p>
-<p>加入正则化项的代价函数：</p>
-<p><img src="http://www.zhihu.com/equation?tex=J%28w%5E%7B%5B1%5D%7D%2Cb%5E%7B%5B1%5D%7D%2C%5Ccdots%2Cw%5E%7B%5BL%5D%7D%2Cb%5E%7B%5BL%5D%7D%29%3D%5Cdfrac%7B1%7D%7Bm%7D%5Csum%5Climits_%7Bi%3D1%7D%5E%7Bm%7Dl%28%5Chat+y%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29%2B%5Cdfrac%7B%5Clambda%7D%7B2m%7D%5Csum%5Climits_%7Bl%3D1%7D%5E%7BL%7D%7C%7Cw%5E%7B%5Bl%5D%7D%7C%7C_%7BF%7D%5E%7B2%7D" alt="J(w^{[1]},b^{[1]},\cdots,w^{[L]},b^{[L]})=\dfrac{1}{m}\sum\limits_{i=1}^{m}l(\hat y^{(i)},y^{(i)})+\dfrac{\lambda}{2m}\sum\limits_{l=1}^{L}||w^{[l]}||_{F}^{2}"></p>
-<p>其中 <img src="http://www.zhihu.com/equation?tex=%7C%7Cw%5E%7B%5Bl%5D%7D%7C%7C_%7BF%7D%5E%7B2%7D%3D%5Csum%5Climits_%7Bi%3D1%7D%5E%7Bn%5E%7B%5Bl-1%5D%7D%7D%5Csum%5Climits_%7Bj%3D1%7D%5E%7Bn%5E%7B%5Bl%5D%7D%7D%28w_%7Bij%7D%5E%7B%5Bl%5D%7D%29%5E%7B2%7D" alt="||w^{[l]}||_{F}^{2}=\sum\limits_{i=1}^{n^{[l-1]}}\sum\limits_{j=1}^{n^{[l]}}(w_{ij}^{[l]})^{2}"> ，因为 <img src="http://www.zhihu.com/equation?tex=w" alt="w"> 的大小为 <img src="http://www.zhihu.com/equation?tex=%28n%5E%7B%5Bl-1%5D%7D%2Cn%5E%7B%5Bl%5D%7D%29" alt="(n^{[l-1]},n^{[l]})"> ，该矩阵范数被称为“Frobenius norm”</p>
-<p><strong>Weight decay</strong></p>
-<p>在加入正则化项后，梯度变为：</p>
-<p><img src="http://www.zhihu.com/equation?tex=dW%5E%7B%5Bl%5D%7D+%3D+%28form%5C_backprop%29%2B%5Cdfrac%7B%5Clambda%7D%7Bm%7DW%5E%7B%5Bl%5D%7D" alt="dW^{[l]} = (form\_backprop)+\dfrac{\lambda}{m}W^{[l]}"></p>
-<p>则梯度更新公式变为：</p>
-<p><img src="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D%3A%3D+W%5E%7B%5Bl%5D%7D-%5Calpha+dW%5E%7B%5Bl%5D%7D" alt="W^{[l]}:= W^{[l]}-\alpha dW^{[l]}"></p>
-<p>代入可得：</p>
-<p>![W^{[l]}:= W^{[l]}-\alpha [ (form_backprop)+\dfrac{\lambda}{m}W^{[l]}]\ = W^{[l]}-\alpha\dfrac{\lambda}{m}W^{[l]} -\alpha(form_backprop)\=(1-\dfrac{\alpha\lambda}{m})W^{<a href="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D%3A%3D+W%5E%7B%5Bl%5D%7D-%5Calpha+%5B+%28form%5C_backprop%29%2B%5Cdfrac%7B%5Clambda%7D%7Bm%7DW%5E%7B%5Bl%5D%7D%5D%5C%5C+%3D+W%5E%7B%5Bl%5D%7D-%5Calpha%5Cdfrac%7B%5Clambda%7D%7Bm%7DW%5E%7B%5Bl%5D%7D+-%5Calpha%28form%5C_backprop%29%5C%5C%3D%281-%5Cdfrac%7B%5Calpha%5Clambda%7D%7Bm%7D%29W%5E%7B%5Bl%5D%7D-%5Calpha%28form%5C_backprop%29" target="_blank" rel="noopener">l]}-\alpha(form_backprop)</a></p>
-<p>其中， <img src="http://www.zhihu.com/equation?tex=%281-%5Cdfrac%7B%5Calpha%5Clambda%7D%7Bm%7D%29" alt="(1-\dfrac{\alpha\lambda}{m})"> 为一个 <img src="http://www.zhihu.com/equation?tex=%3C1" alt="&lt;1"> 的项，会给原来的 <img src="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D" alt="W^{[l]}">一个衰减的参数，所以<strong>L2范数正则化</strong>也被称为“权重衰减（Weight decay）”。</p>
-<h2 id="5-为什么正则化可以减小过拟合"><a href="#5-为什么正则化可以减小过拟合" class="headerlink" title="5. 为什么正则化可以减小过拟合"></a><strong>5. 为什么正则化可以减小过拟合</strong></h2><p>假设下图的神经网络结构属于过拟合状态：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-62cbd6d66c8d7fb2da2d30ed5e80a9d1_hd.jpg" alt="img"></p>
-<p>对于神经网络的 Cost function：</p>
-<p><img src="http://www.zhihu.com/equation?tex=J%28w%5E%7B%5B1%5D%7D%2Cb%5E%7B%5B1%5D%7D%2C%5Ccdots%2Cw%5E%7B%5BL%5D%7D%2Cb%5E%7B%5BL%5D%7D%29%3D%5Cdfrac%7B1%7D%7Bm%7D%5Csum%5Climits_%7Bi%3D1%7D%5E%7Bm%7Dl%28%5Chat+y%5E%7B%28i%29%7D%2Cy%5E%7B%28i%29%7D%29%2B%5Cdfrac%7B%5Clambda%7D%7B2m%7D%5Csum%5Climits_%7Bl%3D1%7D%5E%7BL%7D%7C%7Cw%5E%7B%5Bl%5D%7D%7C%7C_%7BF%7D%5E%7B2%7D" alt="J(w^{[1]},b^{[1]},\cdots,w^{[L]},b^{[L]})=\dfrac{1}{m}\sum\limits_{i=1}^{m}l(\hat y^{(i)},y^{(i)})+\dfrac{\lambda}{2m}\sum\limits_{l=1}^{L}||w^{[l]}||_{F}^{2}"></p>
-<p>加入正则化项，直观上理解，正则化因子 <img src="http://www.zhihu.com/equation?tex=%5Clambda" alt="\lambda"> 设置的足够大的情况下，为了使代价函数最小化，权重矩阵 <img src="http://www.zhihu.com/equation?tex=W" alt="W"> 就会被设置为接近于0的值。则相当于消除了很多神经元的影响，那么图中的大的神经网络就会变成一个较小的网络。</p>
-<p>当然上面这种解释是一种直观上的理解，但是实际上隐藏层的神经元依然存在，但是他们的影响变小了，便不会导致过拟合。</p>
-<p><strong>数学解释：</strong></p>
-<p>假设神经元中使用的激活函数为 <img src="http://www.zhihu.com/equation?tex=g%28z%29%3D%5Ctanh%28z%29" alt="g(z)=\tanh(z)"> ，在加入正则化项后：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-649a8466901387e1fdb2f5159fa676f4_hd.jpg" alt="img"></p>
-<p>当 <img src="http://www.zhihu.com/equation?tex=%5Clambda" alt="\lambda"> 增大，导致 <img src="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D" alt="W^{[l]}"> 减小， <img src="http://www.zhihu.com/equation?tex=Z%5E%7B%5Bl%5D%7D%3DW%5E%7B%5Bl%5D%7Da%5E%7B%5Bl-1%5D%7D%2Bb%5E%7B%5Bl%5D%7D" alt="Z^{[l]}=W^{[l]}a^{[l-1]}+b^{[l]}"> 便会减小，由上图可知，在 <img src="http://www.zhihu.com/equation?tex=z" alt="z">较小的区域里， <img src="http://www.zhihu.com/equation?tex=%5Ctanh%28z%29" alt="\tanh(z)"> 函数近似线性，所以每层的函数就近似线性函数，整个网络就成为一个简单的近似线性的网络，从而不会发生过拟合。</p>
-<h2 id="6-Dropout-正则化"><a href="#6-Dropout-正则化" class="headerlink" title="6. Dropout 正则化"></a><strong>6. Dropout 正则化</strong></h2><p>Dropout（随机失活）就是在神经网络的Dropout层，为每个神经元结点设置一个随机消除的概率，对于保留下来的神经元，我们得到一个节点较少，规模较小的网络进行训练。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-fa86d4f6c9fd6196859320bbaabba4df_hd.jpg" alt="img"></p>
-<p><strong>实现Dropout的方法：</strong>反向随机失活（Inverted dropout）</p>
-<p>首先假设对 layer 3 进行dropout：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">keep_prob = 0.8  # 设置神经元保留概率</span><br><span class="line">d3 = np.random.rand(a3.shape[0], a3.shape[1]) &lt; keep_prob</span><br><span class="line">a3 = np.multiply(a3, d3)</span><br><span class="line">a3 /= keep_prob</span><br></pre></td></tr></table></figure>
-<p>这里解释下为什么要有最后一步：<strong>a3 /= keep_prob</strong></p>
-<p>依照例子中的 keep_prob = 0.8 ，那么就有大约20%的神经元被删除了，也就是说 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5B3%5D%7D" alt="a^{[3]}"> 中有20%的元素被归零了，在下一层的计算中有 <img src="http://www.zhihu.com/equation?tex=Z%5E%7B%5B4%5D%7D%3DW%5E%7B%5B4%5D%7D%5Ccdot+a%5E%7B%5B3%5D%7D%2Bb%5E%7B%5B4%5D%7D" alt="Z^{[4]}=W^{[4]}\cdot a^{[3]}+b^{[4]}"> ，所以为了不影响 <img src="http://www.zhihu.com/equation?tex=Z%5E%7B%5B4%5D%7D" alt="Z^{[4]}"> 的期望值，所以需要 <img src="http://www.zhihu.com/equation?tex=W%5E%7B%5B4%5D%7D%5Ccdot+a%5E%7B%5B3%5D%7D" alt="W^{[4]}\cdot a^{[3]}"> 的部分除以一个keep_prob。</p>
-<p>Inverted dropout 通过对“a3 /= keep_prob”,则保证无论 keep_prob 设置为多少，都不会对 <img src="http://www.zhihu.com/equation?tex=Z%5E%7B%5B4%5D%7D" alt="Z^{[4]}"> 的期望值产生影响。</p>
-<p><strong>Notation：</strong>在测试阶段不要用dropout，因为那样会使得预测结果变得随机。</p>
-<h2 id="7-理解-Dropout"><a href="#7-理解-Dropout" class="headerlink" title="7. 理解 Dropout"></a><strong>7. 理解 Dropout</strong></h2><p>另外一种对于Dropout的理解。</p>
-<p>这里我们以单个神经元入手，单个神经元的工作就是接收输入，并产生一些有意义的输出，但是加入了Dropout以后，输入的特征都是有可能会被随机清除的，所以该神经元不会再特别依赖于任何一个输入特征，也就是说不会给任何一个输入设置太大的权重。</p>
-<p>所以通过传播过程，dropout将产生和L2范数相同的<strong>收缩权重</strong>的效果。</p>
-<p>对于不同的层，设置的<strong>keep_prob</strong>也不同，一般来说神经元较少的层，会设 keep_prob</p>
-<p>=1.0，神经元多的层，则会将keep_prob设置的较小。</p>
-<p><strong>Dropout 缺点：</strong></p>
-<p>dropout的一大缺点就是其使得 Cost function不能再被明确的定义，以为每次迭代都会随机消除一些神经元结点，所以我们无法绘制出每次迭代 <img src="http://www.zhihu.com/equation?tex=J%28W%2Cb%29" alt="J(W,b)"> 下降的图，如下：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-b766c408d994212d8eb7e198440be695_hd.jpg" alt="img"></p>
-<p><strong>使用Dropout：</strong></p>
-<ul>
-<li>关闭dropout功能，即设置 keep_prob = 1.0；</li>
-<li>运行代码，确保 <img src="http://www.zhihu.com/equation?tex=J%28W%EF%BC%8Cb%29" alt="J(W，b)"> 函数单调递减；</li>
-<li>再打开 dropout 。</li>
-</ul>
-<h2 id="8-其他正则化方法"><a href="#8-其他正则化方法" class="headerlink" title="8. 其他正则化方法"></a><strong>8. 其他正则化方法</strong></h2><ul>
-<li>数据扩增（Data augmentation）：通过图片的一些变换，得到更多的训练集和验证集；</li>
-</ul>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-4ee8dd7e2fd0bfd2c5424994a59fcc98_hd.jpg" alt="img"></p>
-<ul>
-<li>Early stopping：在交叉验证集的误差上升之前的点停止迭代，避免过拟合。这种方法的缺点是无法同时解决bias和variance之间的最优。</li>
-</ul>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-cdf222ea7b5b1fc8845f6e815395bd89_hd.jpg" alt="img"></p>
-<h2 id="9-归一化输入"><a href="#9-归一化输入" class="headerlink" title="9. 归一化输入"></a><strong>9. 归一化输入</strong></h2><p>对数据集特征 <img src="http://www.zhihu.com/equation?tex=x_%7B1%7D%2Cx_%7B2%7D" alt="x_{1},x_{2}"> 归一化的过程：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-23cc05544f135c29429e7b0198079662_hd.jpg" alt="img"></p>
-<ul>
-<li>计算每个特征所有样本数据的均值： <img src="http://www.zhihu.com/equation?tex=%5Cmu+%3D+%5Cdfrac%7B1%7D%7Bm%7D%5Csum%5Climits_%7Bi%3D1%7D%5E%7Bm%7Dx%5E%7B%28i%29%7D" alt="\mu = \dfrac{1}{m}\sum\limits_{i=1}^{m}x^{(i)}"> ；</li>
-<li>减去均值得到对称的分布： <img src="http://www.zhihu.com/equation?tex=x+%3A+%3Dx-%5Cmu" alt="x : =x-\mu"> ；</li>
-<li>归一化方差： <img src="http://www.zhihu.com/equation?tex=%5Csigma%5E%7B2%7D+%3D+%5Cdfrac%7B1%7D%7Bm%7D%5Csum%5Climits_%7Bi%3D1%7D%5E%7Bm%7Dx%5E%7B%28i%29%5E%7B2%7D%7D" alt="\sigma^{2} = \dfrac{1}{m}\sum\limits_{i=1}^{m}x^{(i)^{2}}"> ， <img src="http://www.zhihu.com/equation?tex=x+%3D+x%2F%5Csigma%5E%7B2%7D" alt="x = x/\sigma^{2}"> 。</li>
-</ul>
-<p><strong>使用归一化的原因：</strong></p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-9b8ae9653968c8b956c4144577e75880_hd.jpg" alt="img"></p>
-<p>由图可以看出不使用归一化和使用归一化前后 Cost function 的函数形状会有很大的区别。</p>
-<p>在不使用归一化的代价函数中，如果我们设置一个较小的学习率，那么很可能我们需要很多次迭代才能到达代价函数全局最优解；如果使用了归一化，那么无论从哪个位置开始迭代，我们都能以相对很少的迭代次数找到全局最优解。</p>
-<h2 id="10-梯度消失与梯度爆炸"><a href="#10-梯度消失与梯度爆炸" class="headerlink" title="10. 梯度消失与梯度爆炸"></a><strong>10. 梯度消失与梯度爆炸</strong></h2><p>如下图所示的神经网络结构，以两个输入为例：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-942dfd0140e24012549f9b1ca4e4d504_hd.jpg" alt="img"></p>
-<p>这里我们首先假定 <img src="http://www.zhihu.com/equation?tex=g%28z%29+%3D+z%EF%BC%8Cb%5E%7B%5Bl%5D%7D%3D0" alt="g(z) = z，b^{[l]}=0"> ，所以对于目标输出有：</p>
-<p><img src="http://www.zhihu.com/equation?tex=%5Chat+y+%3D+W%5E%7B%5BL%5D%7DW%5E%7B%5BL-1%5D%7D%5Ccdots+W%5E%7B%5B2%5D%7DW%5E%7B%5B1%5D%7DX" alt="\hat y = W^{[L]}W^{[L-1]}\cdots W^{[2]}W^{[1]}X"></p>
-<ul>
-<li><img src="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D" alt="W^{[l]}"> 的值大于1的情况：</li>
-</ul>
-<p>如： <img src="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D%3D%5Cleft%5B+%5Cbegin%7Barray%7D%7Bl%7D1.5+%26+0+%5C%5C%5C+0+%26+1.5%5Cend%7Barray%7D+%5Cright%5D" alt="W^{[l]}=\left[ \begin{array}{l}1.5 &amp; 0 \\\ 0 &amp; 1.5\end{array} \right]"> ，那么最终， <img src="http://www.zhihu.com/equation?tex=%5Chat+y+%3D+W%5E%7B%5BL%5D%7D%5Cleft%5B+%5Cbegin%7Barray%7D%7Bl%7D1.5+%26+0+%5C%5C%5C+0+%26+1.5%5Cend%7Barray%7D+%5Cright%5D%5E%7BL-1%7DX" alt="\hat y = W^{[L]}\left[ \begin{array}{l}1.5 &amp; 0 \\\ 0 &amp; 1.5\end{array} \right]^{L-1}X"> ，激活函数的值将以指数级递增；</p>
-<ul>
-<li><img src="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D" alt="W^{[l]}"> 的值小于1的情况：</li>
-</ul>
-<p>如： <img src="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%5D%7D%3D%5Cleft%5B+%5Cbegin%7Barray%7D%7Bl%7D0.5+%26+0+%5C%5C%5C+0+%26+0.5%5Cend%7Barray%7D+%5Cright%5D" alt="W^{[l]}=\left[ \begin{array}{l}0.5 &amp; 0 \\\ 0 &amp; 0.5\end{array} \right]"> ，那么最终， <img src="http://www.zhihu.com/equation?tex=%5Chat+y+%3D+W%5E%7B%5BL%5D%7D%5Cleft%5B+%5Cbegin%7Barray%7D%7Bl%7D0.5+%26+0+%5C%5C%5C+0+%26+0.5%5Cend%7Barray%7D+%5Cright%5D%5E%7BL-1%7DX" alt="\hat y = W^{[L]}\left[ \begin{array}{l}0.5 &amp; 0 \\\ 0 &amp; 0.5\end{array} \right]^{L-1}X"> ，激活函数的值将以指数级递减。</p>
-<p>上面的情况对于导数也是同样的道理，所以在计算梯度时，根据情况的不同，梯度函数会以指数级递增或者递减，导致训练导数难度上升，梯度下降算法的步长会变得非常非常小，需要训练的时间将会非常长。</p>
-<p>在梯度函数上出现的以指数级递增或者递减的情况就分别称为梯度爆炸或者梯度消失。</p>
-<h2 id="11-利用初始化缓解梯度消失和爆炸问题"><a href="#11-利用初始化缓解梯度消失和爆炸问题" class="headerlink" title="11. 利用初始化缓解梯度消失和爆炸问题"></a><strong>11. 利用初始化缓解梯度消失和爆炸问题</strong></h2><p>以一个单个神经元为例子：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-a1783f8bfc4a2519275903658fdc44e8_hd.jpg" alt="img"></p>
-<p>由上图可知，当输入的数量 <img src="http://www.zhihu.com/equation?tex=n" alt="n"> 较大时，我们希望每个 <img src="http://www.zhihu.com/equation?tex=w_%7Bi%7D" alt="w_{i}"> 的值都小一些，这样它们的和得到的 <img src="http://www.zhihu.com/equation?tex=z" alt="z"> 也较小。</p>
-<p>这里为了得到较小的 <img src="http://www.zhihu.com/equation?tex=w_%7Bi%7D" alt="w_{i}"> ，设置 <img src="http://www.zhihu.com/equation?tex=Var%28w_%7Bi%7D%29%3D%5Cdfrac%7B1%7D%7Bn%7D" alt="Var(w_{i})=\dfrac{1}{n}"> ，这里称为<strong>Xavier initialization。</strong></p>
-<p>对参数进行初始化：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WL = np.random.randn(WL.shape[0],WL.shape[1])* np.sqrt(1/n)</span><br></pre></td></tr></table></figure>
-<p>这么做是因为，如果激活函数的输入 <img src="http://www.zhihu.com/equation?tex=x" alt="x"> 近似设置成均值为0，标准方差1的情况，输出 <img src="http://www.zhihu.com/equation?tex=z" alt="z"> 也会调整到相似的范围内。虽然没有解决梯度消失和爆炸的问题，但其在一定程度上确实减缓了梯度消失和爆炸的速度。</p>
-<p><strong>不同激活函数的 Xavier initialization：</strong></p>
-<ul>
-<li>激活函数使用Relu： <img src="http://www.zhihu.com/equation?tex=Var%28w_%7Bi%7D%29%3D%5Cdfrac%7B2%7D%7Bn%7D" alt="Var(w_{i})=\dfrac{2}{n}"></li>
-<li>激活函数使用tanh： <img src="http://www.zhihu.com/equation?tex=Var%28w_%7Bi%7D%29%3D%5Cdfrac%7B1%7D%7Bn%7D" alt="Var(w_{i})=\dfrac{1}{n}"></li>
-</ul>
-<p>其中n是输入的神经元个数，也就是 <img src="http://www.zhihu.com/equation?tex=n%5E%7B%5Bl-1%5D%7D" alt="n^{[l-1]}"> 。</p>
-<h2 id="12-梯度的数值逼近"><a href="#12-梯度的数值逼近" class="headerlink" title="12. 梯度的数值逼近"></a><strong>12. 梯度的数值逼近</strong></h2><p>使用双边误差的方法去逼近导数：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-2f23a8f5c12577d9dbaa2eb47b226e2d_hd.jpg" alt="img"></p>
-<p>由图可以看出，双边误差逼近的误差是0.0001，先比单边逼近的误差0.03，其精度要高了很多。</p>
-<p><strong>涉及的公式：</strong></p>
-<ul>
-<li>双边导数：</li>
-</ul>
-<p><img src="http://www.zhihu.com/equation?tex=f%27%28%5Ctheta%29+%3D+%5Clim%5Climits_%7B%5Cvarepsilon+%5Cto+0%7D%3D%5Cdfrac%7Bf%28%5Ctheta%2B%5Cvarepsilon%29-%28%5Ctheta-%5Cvarepsilon%29%7D%7B2%5Cvarepsilon%7D%5C%5C" alt="f&#39;(\theta) = \lim\limits_{\varepsilon \to 0}=\dfrac{f(\theta+\varepsilon)-(\theta-\varepsilon)}{2\varepsilon}\\"></p>
-<p>误差： <img src="http://www.zhihu.com/equation?tex=O%28%5Cvarepsilon%5E%7B2%7D%29" alt="O(\varepsilon^{2})"></p>
-<ul>
-<li>单边导数：</li>
-</ul>
-<p><img src="http://www.zhihu.com/equation?tex=f%27%28%5Ctheta%29+%3D+%5Clim%5Climits_%7B%5Cvarepsilon+%5Cto+0%7D%3D%5Cdfrac%7Bf%28%5Ctheta%2B%5Cvarepsilon%29-%28%5Ctheta%29%7D%7B%5Cvarepsilon%7D%5C%5C+" alt="f&#39;(\theta) = \lim\limits_{\varepsilon \to 0}=\dfrac{f(\theta+\varepsilon)-(\theta)}{\varepsilon}\\ "></p>
-<p>误差： <img src="http://www.zhihu.com/equation?tex=O%28%5Cvarepsilon%29" alt="O(\varepsilon)"></p>
-<h2 id="13-梯度检验"><a href="#13-梯度检验" class="headerlink" title="13. 梯度检验"></a><strong>13. 梯度检验</strong></h2><p>下面用前面一节的方法来进行梯度检验。</p>
-<p><strong>连接参数：</strong></p>
-<p>因为我们的神经网络中含有大量的参数： <img src="http://www.zhihu.com/equation?tex=W%5E%7B%5B1%5D%7D%2Cb%5E%7B%5B1%5D%7D%2C%5Ccdots%2CW%5E%7B%5BL%5D%7D%2Cb%5E%7B%5BL%5D%7D" alt="W^{[1]},b^{[1]},\cdots,W^{[L]},b^{[L]}"> ，为了做梯度检验，需要将这些参数全部连接起来，reshape成一个大的向量 <img src="http://www.zhihu.com/equation?tex=%5Ctheta" alt="\theta"> 。</p>
-<p>同时对 <img src="http://www.zhihu.com/equation?tex=dW%5E%7B%5B1%5D%7D%2Cdb%5E%7B%5B1%5D%7D%2C%5Ccdots%2CdW%5E%7B%5BL%5D%7D%2Cdb%5E%7B%5BL%5D%7D" alt="dW^{[1]},db^{[1]},\cdots,dW^{[L]},db^{[L]}"> 执行同样的操作：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-4f422f204d09a055d4d4ed78d21a9437_hd.jpg" alt="img"></p>
-<p><strong>进行梯度检验：</strong></p>
-<p>进行如下图的梯度检验</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-9e1e6192fd6bb32ca0330c29a9d09688_hd.jpg" alt="img"></p>
-<p>判断 <img src="http://www.zhihu.com/equation?tex=d%5Ctheta_%7Bapprox%7D%5Capprox+d%5Ctheta" alt="d\theta_{approx}\approx d\theta"> 是否接近。</p>
-<p><strong>判断公式：</strong></p>
-<p><img src="http://www.zhihu.com/equation?tex=%5Cdfrac+%7B%7C%7Cd%5Ctheta_%7Bapprox%7D-d%5Ctheta%7C%7C_%7B2%7D%7D%7B%7C%7Cd%5Ctheta_%7Bapprox%7D%7C%7C_%7B2%7D%2B%7C%7Cd%5Ctheta%7C%7C_%7B2%7D%7D" alt="\dfrac {||d\theta_{approx}-d\theta||_{2}}{||d\theta_{approx}||_{2}+||d\theta||_{2}}"></p>
-<p>其中，“ <img src="http://www.zhihu.com/equation?tex=%7C%7C%5Ccdot+%7C%7C_%7B2%7D" alt="||\cdot ||_{2}"> ”表示欧几里得范数，它是误差平方之和，然后求平方根，得到的欧氏距离。</p>
-<h2 id="14-实现梯度检验-Notes"><a href="#14-实现梯度检验-Notes" class="headerlink" title="14. 实现梯度检验 Notes"></a><strong>14. 实现梯度检验 Notes</strong></h2><ul>
-<li>不要在训练过程中使用梯度检验，只在debug的时候使用，使用完毕关闭梯度检验的功能；</li>
-<li>如果算法的梯度检验出现了错误，要检查每一项，找出错误，也就是说要找出哪个$d\theta_{approx}[i]$与$d\theta$的值相差比较大；</li>
-<li>不要忘记了正则化项；</li>
-<li>梯度检验不能与dropout同时使用。因为每次迭代的过程中，dropout会随机消除隐层单元的不同神经元，这时是难以计算dropout在梯度下降上的代价函数J；</li>
-<li>在随机初始化的时候运行梯度检验，或许在训练几次后再进行。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/深度学习//" class="article-tag-list-link color5">深度学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/05/改善深层神经网络1/">more >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -2441,7 +2446,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">范数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NLP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2449,7 +2462,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">范数</a>
+                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2457,11 +2470,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
+                <a href="javascript:void(0)" class="js-tag color4">SVM</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SVM</a>
+                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2470,10 +2483,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">概率统计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
               </li>
              
               <li class="article-tag-list-item">
