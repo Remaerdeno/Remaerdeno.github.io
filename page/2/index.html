@@ -180,7 +180,97 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>假设我们有苹果，橙子，香蕉三类水果，你希望记录这三类的特征数据，比如最基本的长度、宽度、高度、重量、周长、体积、光泽度、湿度等量化的物理量，然后统计出一份含有这些物理量的样品表，其中每一行代表一个水果，你可以很容易的为每一行打上水果标签，然后你希望写出某个算法，在当你得到一个未知水果时，通过算法和统计的样本表，根据每个水果都有的物理量来自动推理出这个未知的水果属于哪一类水果？</p>
+<p>显然，这是一个分类算法，并且属于监督学习，KNN算法就是其中最典型最容易实现的算法</p>
+<blockquote>
+<p>本章知识点：</p>
+<p><strong>1、数据在不同维度上分布的分类表现</strong></p>
+<p><strong>2、KNN算法的思想</strong></p>
+<p><strong>3、数据归一化处理</strong></p>
+<p><strong>4、找邻居</strong></p>
+<p><strong>5、投票决定</strong></p>
+<p><strong>6、监督学习的过程</strong></p>
+<p><strong>7、KNN的优缺点</strong></p>
+</blockquote>
+<p>从知识点可以看出，KNN算法并没有涉及到高等数学的推导过程，这个算法非常人性，非常简单</p>
+<p>一. 数据在不同维度上分布的分类表现</p>
+<p>假设我们的样本集是由苹果，橙子，香蕉这3个类别组成，其中每个样本有4个量化物理维度</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-aff8e32de79d7b9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/298" alt="img"></p>
+<p>样本集合</p>
+<p>我们从采集到的样本集合里可以知道，每一行4个维度代表一个样本，并且最后一列表明了样本的类别，这就是<strong>典型的监督学习样本，我们以这个样本为参考系，通过算法来预测未知样本。</strong></p>
+<p>我们先用二维空间为参考系，选取样本的第一维和第四维来绘制样本集</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-c4023f7c7525cc90.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/552" alt="img"></p>
+<p>二维空间上样本第一维和第四维分布</p>
+<p>从第一维和第四维分布上我们看到这三类分类除了颜色区分，离散度是较高的，我们再选择第一维和第三维来绘制</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-50043891f3c4e81f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/538" alt="img"></p>
+<p>二维空间上样本第一维和第三维分布</p>
+<p>从第一维和第三维分布上我们可以看到分类效果稍微比前面的清楚一点（没有那么离散）</p>
+<p>下面我们用三维空间为参考系，选取样本的第一维，第二维，第三维来绘制样本集</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-5c7bd19a4e6bc65a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/454" alt="img"></p>
+<p>三维空间上样本前三维分布</p>
+<p>可以看出它的庐山真面目，分类效果更加明显，那么四维空间上的分布呢？对不起，人类无法看到高维空间</p>
+<p>二. KNN算法的思想</p>
+<p>KNN（k-NearestNeighbor）又被称为近邻算法，它的核心思想是：物以类聚，人以群分</p>
+<p>假设一个未知样本数据x需要归类，总共有ABC三个类别，那么离x距离最近的有k个邻居，这k个邻居里有k1个邻居属于A类，k2个邻居属于B类，k3个邻居属于C类，如果k1&gt;k2&gt;k3，那么x就属于A类，也就是说x的类别完全由邻居来推断出来</p>
+<blockquote>
+<p>所以我们可以总结出其算法步骤为：</p>
+<p><strong>1、计算测试对象到训练集中每个对象的距离</strong></p>
+<p><strong>2、按照距离的远近排序</strong></p>
+<p><strong>3、选取与当前测试对象最近的k的训练对象，作为该测试对象的邻居</strong></p>
+<p><strong>4、统计这k个邻居的类别频率</strong></p>
+<p><strong>5、k个邻居里频率最高的类别，即为测试对象的类别</strong></p>
+</blockquote>
+<p>我们可以简化为：<strong>找邻居 + 投票决定</strong></p>
+<p>三. 数据归一化</p>
+<p>有了算法的思想，首先我们要做的是将采集到的样本集做归一化处理</p>
+<p>因为不同维度的物理量之间往往具有不同的量纲和单位，比如时间，距离等，这样会造成维度之间可比性较差，为了消除物理量之间绝对值相差太大，需要对样本数据集进行<strong>标准化处理，保证各个物理量之间处于同一个数量级之下，消除不同量纲之间的差异，</strong>一般有如下两个常用的归一化方法：</p>
+<p>1、线性归一化（Min-Max scaling）</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-049bbaa30dd0db9d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/173" alt="img"></p>
+<p>离差标准化</p>
+<p>该方法通过线性变化对原始数据进行等比例缩放映射到[0，1]之间，其中X*为归一化后的数据，X为原始数据，Xmin和Xmax分别为X向量的最小值和最大值</p>
+<p>2、0均值标准化（Z-score standardization）</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-d68bf545fcbc8a2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/100" alt="img"></p>
+<p>均值归一化</p>
+<p>该方法将原始数据归一化为均值为0、方差为1的数据集，且该数据集符合标准的高斯分布，其中X*为归一化后的数据，X为原始数据，μ为X向量的均值，σ为X向量的标准差</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-dc4ab1ee0c205356.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/567" alt="img"></p>
+<p>归一化样本数据集</p>
+<p>四. 找邻居</p>
+<p>设x为TestSet的一个n维向量样本，我们需要在TrainSet中找到距离x最近的k个n维向量样本作为x的邻居，那么问题转化为怎么计算多组两个n维向量之间的距离？</p>
+<p>一般对于两个n维向量，如果是直接物理量，可以用<strong>欧氏距离、曼哈顿距离</strong>等来计算这两个n维向量之间的距离；而对于文本分类而言，一般会使用<strong>余弦定理</strong>来计算这两个n维向量之间的夹角来确定相似度</p>
+<p>在这里，我们采用欧式距离来计算，设y为TrainSet中任意一个n维向量样本，则x和y之间的距离可以表示为：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-7ca43c4f48da6847.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/530" alt="img"></p>
+<p>两个向量的欧式距离</p>
+<p>我们需要分别计算x到TrainSet中所有样本的距离，并对这些距离从小到大排序，选取前k个距离的样本就找到了x的k个邻居（物以类聚的思想）</p>
+<p><strong>其中k值的设定一般低于样本数量的平方根，且为奇数最适宜</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-739edfa23fd99bfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
+<p>选取x的k个邻居</p>
+<p>五. 投票决定</p>
+<p>我们得到x的k个邻居后，需要统计这k个邻居的类别频率，<strong>已少数服从多数的原则，同一类别最多的邻居，即作为x的类别</strong>（x的类别完全由邻居来投票推断）</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-e1cd933bf85b9740.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
+<p>k个邻居推断x的类别</p>
+<p>六. KNN监督学习的过程</p>
+<p>我们将样本集划分为25%的测试集和75%的训练集，以5个邻居为例运行算法得到下面结果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/8576381-0032aa055b79b14c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/602" alt="img"></p>
+<p>KNN算法预测结果</p>
+<p>可以看到算法只预测错了1个样本的分类，准确率达到90%以上</p>
+<p>以KNN算法为例，我们可以总结出监督学习的基本流程</p>
+<blockquote>
+<p><strong>1、归一化数据样本集</strong></p>
+<p><strong>2、划分样本集为训练集和测试集</strong></p>
+<p><strong>3、以训练集为算法参考系，测试集来测试算法</strong></p>
+<p><strong>4、计算预测样品标签和真实样品标签的比值来评估算法的准确率</strong></p>
+<p><strong>5、调节不同的参数找到最优算法参数</strong></p>
+</blockquote>
+<p>\7. KNN算法的优缺点</p>
+<p>1、优点</p>
+<p>非常简单的分类算法没有之一，人性化，易于理解，易于实现</p>
+<p>适合处理多分类问题，比如推荐用户</p>
+<p>2、缺点</p>
+<p>属于懒惰算法，时间复杂度较高，因为需要计算未知样本到所有已知样本的距离</p>
+<p>样本平衡度依赖高，当出现极端情况样本不平衡时，分类绝对会出现偏差</p>
+<p>可解释性差，无法给出类似决策树那样的规则</p>
+<p>向量的维度越高，欧式距离的区分能力就越弱</p>
+
       
 
       
@@ -188,7 +278,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">KNN</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/机器学习//" class="article-tag-list-link color5">机器学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
@@ -2124,6 +2236,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">KNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NLP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">范数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">集成学习</a>
               </li>
              
@@ -2132,15 +2256,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NLP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PCA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">范数</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2148,11 +2264,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SVM</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">特征工程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">概率统计</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2161,18 +2289,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">概率统计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">特征工程</a>
               </li>
              
               <li class="article-tag-list-item">
