@@ -160,6 +160,217 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-改善深层神经网络2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/05/改善深层神经网络2/">优化算法</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/05/改善深层神经网络2/" class="archive-article-date">
+  	<time datetime="2018-02-05T08:36:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-Mini-batch-梯度下降法"><a href="#1-Mini-batch-梯度下降法" class="headerlink" title="1. Mini-batch 梯度下降法"></a><strong>1. Mini-batch 梯度下降法</strong></h2><p>对整个训练集进行梯度下降法的时候，我们必须处理整个训练数据集，然后才能进行一步梯度下降，即每一步梯度下降法需要对整个训练集进行一次处理，如果训练数据集很大的时候，如有500万或5000万的训练数据，处理速度就会比较慢。</p>
+<p>但是如果每次处理训练数据的一部分，即用其子集进行梯度下降，则我们的算法速度会执行的更快。而处理的这些一小部分训练子集即称为Mini-batch。</p>
+<p><strong>算法核心</strong></p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-a871740e81fd724832bac62243dee01e_hd.jpg" alt="img"></p>
+<p>对于普通的梯度下降法，一个epoch只能进行一次梯度下降；而对于Mini-batch梯度下降法，一个epoch可以进行Mini-batch的个数次梯度下降。</p>
+<p><strong>不同size大小的比较</strong></p>
+<p>普通的batch梯度下降法和Mini-batch梯度下降法代价函数的变化趋势，如下图所示：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-d7374a43267473cd13bfec8764a32471_hd.jpg" alt="img"></p>
+<ul>
+<li>batch梯度下降：</li>
+</ul>
+<ol>
+<li>对所有m个训练样本执行一次梯度下降，每一次迭代时间较长；</li>
+<li>Cost function 总是向减小的方向下降。</li>
+</ol>
+<ul>
+<li>随机梯度下降：</li>
+</ul>
+<ol>
+<li>对每一个训练样本执行一次梯度下降，但是丢失了向量化带来的计算加速；</li>
+<li>Cost function总体的趋势向最小值的方向下降，但是无法到达全局最小值点，呈现波动的形式。</li>
+</ol>
+<ul>
+<li>Mini-batch梯度下降：</li>
+</ul>
+<ol>
+<li>选择一个 <img src="https://www.zhihu.com/equation?tex=1%3Csize%3Cm" alt="1&lt;size&lt;m"> 的合适的size进行Mini-batch梯度下降，可以实现快速学习，也应用了向量化带来的好处；</li>
+<li>Cost function的下降处于前两者之间。</li>
+</ol>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-2cdd92c6706eaf29b80694c1213804bc_hd.jpg" alt="img"></p>
+<p><strong>Mini-batch 大小的选择</strong></p>
+<ul>
+<li>如果训练样本的大小比较小时，如 <img src="https://www.zhihu.com/equation?tex=m%5Cleqslant+2000" alt="m\leqslant 2000"> 时 —— 选择batch梯度下降法；</li>
+<li>如果训练样本的大小比较大时，典型的大小为： <img src="https://www.zhihu.com/equation?tex=2%5E%7B6%7D%E3%80%812%5E%7B7%7D%E3%80%81%5Ccdots%E3%80%812%5E%7B10%7D" alt="2^{6}、2^{7}、\cdots、2^{10}"> ；</li>
+<li>Mini-batch的大小要符合CPU/GPU内存。</li>
+</ul>
+<h2 id="2-指数加权平均"><a href="#2-指数加权平均" class="headerlink" title="2. 指数加权平均"></a><strong>2. 指数加权平均</strong></h2><p>指数加权平均的关键函数：</p>
+<p><img src="https://www.zhihu.com/equation?tex=v_%7Bt%7D+%3D+%5Cbeta+v_%7Bt-1%7D%2B%281-%5Cbeta%29%5Ctheta_%7Bt%7D" alt="v_{t} = \beta v_{t-1}+(1-\beta)\theta_{t}"></p>
+<p>下图是一个关于天数和温度的散点图：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-2969f0fa8cfb79021856d26e2c269306_hd.jpg" alt="img"></p>
+<ul>
+<li>当 <img src="https://www.zhihu.com/equation?tex=%5Cbeta+%3D0.9" alt="\beta =0.9"> 时，指数加权平均最后的结果如图中红色线所示；</li>
+<li>当 <img src="https://www.zhihu.com/equation?tex=%5Cbeta+%3D0.98" alt="\beta =0.98"> 时，指数加权平均最后的结果如图中绿色线所示；</li>
+<li>当 <img src="https://www.zhihu.com/equation?tex=%5Cbeta+%3D0.5" alt="\beta =0.5"> 时，指数加权平均最后的结果如下图中黄色线所示；</li>
+</ul>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-44d786b0b58dba00c780e398259a58a7_hd.jpg" alt="img"></p>
+<p><strong>理解指数加权平均</strong></p>
+<p>例子，当 <img src="https://www.zhihu.com/equation?tex=%5Cbeta+%3D0.9" alt="\beta =0.9"> 时：</p>
+<p><img src="https://www.zhihu.com/equation?tex=v_%7B100%7D+%3D+0.9v_%7B99%7D%2B0.1%5Ctheta_%7B100%7D%5C%5Cv_%7B99%7D+%3D+0.9v_%7B98%7D%2B0.1%5Ctheta_%7B99%7D%5C%5Cv_%7B98%7D+%3D+0.9v_%7B97%7D%2B0.1%5Ctheta_%7B98%7D%5C%5C+%5Cldots" alt="v_{100} = 0.9v_{99}+0.1\theta_{100}\\v_{99} = 0.9v_{98}+0.1\theta_{99}\\v_{98} = 0.9v_{97}+0.1\theta_{98}\\ \ldots"></p>
+<p>展开，有：</p>
+<p><img src="https://www.zhihu.com/equation?tex=v_%7B100%7D%3D0.1%5Ctheta_%7B100%7D%2B0.9%280.1%5Ctheta_%7B99%7D%2B0.9%280.1%5Ctheta_%7B98%7D%2B0.9v_%7B97%7D%29%29%5C%5C%3D0.1%5Ctheta_%7B100%7D%2B0.1%5Ctimes0.9%5Ctheta_%7B99%7D%2B0.1%5Ctimes%280.9%29%5E%7B2%7D%5Ctheta_%7B98%7D%2B0.1%5Ctimes%280.9%29%5E%7B3%7D%5Ctheta_%7B97%7D%2B%5Ccdots" alt="v_{100}=0.1\theta_{100}+0.9(0.1\theta_{99}+0.9(0.1\theta_{98}+0.9v_{97}))\\=0.1\theta_{100}+0.1\times0.9\theta_{99}+0.1\times(0.9)^{2}\theta_{98}+0.1\times(0.9)^{3}\theta_{97}+\cdots"></p>
+<p>上式中所有 <img src="https://www.zhihu.com/equation?tex=%5Ctheta" alt="\theta"> 前面的系数相加起来为1或者接近于1，称之为偏差修正。</p>
+<p>总体来说存在， <img src="https://www.zhihu.com/equation?tex=%281-%5Cvarepsilon%29%5E%7B1%2F%5Cvarepsilon%7D%3D%5Cdfrac%7B1%7D%7Be%7D" alt="(1-\varepsilon)^{1/\varepsilon}=\dfrac{1}{e}"> ，在我们的例子中， <img src="https://www.zhihu.com/equation?tex=1-%5Cvarepsilon%3D%5Cbeta%3D0.9" alt="1-\varepsilon=\beta=0.9"> ，即 <img src="https://www.zhihu.com/equation?tex=0.9%5E%7B10%7D%5Capprox+0.35%5Capprox%5Cdfrac%7B1%7D%7Be%7D" alt="0.9^{10}\approx 0.35\approx\dfrac{1}{e}"> 。相当于大约10天后，系数的峰值（这里是0.1）下降到原来的 <img src="https://www.zhihu.com/equation?tex=%5Cdfrac%7B1%7D%7Be%7D" alt="\dfrac{1}{e}"> ，只关注了过去10天的天气。</p>
+<p><strong>指数加权平均实现</strong></p>
+<p><img src="https://www.zhihu.com/equation?tex=v_%7B0%7D+%3D0%5C%5C+v_%7B1%7D%3D+%5Cbeta+v_%7B0%7D%2B%281-%5Cbeta%29%5Ctheta_%7B1%7D%5C%5C+v_%7B2%7D%3D+%5Cbeta+v_%7B1%7D%2B%281-%5Cbeta%29%5Ctheta_%7B2%7D%5C%5C+v_%7B3%7D%3D+%5Cbeta+v_%7B2%7D%2B%281-%5Cbeta%29%5Ctheta_%7B3%7D%5C%5C+%5Cldots" alt="v_{0} =0\\ v_{1}= \beta v_{0}+(1-\beta)\theta_{1}\\ v_{2}= \beta v_{1}+(1-\beta)\theta_{2}\\ v_{3}= \beta v_{2}+(1-\beta)\theta_{3}\\ \ldots"></p>
+<p>因为，在计算当前时刻的平均值，只需要前一天的平均值和当前时刻的值，所以在数据量非常大的情况下，指数加权平均在节约计算成本的方面是一种非常有效的方式，可以很大程度上减少计算机资源存储和内存的占用。</p>
+<p><strong>指数加权平均的偏差修正</strong></p>
+<p>在我们执行指数加权平均的公式时，当 <img src="https://www.zhihu.com/equation?tex=%5Cbeta%3D0.98" alt="\beta=0.98"> 时，我们得到的并不是图中的绿色曲线，而是下图中的紫色曲线，其起点比较低。</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-e52c3c3cebde2ec15f3f055fcbca7faa_hd.jpg" alt="img"></p>
+<ul>
+<li>原因：</li>
+</ul>
+<p><img src="https://www.zhihu.com/equation?tex=v_%7B0%7D%3D0%5C%5Cv_%7B1%7D%3D0.98v_%7B0%7D%2B0.02%5Ctheta_%7B1%7D%3D0.02%5Ctheta_%7B1%7D%5C%5Cv_%7B2%7D%3D0.98v_%7B1%7D%2B0.02%5Ctheta_%7B2%7D%3D0.98%5Ctimes0.02%5Ctheta_%7B1%7D%2B0.02%5Ctheta_%7B2%7D%3D0.0196%5Ctheta_%7B1%7D%2B0.02%5Ctheta_%7B2%7D" alt="v_{0}=0\\v_{1}=0.98v_{0}+0.02\theta_{1}=0.02\theta_{1}\\v_{2}=0.98v_{1}+0.02\theta_{2}=0.98\times0.02\theta_{1}+0.02\theta_{2}=0.0196\theta_{1}+0.02\theta_{2}"></p>
+<p>如果第一天的值为如 <img src="https://www.zhihu.com/equation?tex=40" alt="40"> ，则 <img src="https://www.zhihu.com/equation?tex=v_%7B1%7D%3D0.02%5Ctimes40%3D8" alt="v_{1}=0.02\times40=8"> ，得到的值要远小于实际值，后面几天的情况也会由于初值引起的影响，均低于实际均值。</p>
+<ul>
+<li>偏差修正：</li>
+</ul>
+<p>使用 <img src="https://www.zhihu.com/equation?tex=v_%7B1%7D%3D0.02%5Ctimes40%3D8" alt="v_{1}=0.02\times40=8"></p>
+<p>当 <img src="https://www.zhihu.com/equation?tex=t%3D2" alt="t=2"> 时：</p>
+<p><img src="https://www.zhihu.com/equation?tex=+1-%5Cbeta%5E%7Bt%7D%3D1-%280.98%29%5E%7B2%7D%3D0.0396" alt=" 1-\beta^{t}=1-(0.98)^{2}=0.0396"></p>
+<p><img src="https://www.zhihu.com/equation?tex=+%5Cdfrac%7Bv_%7B2%7D%7D%7B0.0396%7D%3D%5Cdfrac%7B0.0196%5Ctheta_%7B1%7D%2B0.02%5Ctheta_%7B2%7D%7D%7B0.0396%7D" alt=" \dfrac{v_{2}}{0.0396}=\dfrac{0.0196\theta_{1}+0.02\theta_{2}}{0.0396}"></p>
+<p>偏差修正得到了绿色的曲线，在开始的时候，能够得到比紫色曲线更好的计算平均的效果。随着 <img src="https://www.zhihu.com/equation?tex=t" alt="t"> 逐渐增大， <img src="https://www.zhihu.com/equation?tex=%5Cbeta%5E%7Bt%7D" alt="\beta^{t}"> 接近于0，所以后面绿色的曲线和紫色的曲线逐渐重合了。</p>
+<p>虽然存在这种问题，但是在实际过程中，一般会忽略前期均值偏差的影响。</p>
+<h2 id="3-动量（Momentum）梯度下降法"><a href="#3-动量（Momentum）梯度下降法" class="headerlink" title="3. 动量（Momentum）梯度下降法"></a><strong>3. 动量（Momentum）梯度下降法</strong></h2><p>动量梯度下降的基本思想就是计算梯度的指数加权平均数，并利用该梯度来更新权重。</p>
+<p>在我们优化 Cost function 的时候，以下图所示的函数图为例：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-4e37ac10a00135412175a0ba85103035_hd.jpg" alt="img"></p>
+<p>在利用梯度下降法来最小化该函数的时候，每一次迭代所更新的代价函数值如图中蓝色线所示在上下波动，而这种幅度比较大波动，减缓了梯度下降的速度，而且我们只能使用一个较小的学习率来进行迭代。</p>
+<p>如果用较大的学习率，结果可能会如紫色线一样偏离函数的范围，所以为了避免这种情况，只能用较小的学习率。</p>
+<p>但是我们又希望在如图的纵轴方向梯度下降的缓慢一些，不要有如此大的上下波动，在横轴方向梯度下降的快速一些，使得能够更快的到达最小值点，而这里用动量梯度下降法既可以实现，如红色线所示。</p>
+<p><strong>算法实现</strong></p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-070324bcdbf16b9104872c2a63b21e3b_hd.jpg" alt="img"></p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cbeta" alt="\beta"> 常用的值是0.9。</p>
+<p>在我们进行动量梯度下降算法的时候，由于使用了指数加权平均的方法。原来在纵轴方向上的上下波动，经过平均以后，接近于0，纵轴上的波动变得非常的小；但在横轴方向上，所有的微分都指向横轴方向，因此其平均值仍然很大。最终实现红色线所示的梯度下降曲线。</p>
+<p><strong>算法本质解释</strong></p>
+<p>在对应上面的计算公式中，将Cost function想象为一个碗状，想象从顶部往下滚球，其中：</p>
+<ul>
+<li>微分项 <img src="https://www.zhihu.com/equation?tex=dw%2Cdb" alt="dw,db"> 想象为球提供的加速度；</li>
+<li>动量项 <img src="https://www.zhihu.com/equation?tex=v_%7Bdw%7D%2Cv_%7Bdb%7D" alt="v_{dw},v_{db}"> 相当于速度；</li>
+</ul>
+<p>小球在向下滚动的过程中，因为加速度的存在使得速度会变快，但是由于 <img src="https://www.zhihu.com/equation?tex=%5Cbeta" alt="\beta"> 的存在，其值小于1，可以认为是摩擦力，所以球不会无限加速下去。</p>
+<h2 id="4-RMSprop"><a href="#4-RMSprop" class="headerlink" title="4. RMSprop"></a><strong>4. RMSprop</strong></h2><p>除了上面所说的<strong>Momentum</strong>梯度下降法，<strong>RMSprop</strong>（root mean square prop）也是一种可以加快梯度下降的算法。</p>
+<p>同样算法的样例实现如下图所示：</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-d9b0e716021f96c12ec478c8d4629b4f_hd.jpg" alt="img"></p>
+<p>这里假设参数b的梯度处于纵轴方向，参数w的梯度处于横轴方向（当然实际中是处于高维度的情况），利用RMSprop算法，可以减小某些维度梯度更新波动较大的情况，如图中蓝色线所示，使其梯度下降的速度变得更快，如图绿色线所示。</p>
+<p>在如图所示的实现中，RMSprop将微分项进行平方，然后使用平方根进行梯度更新，同时为了确保算法不会除以0，平方根分母中在实际使用会加入一个很小的值如 <img src="https://www.zhihu.com/equation?tex=%5Cvarepsilon%3D10%5E%7B-8%7D" alt="\varepsilon=10^{-8}"> 。</p>
+<h2 id="5-Adam-优化算法"><a href="#5-Adam-优化算法" class="headerlink" title="5. Adam 优化算法"></a><strong>5. Adam 优化算法</strong></h2><p>Adam （Adaptive Moment Estimation）优化算法的基本思想就是将 Momentum 和 RMSprop 结合起来形成的一种适用于不同深度学习结构的优化算法。</p>
+<p><strong>算法实现</strong></p>
+<ul>
+<li><p>初始化： <img src="https://www.zhihu.com/equation?tex=V_%7Bdw%7D+%3D+0%EF%BC%8CS_%7Bdw%7D%3D0%EF%BC%8CV_%7Bdb%7D%3D0%EF%BC%8CS_%7Bdb%7D+%3D+0" alt="V_{dw} = 0，S_{dw}=0，V_{db}=0，S_{db} = 0"></p>
+</li>
+<li><p>第 <img src="https://www.zhihu.com/equation?tex=t" alt="t"> 次迭代：</p>
+</li>
+<li><ul>
+<li>Compute <img src="https://www.zhihu.com/equation?tex=dw%EF%BC%8Cdb" alt="dw，db"> on the current mini-batch</li>
+<li><img src="https://www.zhihu.com/equation?tex=V_%7Bdw%7D%3D%5Cbeta_%7B1%7DV_%7Bdw%7D%2B%281-%5Cbeta_%7B1%7D%29dw%EF%BC%8CV_%7Bdb%7D%3D%5Cbeta_%7B1%7DV_%7Bdb%7D%2B%281-%5Cbeta_%7B1%7D%29db" alt="V_{dw}=\beta_{1}V_{dw}+(1-\beta_{1})dw，V_{db}=\beta_{1}V_{db}+(1-\beta_{1})db"> —– “Momentum”</li>
+<li><img src="https://www.zhihu.com/equation?tex=S_%7Bdw%7D%3D%5Cbeta_%7B2%7DS_%7Bdw%7D%2B%281-%5Cbeta_%7B2%7D%29%28dw%29%5E%7B2%7D%EF%BC%8CS_%7Bdb%7D%3D%5Cbeta_%7B2%7DS_%7Bdb%7D%2B%281-%5Cbeta_%7B2%7D%29%28db%29%5E%7B2%7D" alt="S_{dw}=\beta_{2}S_{dw}+(1-\beta_{2})(dw)^{2}，S_{db}=\beta_{2}S_{db}+(1-\beta_{2})(db)^{2}"> —– “RMSprop”</li>
+<li><img src="https://www.zhihu.com/equation?tex=V_%7Bdw%7D%5E%7Bcorrected%7D+%3D+V_%7Bdw%7D%2F%281-%5Cbeta_%7B1%7D%5E%7Bt%7D%29%EF%BC%8CV_%7Bdb%7D%5E%7Bcorrected%7D+%3D+V_%7Bdb%7D%2F%281-%5Cbeta_%7B1%7D%5E%7Bt%7D%29" alt="V_{dw}^{corrected} = V_{dw}/(1-\beta_{1}^{t})，V_{db}^{corrected} = V_{db}/(1-\beta_{1}^{t})"> —– 偏差修正</li>
+<li><img src="https://www.zhihu.com/equation?tex=S_%7Bdw%7D%5E%7Bcorrected%7D+%3D+S_%7Bdw%7D%2F%281-%5Cbeta_%7B2%7D%5E%7Bt%7D%29%EF%BC%8CS_%7Bdb%7D%5E%7Bcorrected%7D+%3D+S_%7Bdb%7D%2F%281-%5Cbeta_%7B2%7D%5E%7Bt%7D%29" alt="S_{dw}^{corrected} = S_{dw}/(1-\beta_{2}^{t})，S_{db}^{corrected} = S_{db}/(1-\beta_{2}^{t})"> —– 偏差修正</li>
+<li><img src="https://www.zhihu.com/equation?tex=w%3A%3Dw-%5Calpha%5Cdfrac%7BV_%7Bdw%7D%5E%7Bcorrected%7D%7D%7B%5Csqrt%7BS_%7Bdw%7D%5E%7Bcorrected%7D%7D%2B%5Cvarepsilon%7D%EF%BC%8Cb%3A%3Db-%5Calpha%5Cdfrac%7BV_%7Bdb%7D%5E%7Bcorrected%7D%7D%7B%5Csqrt%7BS_%7Bdb%7D%5E%7Bcorrected%7D%7D%2B%5Cvarepsilon%7D" alt="w:=w-\alpha\dfrac{V_{dw}^{corrected}}{\sqrt{S_{dw}^{corrected}}+\varepsilon}，b:=b-\alpha\dfrac{V_{db}^{corrected}}{\sqrt{S_{db}^{corrected}}+\varepsilon}"></li>
+</ul>
+</li>
+</ul>
+<p><strong>超参数的选择</strong></p>
+<ul>
+<li><img src="https://www.zhihu.com/equation?tex=%5Calpha" alt="\alpha"> ：需要进行调试；</li>
+<li><img src="https://www.zhihu.com/equation?tex=%5Cbeta_%7B1%7D" alt="\beta_{1}"> ：常用缺省值为0.9， <img src="https://www.zhihu.com/equation?tex=dw" alt="dw"> 的加权平均；</li>
+<li><img src="https://www.zhihu.com/equation?tex=%5Cbeta_%7B2%7D" alt="\beta_{2}"> ：推荐使用0.999， <img src="https://www.zhihu.com/equation?tex=dw%5E%7B2%7D" alt="dw^{2}"> 的加权平均值；</li>
+<li><img src="https://www.zhihu.com/equation?tex=%5Cvarepsilon" alt="\varepsilon"> ：推荐使用 <img src="https://www.zhihu.com/equation?tex=10%5E%7B-8%7D" alt="10^{-8}"> 。</li>
+</ul>
+<h2 id="6-学习率衰减"><a href="#6-学习率衰减" class="headerlink" title="6. 学习率衰减"></a><strong>6. 学习率衰减</strong></h2><p>在我们利用 mini-batch 梯度下降法来寻找Cost function的最小值的时候，如果我们设置一个固定的学习速率 <img src="https://www.zhihu.com/equation?tex=%5Calpha" alt="\alpha"> ，则算法在到达最小值点附近后，由于不同batch中存在一定的噪声，使得不会精确收敛，而一直会在一个最小值点较大的范围内波动，如下图中蓝色线所示。</p>
+<p>但是如果我们使用学习率衰减，逐渐减小学习速率 <img src="https://www.zhihu.com/equation?tex=%5Calpha" alt="\alpha"> ，在算法开始的时候，学习速率还是相对较快，能够相对快速的向最小值点的方向下降。但随着 <img src="https://www.zhihu.com/equation?tex=%5Calpha" alt="\alpha"> 的减小，下降的步伐也会逐渐变小，最终会在最小值附近的一块更小的区域里波动，如图中绿色线所示。</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-0b54853b610c36c030c124606cea1d5c_hd.jpg" alt="img"></p>
+<p><strong>学习率衰减的实现</strong></p>
+<ul>
+<li>常用： <img src="https://www.zhihu.com/equation?tex=%5Calpha+%3D+%5Cdfrac%7B1%7D%7B1%2Bdecay%5C_rate%2Aepoch%5C_num%7D%5Calpha_%7B0%7D" alt="\alpha = \dfrac{1}{1+decay\_rate*epoch\_num}\alpha_{0}"></li>
+<li>指数衰减： <img src="https://www.zhihu.com/equation?tex=%5Calpha+%3D+0.95%5E%7Bepoch%5C_num%7D%5Calpha_%7B0%7D" alt="\alpha = 0.95^{epoch\_num}\alpha_{0}"></li>
+<li>其他： <img src="https://www.zhihu.com/equation?tex=%5Calpha+%3D+%5Cdfrac%7Bk%7D%7Bepoch%5C_num%7D%5Ccdot%5Calpha_%7B0%7D" alt="\alpha = \dfrac{k}{epoch\_num}\cdot\alpha_{0}"></li>
+<li>离散下降（不同阶段使用不同的学习速率）</li>
+</ul>
+<h2 id="7-局部最优问题"><a href="#7-局部最优问题" class="headerlink" title="7. 局部最优问题"></a><strong>7. 局部最优问题</strong></h2><p>在低维度的情形下，我们可能会想象到一个Cost function 如左图所示，存在一些局部最小值点，在初始化参数的时候，如果初始值选取的不得当，会存在陷入局部最优点的可能性。</p>
+<p>但是，如果我们建立一个高维度的神经网络。通常梯度为零的点，并不是如左图中的局部最优点，而是右图中的<strong>鞍点</strong>（叫鞍点是因为其形状像马鞍的形状）。</p>
+<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-ec0c95cf84b7d2ca878bcd51b4485707_hd.jpg" alt="img"></p>
+<p>在一个具有高维度空间的函数中，如果梯度为0，那么在每个方向，Cost function可能是凸函数，也有可能是凹函数。但如果参数维度为2万维，想要得到局部最优解，那么所有维度均需要是凹函数，其概率为 <img src="https://www.zhihu.com/equation?tex=2%5E%7B-20000%7D" alt="2^{-20000}"> ，可能性非常的小。也就是说，在低维度中的局部最优点的情况，并不适用于高维度，在梯度为0的点更有可能是鞍点，而不是局部最小值点。</p>
+<p>在高纬度的情况下：</p>
+<ul>
+<li>几乎不可能陷入局部最小值点；</li>
+<li>处于鞍点的停滞区会减缓学习过程，利用如Adam等算法进行改善。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/深度学习//" class="article-tag-list-link color5">深度学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/05/改善深层神经网络2/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-改善深层神经网络1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1683,7 +1894,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">GBDT</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">集成学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">KNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1695,19 +1918,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">集成学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PCA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1719,11 +1930,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
+                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">特征工程</a>
+                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1731,15 +1942,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">特征工程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">优化</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
+                <a href="javascript:void(0)" class="js-tag color5">线性回归</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">线性回归</a>
+                <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
               </li>
              
               <li class="article-tag-list-item">

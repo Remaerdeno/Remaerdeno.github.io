@@ -160,6 +160,165 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-GBDT算法原理深入解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/13/GBDT算法原理深入解析/">GBDT算法原理深入解析</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/13/GBDT算法原理深入解析/" class="archive-article-date">
+  	<time datetime="2018-03-13T02:34:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>1、如何在不改变原有模型的结构上提升模型的拟合能力</strong></p>
+<p>​    假设现在你有样本集 <img src="http://www.zhihu.com/equation?tex=%28x_%7B1%7D%2Cy_%7B1%7D%29%2C%28x_%7B2%7D%2Cy_%7B2%7D%29%2C...%28x_%7Bn%7D%2Cy_%7Bn%7D%29" alt="(x_{1},y_{1}),(x_{2},y_{2}),...(x_{n},y_{n})"> ，然后你用一个模型，如 <img src="http://www.zhihu.com/equation?tex=F%28x%29" alt="F(x)"> 去拟合这些数据，使得这批样本的平方损失函数（即 <img src="http://www.zhihu.com/equation?tex=%5Cfrac%7B1%7D%7B2%7D%5Csum_%7B0%7D%5E%7Bn%7D%7B%7D%28y_%7Bi%7D-F%28x_%7Bi%7D%29%29%5E%7B2%7D" alt="\frac{1}{2}\sum_{0}^{n}{}(y_{i}-F(x_{i}))^{2}"> ）最小。但是你发现虽然模型的拟合效果很好，但仍然有一些差距，比如预测值 <img src="http://www.zhihu.com/equation?tex=F%28x_%7B1%7D%29" alt="F(x_{1})"> =0.8，而真实值 <img src="http://www.zhihu.com/equation?tex=y_%7B1%7D" alt="y_{1}"> =0.9， <img src="http://www.zhihu.com/equation?tex=F%28x_%7B2%7D%29" alt="F(x_{2})"> =1.4， <img src="http://www.zhihu.com/equation?tex=y_%7B2%7D" alt="y_{2}"> =1.3等等。另外你不允许更改原来模型 <img src="http://www.zhihu.com/equation?tex=F%28x%29" alt="F(x)"> 的参数，那么你有什么办法进一步来提高模型的拟合能力呢。</p>
+<p>​    既然不能更改原来模型的参数，那么意味着必须在原来模型的基础之上做改善，那么直观的做法就是建立一个新的模型 <img src="http://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 来拟合 <img src="http://www.zhihu.com/equation?tex=F%28x%29" alt="F(x)"> 未完全拟合真实样本的残差，即 <img src="http://www.zhihu.com/equation?tex=y-F%28X%29" alt="y-F(X)"> 。所以对于每个样本来说，拟合的样本集就变成了： <img src="http://www.zhihu.com/equation?tex=%28x_%7B1%7D%2Cy_%7B1%7D-F%28x_%7B1%7D%29%29%2C%28x_%7B2%7D%2Cy_%7B2%7D-F%28x_%7B2%7D%29%29%2C...%28x_%7Bn%7D%2Cy_%7Bn%7D-F%28x_%7Bn%7D%29%29" alt="(x_{1},y_{1}-F(x_{1})),(x_{2},y_{2}-F(x_{2})),...(x_{n},y_{n}-F(x_{n}))"> .</p>
+<p><strong>2、基于残差的gbdt</strong></p>
+<p>​    在第一部分， <img src="http://www.zhihu.com/equation?tex=y_%7Bi%7D-F%28x_%7Bi%7D%29" alt="y_{i}-F(x_{i})"> 被称为残差，这一部分也就是前一模型（ <img src="http://www.zhihu.com/equation?tex=F%28x_%7Bi%7D%29" alt="F(x_{i})"> ）未能完全拟合的部分，所以交给新的模型来完成。</p>
+<p>​    我们知道gbdt的全称是Gradient Boosting Decision Tree，其中gradient被称为梯度，更一般的理解，可以认为是一阶导，那么这里的残差与梯度是什么关系呢。在第一部分，我们提到了一个叫做平方损失函数的东西，具体形式可以写成 <img src="http://www.zhihu.com/equation?tex=%5Cfrac%7B1%7D%7B2%7D%5Csum_%7B0%7D%5E%7Bn%7D%7B%7D%28y_%7Bi%7D-F%28x_%7Bi%7D%29%29%5E%7B2%7D" alt="\frac{1}{2}\sum_{0}^{n}{}(y_{i}-F(x_{i}))^{2}"> ，熟悉其他算法的原理应该知道，这个损失函数主要针对回归类型的问题，分类则是用熵值类的损失函数。具体到平方损失函数的式子，你可能已经发现它的一阶导其实就是残差的形式，所以基于残差的gbdt是一种特殊的gbdt模型，它的损失函数是平方损失函数，只能处理回归类的问题。具体形式可以如下表示：</p>
+<p><img src="http://www.zhihu.com/equation?tex=%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%EF%BC%9AL%28y%2CF%28x%29%29+%3D+%5Cfrac%7B1%7D%7B2%7D%28y-F%28X%29%29%5E%7B2%7D" alt="损失函数：L(y,F(x)) = \frac{1}{2}(y-F(X))^{2}"> </p>
+<p><img src="http://www.zhihu.com/equation?tex=%E6%89%80%E4%BB%A5%E6%88%91%E4%BB%AC%E6%83%B3%E6%9C%80%E5%B0%8F%E5%8C%96J+%3D+%5Cfrac%7B1%7D%7B2%7D%5Csum_%7B0%7D%5E%7Bn%7D%7B%7D%28y_%7Bi%7D-F%28x_%7Bi%7D%29%29%5E%7B2%7D" alt="所以我们想最小化J = \frac{1}{2}\sum_{0}^{n}{}(y_{i}-F(x_{i}))^{2}"> </p>
+<p>损失函数的一阶导：</p>
+<p><img src="https://pic4.zhimg.com/v2-e7386c40a88af0b1098d2ec8e91b495f_b.jpg" alt="img"></p>
+<p>正好残差就是负梯度：</p>
+<p><img src="https://pic1.zhimg.com/v2-203673610dfc8d77113ab68dcd4720bd_b.jpg" alt="img"></p>
+<p><strong>3、为什么基于残差的gbdt不是一个好的选择</strong></p>
+<p>​    首先基于残差的gbdt只能处理回归类的问题，不能处理分类问题，这是损失函数所限制的，所以更一般化的gbdt是基于梯度的算法，这也就意味着只要我给出的损失函数是可导的，那么我就能用gbdt的思想去解决问题。具体解决的问题就不会仅仅限于回归了。</p>
+<p>​    另外，基于残差的gbdt在解决回归问题上也不算是一个好的选择，一个比较明显的缺点就是对异常值过于敏感。我们来看一个例子：</p>
+<p><img src="https://pic1.zhimg.com/v2-07da5ff0688dd0e4438747bf64767572_b.jpg" alt="img"></p>
+<p>很明显后续的模型会对第4个值关注过多，这不是一种好的现象，所以一般回归类的损失函数会用绝对损失或者huber损失函数来代替平方损失函数：</p>
+<p><img src="https://pic3.zhimg.com/v2-8df529ee6a1e86eae8cc4e527531eac9_b.jpg" alt="img"></p>
+<p><strong>4、Boosting的加法模型</strong></p>
+<p>​    如前面所述，gbdt模型可以认为是是由k个基模型组成的一个加法运算式：</p>
+<p><img src="http://www.zhihu.com/equation?tex=%5Chat%7By%7D_i%3D%5Csum_%7Bk%3D1%7D%5EK+f_k%28x_i%29%2C+f_k+%5Cin+F+%5Ctag+0" alt="\hat{y}_i=\sum_{k=1}^K f_k(x_i), f_k \in F \tag 0">   </p>
+<p>其中F是指所有基模型组成的函数空间。</p>
+<p>​    那么一般化的损失函数是预测值 <img src="http://www.zhihu.com/equation?tex=%5Chat%7By%7D" alt="\hat{y}"> 与 真实值<img src="http://www.zhihu.com/equation?tex=y" alt="y"> 之间的关系，如我们前面的平方损失函数，那么对于n个样本来说，则可以写成：</p>
+<p><img src="http://www.zhihu.com/equation?tex=L%3D%5Csum_%7Bi%3D1%7D%5En+l%28y_i%2C+%5Chat%7By%7D_i%29+" alt="L=\sum_{i=1}^n l(y_i, \hat{y}_i) "> </p>
+<p>更一般的，我们知道一个好的模型，在偏差和方差上有一个较好的平衡，而算法的损失函数正是代表了模型的偏差面，最小化损失函数，就相当于最小化模型的偏差，但同时我们也需要兼顾模型的方差，所以目标函数还包括抑制模型复杂度的正则项，因此目标函数可以写成：</p>
+<p><img src="http://www.zhihu.com/equation?tex=Obj%3D%5Csum_%7Bi%3D1%7D%5En+l%28y_i%2C+%5Chat%7By%7D_i%29+%2B+%5Csum_%7Bk%3D1%7D%5EK+%5COmega%28f_k%29" alt="Obj=\sum_{i=1}^n l(y_i, \hat{y}_i) + \sum_{k=1}^K \Omega(f_k)"> </p>
+<p>其中 <img src="http://www.zhihu.com/equation?tex=%5COmega" alt="\Omega"> 代表了基模型的复杂度，若基模型是树模型，则树的深度、叶子节点数等指标可以反应树的复杂程度。</p>
+<p>​    对于Boosting来说，它采用的是前向优化算法，即从前往后，逐渐建立基模型来优化逼近目标函数，具体过程如下：</p>
+<p><img src="http://www.zhihu.com/equation?tex=%5Cbegin%7Bsplit%7D+%5Chat%7By%7D_i%5E0+%26%3D+0+%5C%5C+%5Chat%7By%7D_i%5E1+%26%3D+f_1%28x_i%29+%3D+%5Chat%7By%7D_i%5E0+%2B+f_1%28x_i%29+%5C%5C+%5Chat%7By%7D_i%5E2+%26%3D+f_1%28x_i%29+%2B+f_2%28x_i%29+%3D+%5Chat%7By%7D_i%5E1+%2B+f_2%28x_i%29+%5C%5C+%26+%5Ccdots+%5C%5C+%5Chat%7By%7D_i%5Et+%26%3D+%5Csum_%7Bk%3D1%7D%5Et+f_k%28x_i%29+%3D+%5Chat%7By%7D_i%5E%7Bt-1%7D+%2B+f_t%28x_i%29+%5C%5C+%5Cend%7Bsplit%7D" alt="\begin{split} \hat{y}_i^0 &amp;= 0 \\ \hat{y}_i^1 &amp;= f_1(x_i) = \hat{y}_i^0 + f_1(x_i) \\ \hat{y}_i^2 &amp;= f_1(x_i) + f_2(x_i) = \hat{y}_i^1 + f_2(x_i) \\ &amp; \cdots \\ \hat{y}_i^t &amp;= \sum_{k=1}^t f_k(x_i) = \hat{y}_i^{t-1} + f_t(x_i) \\ \end{split}"> </p>
+<p>那么，在每一步，如何学习一个新的模型呢，答案的关键还是在于gbdt的目标函数上，即新模型的加入总是以优化目标函数为目的的。</p>
+<p>我们以第t步的模型拟合为例，在这一步，模型对第 <img src="http://www.zhihu.com/equation?tex=i" alt="i"> 个样本 <img src="http://www.zhihu.com/equation?tex=x_%7Bi%7D" alt="x_{i}"> 的预测为：</p>
+<p><img src="http://www.zhihu.com/equation?tex=%5Chat%7By%7D_i%5Et%3D+%5Chat%7By%7D_i%5E%7Bt-1%7D+%2B+f_t%28x_i%29" alt="\hat{y}_i^t= \hat{y}_i^{t-1} + f_t(x_i)"> </p>
+<p>其中 <img src="http://www.zhihu.com/equation?tex=f_t%28x_i%29" alt="f_t(x_i)"> 就是我们这次需要加入的新模型，即需要拟合的模型，此时，目标函数就可以写成：</p>
+<p><img src="http://www.zhihu.com/equation?tex=%5Cbegin%7Bsplit%7D+Obj%5E%7B%28t%29%7D+%26%3D+%5Csum_%7Bi%3D1%7D%5Enl%28y_i%2C+%5Chat%7By%7D_i%5Et%29+%2B+%5Csum_%7Bi%3Di%7D%5Et+%5COmega%28f_i%29+%5C%5C+%26%3D+%5Csum_%7Bi%3D1%7D%5En+l%5Cleft%28y_i%2C+%5Chat%7By%7D_i%5E%7Bt-1%7D+%2B+f_t%28x_i%29+%5Cright%29+%2B+%5COmega%28f_t%29+%2B+constant+%5Cend%7Bsplit%7D%5Ctag%7B1%7D" alt="\begin{split} Obj^{(t)} &amp;= \sum_{i=1}^nl(y_i, \hat{y}_i^t) + \sum_{i=i}^t \Omega(f_i) \\ &amp;= \sum_{i=1}^n l\left(y_i, \hat{y}_i^{t-1} + f_t(x_i) \right) + \Omega(f_t) + constant \end{split}\tag{1}"> </p>
+<p>即此时最优化目标函数，就相当于求得了 <img src="http://www.zhihu.com/equation?tex=f_t%28x_i%29" alt="f_t(x_i)"> 。</p>
+<p><strong>5、什么是gbdt的目标函数</strong></p>
+<p>​    我们知道泰勒公式中，若 <img src="http://www.zhihu.com/equation?tex=%5CDelta+x" alt="\Delta x"> 很小时，我们只保留二阶导是合理的（gbdt是一阶导，xgboost是二阶导，我们以二阶导为例，一阶导可以自己去推，因为更简单），即：</p>
+<p><img src="http://www.zhihu.com/equation?tex=f%28x%2B%5CDelta+x%29+%5Capprox+f%28x%29+%2B+f%27%28x%29%5CDelta+x+%2B+%5Cfrac12+f%27%27%28x%29%5CDelta+x%5E2+%5Ctag+2" alt="f(x+\Delta x) \approx f(x) + f&#39;(x)\Delta x + \frac12 f&#39;&#39;(x)\Delta x^2 \tag 2"> </p>
+<p>那么在等式（1）中，我们把 <img src="http://www.zhihu.com/equation?tex=%5Chat%7By%7D_i%5E%7Bt-1%7D" alt="\hat{y}_i^{t-1}"> 看成是等式（2）中的x， <img src="http://www.zhihu.com/equation?tex=f_t%28x_i%29" alt="f_t(x_i)"> 看成是 <img src="http://www.zhihu.com/equation?tex=%5CDelta+x" alt="\Delta x"> ，因此等式（1）可以写成：</p>
+<p><img src="http://www.zhihu.com/equation?tex=Obj%5E%7B%28t%29%7D+%3D+%5Csum_%7Bi%3D1%7D%5En+%5Cleft%5B+l%28y_i%2C+%5Chat%7By%7D_i%5E%7Bt-1%7D%29+%2B+g_if_t%28x_i%29+%2B+%5Cfrac12h_if_t%5E2%28x_i%29+%5Cright%5D+%2B+%5COmega%28f_t%29+%2B+constant+%5Ctag+3" alt="Obj^{(t)} = \sum_{i=1}^n \left[ l(y_i, \hat{y}_i^{t-1}) + g_if_t(x_i) + \frac12h_if_t^2(x_i) \right] + \Omega(f_t) + constant \tag 3"> </p>
+<p>其中 <img src="http://www.zhihu.com/equation?tex=g_%7Bi%7D" alt="g_{i}"> 为损失函数的一阶导， <img src="http://www.zhihu.com/equation?tex=h_%7Bi%7D" alt="h_{i}"> 为损失函数的二阶导，注意这里的导是对 <img src="http://www.zhihu.com/equation?tex=%5Chat%7By%7D_i%5E%7Bt-1%7D" alt="\hat{y}_i^{t-1}"> 求导。我们以 平方损失函数为例<img src="http://www.zhihu.com/equation?tex=%5Csum_%7Bi%3D1%7D%5En+%5Cleft%28y_i+-+%28%5Chat%7By%7D_i%5E%7Bt-1%7D+%2B+f_t%28x_i%29%29+%5Cright%29%5E2" alt="\sum_{i=1}^n \left(y_i - (\hat{y}_i^{t-1} + f_t(x_i)) \right)^2"> ，则 <img src="http://www.zhihu.com/equation?tex=g_i%3D%5Cpartial_%7B%5Chat%7By%7D%5E%7Bt-1%7D%7D%28%5Chat%7By%7D%5E%7Bt-1%7D+-+y_i%29%5E2+%3D+2%28%5Chat%7By%7D%5E%7Bt-1%7D+-+y_i%29" alt="g_i=\partial_{\hat{y}^{t-1}}(\hat{y}^{t-1} - y_i)^2 = 2(\hat{y}^{t-1} - y_i)">， <img src="http://www.zhihu.com/equation?tex=h_i%3D%5Cpartial_%7B%5Chat%7By%7D%5E%7Bt-1%7D%7D%5E2%28%5Chat%7By%7D%5E%7Bt-1%7D+-+y_i%29%5E2+%3D+2" alt="h_i=\partial_{\hat{y}^{t-1}}^2(\hat{y}^{t-1} - y_i)^2 = 2"> 。</p>
+<p>由于在第t步 <img src="http://www.zhihu.com/equation?tex=%5Chat%7By%7D_i%5E%7Bt-1%7D" alt="\hat{y}_i^{t-1}"> 其实是一个已知的值，所以 <img src="http://www.zhihu.com/equation?tex=+l%28y_i%2C+%5Chat%7By%7D_i%5E%7Bt-1%7D%29" alt=" l(y_i, \hat{y}_i^{t-1})"> 是一个常数，其对函数优化不会产生影响，因此，等式（3）可以写成：</p>
+<p><img src="http://www.zhihu.com/equation?tex=Obj%5E%7B%28t%29%7D+%5Capprox+%5Csum_%7Bi%3D1%7D%5En+%5Cleft%5B+g_if_t%28x_i%29+%2B+%5Cfrac12h_if_t%5E2%28x_i%29+%5Cright%5D+%2B+%5COmega%28f_t%29+%5Ctag+4" alt="Obj^{(t)} \approx \sum_{i=1}^n \left[ g_if_t(x_i) + \frac12h_if_t^2(x_i) \right] + \Omega(f_t) \tag 4"> </p>
+<p>所以我么只要求出每一步损失函数的一阶和二阶导的值（由于前一步的 <img src="http://www.zhihu.com/equation?tex=%5Chat%7By%7D%5E%7Bt-1%7D" alt="\hat{y}^{t-1}"> 是已知的，所以这两个值就是常数）代入等式4，然后最优化目标函数，就可以得到每一步的 <img src="http://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> ，最后根据加法模型得到一个整体模型。</p>
+<p><strong>6、如何用决策树来表示上一步的目标函数</strong></p>
+<p>​    假设我们boosting的基模型用决策树来实现，则一颗生成好的决策树，即结构确定，也就是说树的叶子结点其实是确定了的。假设这棵树的叶子结点有 <img src="http://www.zhihu.com/equation?tex=T" alt="T"> 片叶子，而每片叶子对应的值 <img src="http://www.zhihu.com/equation?tex=w+%5Cin+R%5ET" alt="w \in R^T"> 。熟悉决策树的同学应该清楚，每一片叶子结点中样本的预测值都会是一样的，在分类问题中，是某一类，在回归问题中，是某一个值，那么肯定存在这样一个函数 <img src="http://www.zhihu.com/equation?tex=q%3AR%5Ed+%5Cto+%5C%7B1%2C2%2C%5Ccdots%2CT%5C%7D" alt="q:R^d \to \{1,2,\cdots,T\}"> ，即将 <img src="http://www.zhihu.com/equation?tex=f_%7Bt%7D%28x%29" alt="f_{t}(x)"> 中的每个样本映射到每一个叶子结点上，当然 <img src="http://www.zhihu.com/equation?tex=f_%7Bt%7D%28x%29" alt="f_{t}(x)"> 和 <img src="http://www.zhihu.com/equation?tex=q" alt="q"> 我们都是不知道的，但我们也不关心，这里只是说明一下决策树表达数据结构的方法是怎么样的，不理解也没有问题。</p>
+<p>​    那么 <img src="http://www.zhihu.com/equation?tex=f_%7Bt%7D%28x%29" alt="f_{t}(x)"> 就可以转成 <img src="http://www.zhihu.com/equation?tex=w_%7Bq%28x%29%7D" alt="w_{q(x)}"> ，这里的 <img src="http://www.zhihu.com/equation?tex=q%28x%29" alt="q(x)"> 代表了每个样本在哪个叶子结点上，而 <img src="http://www.zhihu.com/equation?tex=w_%7Bq%7D" alt="w_{q}"> 则代表了哪个叶子结点取什么 <img src="http://www.zhihu.com/equation?tex=w" alt="w"> 值，所以 <img src="http://www.zhihu.com/equation?tex=w_%7Bq%28x%29%7D" alt="w_{q(x)}"> 就代表了每个样本的取值 <img src="http://www.zhihu.com/equation?tex=w" alt="w"> （即预测值）。</p>
+<p>​    如果决策树的复杂度可以由正则项来定义 <img src="http://www.zhihu.com/equation?tex=%5COmega%28f_t%29%3D%5Cgamma+T+%2B+%5Cfrac12+%5Clambda+%5Csum_%7Bj%3D1%7D%5ET+w_j%5E2" alt="\Omega(f_t)=\gamma T + \frac12 \lambda \sum_{j=1}^T w_j^2"> ，即决策树模型的复杂度由生成的树的叶子节点数量和叶子节点对应的值向量的L2范数决定。</p>
+<p>​    我们假设 <img src="http://www.zhihu.com/equation?tex=I_j%3D%5C%7B+i+%5Cvert+q%28x_i%29%3Dj+%5C%7D" alt="I_j=\{ i \vert q(x_i)=j \}"> 为第 <img src="http://www.zhihu.com/equation?tex=j" alt="j"> 个叶子节点的样本集合，则等式4根据上面的一些变换可以写成：</p>
+<p><img src="http://www.zhihu.com/equation?tex=%5Cbegin%7Bsplit%7D+Obj%5E%7B%28t%29%7D+%26%5Capprox+%5Csum_%7Bi%3D1%7D%5En+%5Cleft%5B+g_if_t%28x_i%29+%2B+%5Cfrac12h_if_t%5E2%28x_i%29+%5Cright%5D+%2B+%5COmega%28f_t%29+%5C%5C+%26%3D+%5Csum_%7Bi%3D1%7D%5En+%5Cleft%5B+g_iw_%7Bq%28x_i%29%7D+%2B+%5Cfrac12h_iw_%7Bq%28x_i%29%7D%5E2+%5Cright%5D+%2B+%5Cgamma+T+%2B+%5Cfrac12+%5Clambda+%5Csum_%7Bj%3D1%7D%5ET+w_j%5E2+%5C%5C+%26%3D+%5Csum_%7Bj%3D1%7D%5ET+%5Cleft%5B%28%5Csum_%7Bi+%5Cin+I_j%7Dg_i%29w_j+%2B+%5Cfrac12%28%5Csum_%7Bi+%5Cin+I_j%7Dh_i+%2B+%5Clambda%29w_j%5E2+%5Cright%5D+%2B+%5Cgamma+T+%5Cend%7Bsplit%7D%5Ctag+5" alt="\begin{split} Obj^{(t)} &amp;\approx \sum_{i=1}^n \left[ g_if_t(x_i) + \frac12h_if_t^2(x_i) \right] + \Omega(f_t) \\ &amp;= \sum_{i=1}^n \left[ g_iw_{q(x_i)} + \frac12h_iw_{q(x_i)}^2 \right] + \gamma T + \frac12 \lambda \sum_{j=1}^T w_j^2 \\ &amp;= \sum_{j=1}^T \left[(\sum_{i \in I_j}g_i)w_j + \frac12(\sum_{i \in I_j}h_i + \lambda)w_j^2 \right] + \gamma T \end{split}\tag 5"> </p>
+<p>即我们之前样本的集合，现在都改写成叶子结点的集合，由于一个叶子结点有多个样本存在，因此才有了 <img src="http://www.zhihu.com/equation?tex=%5Csum_%7Bi+%5Cin+I_j%7Dg_i" alt="\sum_{i \in I_j}g_i"> 和 <img src="http://www.zhihu.com/equation?tex=%5Csum_%7Bi+%5Cin+I_j%7Dh_i" alt="\sum_{i \in I_j}h_i"> 这两项。</p>
+<p>定义 <img src="http://www.zhihu.com/equation?tex=G_j%3D%5Csum_%7Bi+%5Cin+I_j%7Dg_i" alt="G_j=\sum_{i \in I_j}g_i"> ， <img src="http://www.zhihu.com/equation?tex=H_j%3D%5Csum_%7Bi+%5Cin+I_j%7Dh_i" alt="H_j=\sum_{i \in I_j}h_i"> ，则等式5可以写成：</p>
+<p><img src="http://www.zhihu.com/equation?tex=Obj%5E%7B%28t%29%7D+%3D+%5Csum_%7Bj%3D1%7D%5ET+%5Cleft%5BG_jw_j+%2B+%5Cfrac12%28H_j+%2B+%5Clambda%29w_j%5E2+%5Cright%5D+%2B+%5Cgamma+T" alt="Obj^{(t)} = \sum_{j=1}^T \left[G_jw_j + \frac12(H_j + \lambda)w_j^2 \right] + \gamma T"> </p>
+<p>如果树的结构是固定的，即 <img src="http://www.zhihu.com/equation?tex=q" alt="q"> 是确定的，或者说我们已经知道了每个叶子结点有哪些样本，所以 <img src="http://www.zhihu.com/equation?tex=G_j" alt="G_j"> 和 <img src="http://www.zhihu.com/equation?tex=H_j" alt="H_j"> 是确定的，但 <img src="http://www.zhihu.com/equation?tex=w" alt="w"> 不确定（ <img src="http://www.zhihu.com/equation?tex=w" alt="w"> 其实就是我们需要预测的值），那么令目标函数一阶导为0，则可以求得叶子结点 <img src="http://www.zhihu.com/equation?tex=j" alt="j"> 对应的值：</p>
+<p><img src="http://www.zhihu.com/equation?tex=w_j%5E%2A%3D-%5Cfrac%7BG_j%7D%7BH_j%2B%5Clambda%7D+%5Ctag+6" alt="w_j^*=-\frac{G_j}{H_j+\lambda} \tag 6"> </p>
+<p>目标函数的值可以化简为：</p>
+<p><img src="http://www.zhihu.com/equation?tex=Obj+%3D+-%5Cfrac12+%5Csum_%7Bj%3D1%7D%5ET+%5Cfrac%7BG_j%5E2%7D%7BH_j%2B%5Clambda%7D+%2B+%5Cgamma+T+%5Ctag+7" alt="Obj = -\frac12 \sum_{j=1}^T \frac{G_j^2}{H_j+\lambda} + \gamma T \tag 7"> </p>
+<p><strong>7、如何最优化目标函数</strong></p>
+<p>​    那么对于单棵决策树，一种理想的优化状态就是枚举所有可能的树结构，因此过程如下：</p>
+<p>a、首先枚举所有可能的树结构，即 <img src="http://www.zhihu.com/equation?tex=q" alt="q"> ；</p>
+<p>b、计算每种树结构下的目标函数值，即等式7的值；</p>
+<p>c、取目标函数最小（大）值为最佳的数结构，根据等式6求得每个叶子节点的 <img src="http://www.zhihu.com/equation?tex=w" alt="w"> 取值，即样本的预测值。</p>
+<p>​    但上面的方法肯定是不可行的，因为树的结构千千万，所以一般用贪心策略来优化：</p>
+<p>a、从深度为0的树开始，对每个叶节点枚举所有的可用特征 </p>
+<p>b、 针对每个特征，把属于该节点的训练样本根据该特征值升序排列，通过线性扫描的方式来决定该特征的最佳分裂点，并记录该特征的最大收益（采用最佳分裂点时的收益） </p>
+<p>c、 选择收益最大的特征作为分裂特征，用该特征的最佳分裂点作为分裂位置，把该节点生长出左右两个新的叶节点，并为每个新节点关联对应的样本集 </p>
+<p>d、回到第1步，递归执行到满足特定条件为止</p>
+<p>那么如何计算上面的收益呢，很简单，仍然紧扣目标函数就可以了。假设我们在某一节点上二分裂成两个节点，分别是左（L）右（R），则分列前的目标函数是 <img src="http://www.zhihu.com/equation?tex=-%5Cfrac12+%5B%5Cfrac%7B%28G_L%2BG_R%29%5E2%7D%7BH_L%2BH_R%2B%5Clambda%7D%5D+%2B+%5Cgamma+" alt="-\frac12 [\frac{(G_L+G_R)^2}{H_L+H_R+\lambda}] + \gamma "> ，分裂后则是 <img src="http://www.zhihu.com/equation?tex=-%5Cfrac12+%5B+%5Cfrac%7BG_L%5E2%7D%7BH_L%2B%5Clambda%7D+%2B+%5Cfrac%7BG_R%5E2%7D%7BH_R%2B%5Clambda%7D%5D+%2B2%5Cgamma" alt="-\frac12 [ \frac{G_L^2}{H_L+\lambda} + \frac{G_R^2}{H_R+\lambda}] +2\gamma"> ，则对于目标函数来说，分裂后的收益是（这里假设是最小化目标函数，所以用分裂前-分裂后）：</p>
+<p><img src="http://www.zhihu.com/equation?tex=Gain%3D%5Cfrac12+%5Cleft%5B+%5Cfrac%7BG_L%5E2%7D%7BH_L%2B%5Clambda%7D+%2B+%5Cfrac%7BG_R%5E2%7D%7BH_R%2B%5Clambda%7D+-+%5Cfrac%7B%28G_L%2BG_R%29%5E2%7D%7BH_L%2BH_R%2B%5Clambda%7D%5Cright%5D+-+%5Cgamma+%5Ctag+8" alt="Gain=\frac12 \left[ \frac{G_L^2}{H_L+\lambda} + \frac{G_R^2}{H_R+\lambda} - \frac{(G_L+G_R)^2}{H_L+H_R+\lambda}\right] - \gamma \tag 8"> </p>
+<p>等式8计算出来的收益，也是作为变量重要度输出的重要依据。</p>
+<p>所以gbdt的算法可以总结为：</p>
+<p>a、算法在拟合的每一步都新生成一颗决策树；</p>
+<p>b、在拟合这棵树之前，需要计算损失函数在每个样本上的一阶导和二阶导，即 <img src="http://www.zhihu.com/equation?tex=g_%7Bi%7D" alt="g_{i}"> 和 <img src="http://www.zhihu.com/equation?tex=h_%7Bi%7D" alt="h_{i}"> ；</p>
+<p>c、通过上面的贪心策略生成一颗树，计算每个叶子结点的的 <img src="http://www.zhihu.com/equation?tex=G_%7Bj%7D" alt="G_{j}"> 和 <img src="http://www.zhihu.com/equation?tex=H_%7Bj%7D" alt="H_{j}"> ，利用等式6计算预测值 <img src="http://www.zhihu.com/equation?tex=w" alt="w"> ；</p>
+<p>d、把新生成的决策树 <img src="http://www.zhihu.com/equation?tex=f_t%28x%29" alt="f_t(x)"> 加入 <img src="http://www.zhihu.com/equation?tex=%5Chat%7By%7D_i%5Et+%3D+%5Chat%7By%7D_i%5E%7Bt-1%7D+%2B+%5Cepsilon+f_t%28x_i%29" alt="\hat{y}_i^t = \hat{y}_i^{t-1} + \epsilon f_t(x_i)"> ，其中 <img src="http://www.zhihu.com/equation?tex=%5Cepsilon" alt="\epsilon"> 为学习率，主要为了抑制模型的过拟合。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">GBDT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/机器学习//" class="article-tag-list-link color5">机器学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/13/GBDT算法原理深入解析/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-NLP和词嵌入" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1596,68 +1755,6 @@
 
 
   
-    <article id="post-Kmeans-K均值算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/07/Kmeans-K均值算法/">Kmeans-K均值算法</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/07/Kmeans-K均值算法/" class="archive-article-date">
-  	<time datetime="2018-02-07T12:00:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/07/Kmeans-K均值算法/">more >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1747,7 +1844,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">GBDT</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">集成学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">KNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1759,19 +1868,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">集成学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PCA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1783,11 +1880,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
+                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">特征工程</a>
+                <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1795,15 +1892,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">特征工程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">优化</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
+                <a href="javascript:void(0)" class="js-tag color5">线性回归</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">线性回归</a>
+                <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
               </li>
              
               <li class="article-tag-list-item">
