@@ -6,80 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.reamder.com">
-  <title>深度卷机网络：实例探究 | 梦想家的博客</title>
+  <title>SVD理解 | 梦想家的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 经典的卷积网络介绍几种经典的卷积神经网络结构，分别是LeNet、AlexNet、VGGNet。 LeNet-5： LeNet-5主要是针对灰度设计的，所以其输入较小，为  ，其结构如下：  在LetNet中，存在的经典模式：  随着网络的深度增加，图像的大小在缩小，与此同时，通道的数量却在增加； 每个卷积层后面接一个池化层。  AlexNet： AlexNet直接对彩色的大图片进行处理，其结">
-<meta property="og:type" content="article">
-<meta property="og:title" content="深度卷机网络：实例探究">
-<meta property="og:url" content="http://www.reamder.com/2018/02/05/卷积神经网络2/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="SVD理解">
+<meta property="og:url" content="http://www.reamder.com/2018/03/14/SVD理解/index.html">
 <meta property="og:site_name" content="梦想家的博客">
-<meta property="og:description" content="1. 经典的卷积网络介绍几种经典的卷积神经网络结构，分别是LeNet、AlexNet、VGGNet。 LeNet-5： LeNet-5主要是针对灰度设计的，所以其输入较小，为  ，其结构如下：  在LetNet中，存在的经典模式：  随着网络的深度增加，图像的大小在缩小，与此同时，通道的数量却在增加； 每个卷积层后面接一个池化层。  AlexNet： AlexNet直接对彩色的大图片进行处理，其结">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=32%5Ctimes32%5Ctimes1">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-47ce686eadb7eca361cb8e30e5ce44a9_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-40cf21fdb32b5c45267dc8454b1c305c_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=3%5Ctimes3%EF%BC%8Cstride%3D1%2C+SAME">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=2%5Ctimes2%EF%BC%8C+stride%3D2">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-ace8d57233d927540b09dd62f3a02767_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-9af76e289bd4a48aa986560767108833_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=z%5E%7B%5Bl%2B1%5D%7D+%3D+W%5E%7B%5Bl%2B1%5D%7Da%5E%7B%5Bl%5D%7D+%2B+b%5E%7B%5Bl%2B1%5D%7D">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B1%5D%7D+%3D+g%28z%5E%7B%5Bl%2B1%5D%7D%29">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=z%5E%7B%5Bl%2B2%5D%7D+%3D+W%5E%7B%5Bl%2B2%5D%7Da%5E%7B%5Bl%2B1%5D%7D+%2B+b%5E%7B%5Bl%2B2%5D%7D">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3D+g%28z%5E%7B%5Bl%2B2%5D%7D%29">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%7D">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=z%5E%7B%5Bl%2B2%5D%7D">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-a36e3ecbd3d375e85caa06a25ca6c03b_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3D+g%28z%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-f798208c0ea57bfc0991c280c71f5bf2_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-879e090bfb52fae7112ad9896f316ccd_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-bcaf9f135b7a957a6498020c11f055b7_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=x">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%7D">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-92ee772505f210dfe8f6e880b5ff4ea0_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5Cgeqslant+0">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3D+g%28z%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29%3Dg%28W%5E%7B%5Bl%2B2%5D%7Da%5E%7B%5Bl%2B1%5D%7D%2Bb%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%2B2%5D%7D%3D0">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=b%5E%7B%5Bl%2B2%5D%7D%3D0">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3D+g%28z%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29%3Dg%28a%5E%7B%5Bl%5D%7D%29%3Drelu%28a%5E%7B%5Bl%5D%7D%29%3D+a%5E%7B%5Bl%5D%7D">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3Dg%28z%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=z%5E%7B%5Bl%2B2%5D%7D">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%7D">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-3d285acc6d2b01fc635f021303cd9c2c_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=1%5Ctimes1%5Ctimes+n_C">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=1%5Ctimes1%5Ctimes+n_C">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=n_C">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=1%5Ctimes1">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=n_C">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-d277d0d16f71b796a5c5f6ee5bc4b034_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=1%5Ctimes1">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=1%5Ctimes1">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=1%5Ctimes1">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-fe00f8771cc158b27ebf79cc3423e6c8_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-9baabd75b8b165539fabbf2d29ef97c8_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=5%5Ctimes5">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-75a53d1539434064de1843e757e841fd_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=5%5Ctimes5%5Ctimes192">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=28%5Ctimes28%5Ctimes32%5Ctimes5%5Ctimes5%5Ctimes192%3D120M">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=1%5Ctimes1">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-8adfd8721d6ea9da0f214c406007f293_hd.jpg">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=1%5Ctimes1">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=28%5Ctimes28%5Ctimes16%5Ctimes1%5Ctimes1%5Ctimes192%3D2.4M">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=5%5Ctimes5">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=28%5Ctimes28%5Ctimes32%5Ctimes5%5Ctimes5%5Ctimes16%3D10.0M">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=2.4M%2B10.0M%3D12.4M">
-<meta property="og:image" content="http://www.zhihu.com/equation?tex=1%5Ctimes1">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-1c0d40f4f581a53d8f9c0c10ebd3e588_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-5922b4756827c373937fe83c2f192607_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-a8f828d1cd4ac169b2d30feeb6327a40_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-80a990183643a60667f96f2bd1a6eb78_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-a83cec7b4b533453b94041f27affb7e1_hd.jpg">
-<meta property="og:image" content="http://p3ev46x16.bkt.clouddn.com/v2-66425ba48cf3db7af7b38effeca69aa2_hd.jpg">
-<meta property="og:updated_time" content="2018-02-05T13:29:04.885Z">
+<meta property="og:updated_time" content="2018-03-14T12:41:36.604Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深度卷机网络：实例探究">
-<meta name="twitter:description" content="1. 经典的卷积网络介绍几种经典的卷积神经网络结构，分别是LeNet、AlexNet、VGGNet。 LeNet-5： LeNet-5主要是针对灰度设计的，所以其输入较小，为  ，其结构如下：  在LetNet中，存在的经典模式：  随着网络的深度增加，图像的大小在缩小，与此同时，通道的数量却在增加； 每个卷积层后面接一个池化层。  AlexNet： AlexNet直接对彩色的大图片进行处理，其结">
-<meta name="twitter:image" content="http://www.zhihu.com/equation?tex=32%5Ctimes32%5Ctimes1">
+<meta name="twitter:title" content="SVD理解">
   
     <link rel="alternative" href="/atom.xml" title="梦想家的博客" type="application/atom+xml">
   
@@ -223,159 +159,27 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-卷积神经网络2" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-SVD理解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      深度卷机网络：实例探究
+      SVD理解
     </h1>
   
 
         
-        <a href="/2018/02/05/卷积神经网络2/" class="archive-article-date">
-  	<time datetime="2018-02-05T08:48:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-05</time>
+        <a href="/2018/03/14/SVD理解/" class="archive-article-date">
+  	<time datetime="2018-03-14T12:41:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-经典的卷积网络"><a href="#1-经典的卷积网络" class="headerlink" title="1. 经典的卷积网络"></a><strong>1. 经典的卷积网络</strong></h2><p>介绍几种经典的卷积神经网络结构，分别是LeNet、AlexNet、VGGNet。</p>
-<p><strong>LeNet-5：</strong></p>
-<p>LeNet-5主要是针对灰度设计的，所以其输入较小，为 <img src="http://www.zhihu.com/equation?tex=32%5Ctimes32%5Ctimes1" alt="32\times32\times1"> ，其结构如下：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-47ce686eadb7eca361cb8e30e5ce44a9_hd.jpg" alt="img"></p>
-<p>在LetNet中，存在的经典模式：</p>
-<ul>
-<li>随着网络的深度增加，图像的大小在缩小，与此同时，通道的数量却在增加；</li>
-<li>每个卷积层后面接一个池化层。</li>
-</ul>
-<p><strong>AlexNet：</strong></p>
-<p>AlexNet直接对彩色的大图片进行处理，其结构如下：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-40cf21fdb32b5c45267dc8454b1c305c_hd.jpg" alt="img"></p>
-<ul>
-<li>与LeNet相似，但网络结构更大，参数更多，表现更加出色；</li>
-<li>使用了Relu；</li>
-<li>使用了多个GPUs；</li>
-<li>LRN（后来发现用处不大，丢弃了）</li>
-</ul>
-<p>AlexNet使得深度学习在计算机视觉方面受到极大的重视。</p>
-<p><strong>VGG-16：</strong></p>
-<p>VGG卷积层和池化层均具有相同的卷积核大小，都使用 <img src="http://www.zhihu.com/equation?tex=3%5Ctimes3%EF%BC%8Cstride%3D1%2C+SAME" alt="3\times3，stride=1, SAME"> 的卷积和 <img src="http://www.zhihu.com/equation?tex=2%5Ctimes2%EF%BC%8C+stride%3D2" alt="2\times2， stride=2"> 的池化。其结构如下：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-ace8d57233d927540b09dd62f3a02767_hd.jpg" alt="img"></p>
-<h2 id="2-ResNet"><a href="#2-ResNet" class="headerlink" title="2. ResNet"></a><strong>2. ResNet</strong></h2><p>ResNet是由残差块所构建。</p>
-<p><strong>残差块：</strong></p>
-<p>下面是一个普通的神经网络块的传输：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-9af76e289bd4a48aa986560767108833_hd.jpg" alt="img"></p>
-<p>其前向传播的计算步骤为：</p>
-<ul>
-<li>Linear： <img src="http://www.zhihu.com/equation?tex=z%5E%7B%5Bl%2B1%5D%7D+%3D+W%5E%7B%5Bl%2B1%5D%7Da%5E%7B%5Bl%5D%7D+%2B+b%5E%7B%5Bl%2B1%5D%7D" alt="z^{[l+1]} = W^{[l+1]}a^{[l]} + b^{[l+1]}"></li>
-<li>Relu： <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B1%5D%7D+%3D+g%28z%5E%7B%5Bl%2B1%5D%7D%29" alt="a^{[l+1]} = g(z^{[l+1]})"></li>
-<li>Linear： <img src="http://www.zhihu.com/equation?tex=z%5E%7B%5Bl%2B2%5D%7D+%3D+W%5E%7B%5Bl%2B2%5D%7Da%5E%7B%5Bl%2B1%5D%7D+%2B+b%5E%7B%5Bl%2B2%5D%7D" alt="z^{[l+2]} = W^{[l+2]}a^{[l+1]} + b^{[l+2]}"></li>
-<li>Relu： <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3D+g%28z%5E%7B%5Bl%2B2%5D%7D%29" alt="a^{[l+2]} = g(z^{[l+2]})"></li>
-</ul>
-<p>而ResNet块则将其传播过程增加了一个从 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%7D" alt="a^{[l]}"> 直接到 <img src="http://www.zhihu.com/equation?tex=z%5E%7B%5Bl%2B2%5D%7D" alt="z^{[l+2]}"> 的连接，将其称之为“<strong>short cut</strong>”或者“<strong>skip connection</strong>”：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-a36e3ecbd3d375e85caa06a25ca6c03b_hd.jpg" alt="img"></p>
-<p>也就是前向传播公式的最后一个步骤变为： <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3D+g%28z%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29" alt="a^{[l+2]} = g(z^{[l+2]}+a^{[l]})"></p>
-<p>增加“short cut”后，成为残差块的网络结构：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-f798208c0ea57bfc0991c280c71f5bf2_hd.jpg" alt="img"></p>
-<p>注意这里是连接在Relu激活函数之前。</p>
-<p><strong>Residual Network：</strong></p>
-<p>多个<strong>残差块</strong>堆积起来构成ResNet网络结构，其结构如下：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-879e090bfb52fae7112ad9896f316ccd_hd.jpg" alt="img"></p>
-<p>没有“short cut”的普通神经网络和ResNet的误差曲线：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-bcaf9f135b7a957a6498020c11f055b7_hd.jpg" alt="img"></p>
-<ul>
-<li>在没有残差的普通神经网络中，训练的误差实际上是随着网络层数的加深，先减小再增加；</li>
-<li>在有残差的ResNet中，即使网络再深，训练误差都会随着网络层数的加深逐渐减小。</li>
-</ul>
-<p>ResNet对于中间的激活函数来说，有助于能够达到更深的网络，解决梯度消失和梯度爆炸的问题。</p>
-<h2 id="3-ResNet表现好的原因"><a href="#3-ResNet表现好的原因" class="headerlink" title="3. ResNet表现好的原因"></a><strong>3. ResNet表现好的原因</strong></h2><p>假设有个比较大的神经网络，输入为 <img src="http://www.zhihu.com/equation?tex=x" alt="x"> ，输出为 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%7D" alt="a^{[l]}"> 。如果我们想增加网络的深度，这里再给网络增加一个残差块：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-92ee772505f210dfe8f6e880b5ff4ea0_hd.jpg" alt="img"></p>
-<p>假设网络中均使用Relu激活函数，所以最后的输出 <img src="http://www.zhihu.com/equation?tex=a%5Cgeqslant+0" alt="a\geqslant 0"> 。这里我们给出 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D" alt="a^{[l+2]}"> 的值：</p>
-<p><img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3D+g%28z%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29%3Dg%28W%5E%7B%5Bl%2B2%5D%7Da%5E%7B%5Bl%2B1%5D%7D%2Bb%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29" alt="a^{[l+2]} = g(z^{[l+2]}+a^{[l]})=g(W^{[l+2]}a^{[l+1]}+b^{[l+2]}+a^{[l]})"></p>
-<p>如果使用L2正则化或者权重衰减，会压缩W和b的值。如果 <img src="http://www.zhihu.com/equation?tex=W%5E%7B%5Bl%2B2%5D%7D%3D0" alt="W^{[l+2]}=0"> 同时 <img src="http://www.zhihu.com/equation?tex=b%5E%7B%5Bl%2B2%5D%7D%3D0" alt="b^{[l+2]}=0">，那么上式就变成：</p>
-<p><img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3D+g%28z%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29%3Dg%28a%5E%7B%5Bl%5D%7D%29%3Drelu%28a%5E%7B%5Bl%5D%7D%29%3D+a%5E%7B%5Bl%5D%7D" alt="a^{[l+2]} = g(z^{[l+2]}+a^{[l]})=g(a^{[l]})=relu(a^{[l]})= a^{[l]}"></p>
-<p>所以从上面的结果我们可以看出，对于残差块来学习上面这个恒等函数是很容易的。所以在增加了残差块后更深的网络的性能也并不逊色于没有增加残差块简单的网络。所以尽管增加了网络的深度，但是并不会影响网络的性能。同时如果增加的网络结构能够学习到一些有用的信息，那么就会提升网络的性能。</p>
-<p>同时由于结构 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%2B2%5D%7D+%3Dg%28z%5E%7B%5Bl%2B2%5D%7D%2Ba%5E%7B%5Bl%5D%7D%29" alt="a^{[l+2]} =g(z^{[l+2]}+a^{[l]})"> ，ResNet在设计中使用了很多相同的卷积，以保持 <img src="http://www.zhihu.com/equation?tex=z%5E%7B%5Bl%2B2%5D%7D" alt="z^{[l+2]}"> 和 <img src="http://www.zhihu.com/equation?tex=a%5E%7B%5Bl%5D%7D" alt="a^{[l]}"> 的维度相同。</p>
-<p>将普通深度神经网络变为ResNet：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-3d285acc6d2b01fc635f021303cd9c2c_hd.jpg" alt="img"></p>
-<p>在两个相同的卷积层之间增加“<strong>skip connection</strong>”。</p>
-<h2 id="4-1x1卷积"><a href="#4-1x1卷积" class="headerlink" title="4. 1x1卷积"></a><strong>4. 1x1卷积</strong></h2><p><strong>1x1卷积：</strong></p>
-<p>在二维上的卷积相当于图片的每个元素和一个卷积核数字相乘。</p>
-<p>但是在三维上，与 <img src="http://www.zhihu.com/equation?tex=1%5Ctimes1%5Ctimes+n_C" alt="1\times1\times n_C"> 卷积核进行卷积，相当于三维图像上的 <img src="http://www.zhihu.com/equation?tex=1%5Ctimes1%5Ctimes+n_C" alt="1\times1\times n_C"> 的切片，也就是 <img src="http://www.zhihu.com/equation?tex=n_C" alt="n_C"> 个点乘以卷积数值权重，通过Relu函数后，输出对应的结果。而不同的卷积核则相当于不同的隐层神经元结点与切片上的点进行一一连接。</p>
-<p>所以根本上 <img src="http://www.zhihu.com/equation?tex=1%5Ctimes1" alt="1\times1"> 卷积核相当于对一个切片上的 <img src="http://www.zhihu.com/equation?tex=n_C" alt="n_C"> 个单元都应用了一个全连接的神经网络。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-d277d0d16f71b796a5c5f6ee5bc4b034_hd.jpg" alt="img"></p>
-<p>最终三维的图形应用 <img src="http://www.zhihu.com/equation?tex=1%5Ctimes1" alt="1\times1"> 的卷积核得到一个相同长宽但第三维度变为卷积核个数的图片。</p>
-<p><strong>1x1卷积应用：</strong></p>
-<ul>
-<li>维度压缩：使用目标维度的 <img src="http://www.zhihu.com/equation?tex=1%5Ctimes1" alt="1\times1"> 的卷积核个数。</li>
-<li>增加非线性：保持与原维度相同的 <img src="http://www.zhihu.com/equation?tex=1%5Ctimes1" alt="1\times1"> 的卷积核个数。</li>
-</ul>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-fe00f8771cc158b27ebf79cc3423e6c8_hd.jpg" alt="img"></p>
-<h2 id="5-Inception-Network"><a href="#5-Inception-Network" class="headerlink" title="5. Inception Network"></a><strong>5. Inception Network</strong></h2><p>Inception Network 的作用就是使我们无需去考虑在构建深度卷积神经网络时，使用多大的卷积核以及是否添加池化层等问题。</p>
-<p><strong>Inception主要结构：</strong></p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-9baabd75b8b165539fabbf2d29ef97c8_hd.jpg" alt="img"></p>
-<p>在上面的Inception结构中，应用了不同的卷积核，以及带padding的池化层。在保持输入图片大小不变的情况下，通过不同运算结果的叠加，增加了通道的数量。</p>
-<p><strong>计算成本的问题：</strong></p>
-<p>对于上面的 <img src="http://www.zhihu.com/equation?tex=5%5Ctimes5" alt="5\times5"> 大小卷积核的计算成本：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-75a53d1539434064de1843e757e841fd_hd.jpg" alt="img"></p>
-<ul>
-<li>1 filters： <img src="http://www.zhihu.com/equation?tex=5%5Ctimes5%5Ctimes192" alt="5\times5\times192"> ；</li>
-<li>32 个 filters；</li>
-<li>总的计算成本： <img src="http://www.zhihu.com/equation?tex=28%5Ctimes28%5Ctimes32%5Ctimes5%5Ctimes5%5Ctimes192%3D120M" alt="28\times28\times32\times5\times5\times192=120M"></li>
-</ul>
-<p>对于 <img src="http://www.zhihu.com/equation?tex=1%5Ctimes1" alt="1\times1"> 大小卷积核用作过渡的计算成本，也将下面的中间的层叫做“<strong>bottleneck layer</strong>”：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-8adfd8721d6ea9da0f214c406007f293_hd.jpg" alt="img"></p>
-<ul>
-<li><img src="http://www.zhihu.com/equation?tex=1%5Ctimes1" alt="1\times1"> 卷积层计算成本： <img src="http://www.zhihu.com/equation?tex=28%5Ctimes28%5Ctimes16%5Ctimes1%5Ctimes1%5Ctimes192%3D2.4M" alt="28\times28\times16\times1\times1\times192=2.4M"></li>
-<li><img src="http://www.zhihu.com/equation?tex=5%5Ctimes5" alt="5\times5"> 卷积层计算成本： <img src="http://www.zhihu.com/equation?tex=28%5Ctimes28%5Ctimes32%5Ctimes5%5Ctimes5%5Ctimes16%3D10.0M" alt="28\times28\times32\times5\times5\times16=10.0M"></li>
-<li>总的计算成本： <img src="http://www.zhihu.com/equation?tex=2.4M%2B10.0M%3D12.4M" alt="2.4M+10.0M=12.4M"></li>
-</ul>
-<p>所以 <img src="http://www.zhihu.com/equation?tex=1%5Ctimes1" alt="1\times1"> 卷积核作为“bottleneck layer”的过渡层能够有效减小卷积神经网的计算成本。事实证明，只要合理地设置“bottleneck layer”，既可以显著减小上层的规模，同时又能降低计算成本，从而不会影响网络的性能。</p>
-<p><strong>Inception 模块：</strong></p>
-<p>将上面说介绍的两种主要思想和模式结合到一起构成 Inception 模块，如下：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-1c0d40f4f581a53d8f9c0c10ebd3e588_hd.jpg" alt="img"></p>
-<p><strong>Inception Network：</strong></p>
-<p>多个Inception 模块的堆叠构成Inception Network，下面是GoogleNet的结构：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-5922b4756827c373937fe83c2f192607_hd.jpg" alt="img"></p>
-<h2 id="6-迁移学习"><a href="#6-迁移学习" class="headerlink" title="6. 迁移学习"></a><strong>6. 迁移学习</strong></h2><p><strong>小数据集：</strong></p>
-<p>如今在深度学习领域，许多研究者都会将他们的工作共享到网络上。在我们实施自己的工作的时候，比如说做某种物体的识别分类，但是只有少量的数据集，对于从头开始训练一个深度网络结构是远远不够的。</p>
-<p>但是我们可以应用迁移学习，应用其他研究者建立的模型和参数，用少量的数据仅训练最后自定义的softmax网络。从而能够在小数据集上达到很好的效果。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-a8f828d1cd4ac169b2d30feeb6327a40_hd.jpg" alt="img"></p>
-<p><strong>大数据集：</strong></p>
-<p>如果我们在自己的问题上也拥有大量的数据集，我们可以多训练后面的几层。总之随着数据集的增加，我们需要“ <strong>freeze</strong>”的层数越来越少。最后如果我们有十分庞大的数据集，那么我们可以训练网络模型的所有参数，将其他研究者训练的模型参数作为<strong>参数的初始化</strong>来替代随机初始化，来加速我们模型的训练。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-80a990183643a60667f96f2bd1a6eb78_hd.jpg" alt="img"></p>
-<h2 id="7-数据扩充"><a href="#7-数据扩充" class="headerlink" title="7. 数据扩充"></a><strong>7. 数据扩充</strong></h2><p>与其他机器学习问题相比，在计算机视觉领域当下最主要的问题是没有办法得到充足的数据。所以在我们训练计算机数据模型的时候，数据的扩充就是会非常有用。</p>
-<p><strong>数据扩充的方法：</strong></p>
-<ul>
-<li>镜像翻转（Mirroring）；</li>
-<li>随机剪裁（Random Cropping）；</li>
-<li>色彩转换（Color shifting）：</li>
-</ul>
-<p>为图片的RGB三个色彩通道进行增减值，如（R：+20，G：-20，B：+20）；PCA颜色增强：对图片的主色的变化较大，图片的次色变化较小，使总体的颜色保持一致。</p>
-<p><strong>训练过程中的数据扩充：</strong></p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-a83cec7b4b533453b94041f27affb7e1_hd.jpg" alt="img"></p>
-<p>为了节省时间，数据扩充的过程和训练过程可以多CPU多线程来并行的实现。</p>
-<h2 id="8-计算机视觉现状"><a href="#8-计算机视觉现状" class="headerlink" title="8. 计算机视觉现状"></a><strong>8. 计算机视觉现状</strong></h2><p><strong>数据和手工工程：</strong></p>
-<p>不同问题当前的数据集大小：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-66425ba48cf3db7af7b38effeca69aa2_hd.jpg" alt="img"></p>
-<p>在有大量数据的时候，我们更倾向于使用简单的算法和更少的手工工程。因为此时有大量的数据，我们不需要为这个问题来精心设计特征，我们使用一个大的网络结果或者更简单的模型就能够解决。</p>
-<p>相反，在有少量数据的时候，我们从事更多的是手工工程。因为数据量太少，较大的网络结构或者模型很难从这些少量的数据中获取足够的特征，而手工工程实际上是获得良好表现的最佳方式。</p>
-<p>对于机器学习应用：</p>
-<ul>
-<li>标记数据，（x,y）；</li>
-<li>手工特征工程/网络结构/其他构建。</li>
-</ul>
-<p><strong>Tips for doing well：</strong></p>
-<p>在基准研究和比赛中，下面的tips可能会有较好的表现：</p>
-<ul>
-<li>Ensembling：独立地训练多个网络模型，输出平均结果或加权平均结果；</li>
-<li>测试时的 Multi-crop：在测试图片的多种版本上运行分类器，输出平均结果。</li>
-</ul>
-
+        
       
 
       
@@ -405,17 +209,6 @@
       
       
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/深度学习//" class="article-tag-list-link color5">深度学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -465,7 +258,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://www.reamder.com/2018/02/05/卷积神经网络2/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.reamder.com/2018/03/14/SVD理解/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -479,18 +272,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/02/05/卷积神经网络3/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/16/RPC框架实现机制/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          目标检测
+          RPC框架实现机制
         
       </div>
     </a>
   
   
-    <a href="/2018/02/05/卷积神经网络1/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">计算机视觉</div>
+    <a href="/2018/03/13/GBDT算法原理深入解析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">GBDT算法原理深入解析</div>
       <i class="icon-circle-right"></i>
     </a>
   

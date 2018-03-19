@@ -49,7 +49,7 @@
 		  <h1 class="header-author"><a href="/">Remaerd</a></h1>
 		</hgroup>
 		
-		<p class="header-subtitle">以梦为马 不负韶华</p>
+		<p class="header-subtitle">闻道有先后，术业有专攻。</p>
 		
 
 		<nav class="header-menu">
@@ -107,7 +107,7 @@
 			  <h1 class="header-author js-header-author">Remaerd</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>以梦为马 不负韶华<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>闻道有先后，术业有专攻。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -159,6 +159,188 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-Vim编辑器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/08/Vim编辑器/">Vim编辑器</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/08/Vim编辑器/" class="archive-article-date">
+  	<time datetime="2018-02-08T07:59:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://pic1.zhimg.com/v2-107a6944cd955f2b14e11c80714db9a4_b.png" alt="img"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/08/Vim编辑器/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Linux基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/08/Linux基础/">Linux命令基础</a>
+    </h1>
+  
+
+        
+        <a href="/2018/02/08/Linux基础/" class="archive-article-date">
+  	<time datetime="2018-02-08T04:28:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.# 表示权限用户(如:root),$ 表示普通用户<br>  开机提示:Login:输入用户名<br>  password:输入口令   用户是系统注册用户成功登陆后，可以进入相应的用户环境.<br>  退出当前shell,输入:exit<br>2.useradd netseek 添加一个netseek用户<br>  passwd netseek  给netseek这个用户设置密码.<br>  (/etc/passwd /etc/group)<br>  userdel netseek 删除账号<br>  userdel -r netseek 删除账号连同自家目录.<br>  [更详细的操作请参阅man page,和账号管理篇]<br>3.查看命令<br>  ls -l                显示文件列表<br>  ls -al        -a 显示所有档案及目录 (ls内定将档案名或目录名称开头为”.”的视为隐藏档，不会列出)<br>  ls -al |grep ‘^d’   显示目录<br>  ls -al |grep ‘^[^d]’ 在一个目录中查询不包含目录的所有文件<br>  ls -sh        (man ls 查看man帮助.)<br>  linux几种文件类型:<br>  d    表示此文件是一个目录<br>  -    表示此文件是一个普通文件<br>  b    表示此文件是一个特殊的块设备I/O文件<br>  c    表示此文件是一个特殊的字符设备I/O文件<br>  l    表示此文件是一个连接文件。在其文件名称后紧跟与它连接的文件路径及名称</p>
+<p> file 命令通过探测文件内容判断文件类型<br>4.建立文件和目录<br>  touch 1.txt<br>  cat &gt; 2.txt (用定向符创建文件，填写内容后，按ctrl+d保存内容)<br>  mkdir mywork 建立mywork这个目录<br>5.拷贝文件或目录<br>  cp filename1 filename2<br>  cp -r dir1 dir2 复制目录<br>  cp -rf 参数f是删除已经存在的目标文件而不提示<br>  cp -i  参数i和f相反，在覆盖目标文件之前将给出提示要求用户确认，回答y时目标文件将被覆盖，是交互式拷贝.<br>6.删除文件和目录(删除文件或目录都可以用rm搞定)<br>  rm 1.c //将1.c这个文件删除<br>  rm -rf (强制删除文件或目录,删除时不提示.)<br>7.移走目录或者改文件名<br>  mv [opitons] 源文件或目录   目标文件或目录<br>  [options]主要参数<br>  -i:交互方式操作，如果mv操作将导致对已存在的目标文件的覆盖，此时系统询问是否重写，要求用户回答“y”或“n”，<br>​     这样可以避免误覆盖文件.<br>  -f:禁止交互操作。mv操作要覆盖某个已有的目标文件时不给任何指示，指定此参数后i参数将不再起作用。<br>  mv hello ../ 将hello目录或者文件移动上一级.</p>
+<p>8.alias 别名<br>  alias dir=’ls -l’   输入dir，其实就相当于执行了ls -l</p>
+<p>9.权限的控制(rwx 421)<br>  chmod +x hello.sh 赋于可执行权限.<br>  (详细介绍一下权限的控制)<br>  chmod 命令 权限修改 用法：chmod 一位8进制数 filename (rwx 421)<br>　eg: chmod u+x filenmame      只想给自己运行，别人只能读<br>  chown netseek.netseek mydir  改变用户属组<br>​    u：表示文件所有者<br>​    g：表示同组用户<br>​    o：表示其它用户<br>​    a：表示所有用户<br>​    opt则是代表操作，可以为：<br>​    +：添加某个权限<br>​    -：取消某个权限<br>​    =：赋予给定的权限，并取消原有的权限<br>​    而mode则代表权限：<br>​    r：可读 4<br>​    w：可写 2<br>​    x：可执行 1<br>10.pwd 显示当前目录完整路径和改变目录<br>  cd netseek 进入netseek这个目录<br>cd 退出当前目录<br> cd ../ 进入上一级目录.</p>
+<p>  cd - 返回上一次目录<br>  cd ~ 返回主目录</p>
+<ol>
+<li><p>cat,more,less 命令</p>
+<p>将某个文件的内容显示出来，两个命令不同的是:cat 把文件内容一直打印出来，而more则分展显示.<br>less 可以上下翻滚查看内容.<br>cat &gt; 1.txt 可以填写或者复制内容,按ctrl+d保存<br>cat 1.c<br>more 1.c<br>head -n filename 显示第N行的内容<br>tail -n filename 显示后N行的内容<br>tail -n 20 /var/log/message 显示最新的20行日志<br>12.设置linux时间和日期<br>date 命令(“date MMDDhhmmYYYY.ss”)<br>2006年7月24日12:37 ,30秒<br>date 072412372006.30<br>date -s 20:30:30 #设置系统时间为20: 30:30<br>date -s 2006-7-24 #设置系统时期为2006-7-24<br>clock -r #对系统Bios中读取时间参数<br>clock -w #将系统时间(如由date设置的时间)写入Bios<br>13.查看找文件<br>几种介绍:<br>find 路径  -name 文件名</p>
+<p>find /etc -name named.conf </p>
+</li>
+</ol>
+<p>locate 通过文件名搜索文件的工具(要先通过updatedb建立索引数据库)<br>  localte named.conf<br>  whereis 是寻找二进制文件，同时也会找到其帮助文件<br>  which 和where 相似，只是我们所设置的环境变量中设置好的路径中寻找；比如；<br>14.查杀进程<br>  ps aux<br>  ps -ef |grep<br>  kill -9<br>  看看哪个进程占用的内存最大<br>  ps -aux|sort +5n<br>  将程序放在前后台执行<br>  cp file1 file2 &amp;<br>  &amp;与ctrl+z 你可以使用&amp;或ctrl+z来将命令放在后台执行.<br>  fg 是将放在后台执行的程序再放回前台.<br>  jobs<br>15.dd命令备份<br>  dd if=”input_file” of=”out_file” bs=”block_size” count=”number”<br>  参数:<br>  if:就是input file可以是设备<br>  of:就是output file也可以是设备<br>  bs:规划的一个block的大小，如果没有设定时，预设是512bytes<br>  count:多少个bs的意思.</p>
+<p>  dd if=/etc/password of=/tmp/passwd.bak 备份 </p>
+<p>16.mount 加载一个硬件设备<br>　 用法:mount [参数] 要加载的设备 载入点<br>　 eg: mount /dev/cdrom<br>　 cd /mnt/cdrom //进入光盘目录<br>   u盘:<br>   mkdir /mnt/usb；（注：创建挂载目录）<br>   mount /mnt/sda1 /mnt/usb；(注：挂载U盘)<br>   现在就可以使用U盘了，在/mnt/usb目录下的内容就是U盘里的内容了；<br>   使用完后，用以下命令卸载U盘即可。<br>   umount /mnt/usb<br>   mount     列出系统所有的分区<br>   mount -t iso9660 /dev/cdrom /mnt/cdrom   挂载光盘<br>   mount -t vfat /dev/fd0 /mnt/floppy       挂载软盘<br>   mount -t vfat -o iocharset=utf8,umask=000 /dev/hda2 /mnt/hda2   挂载fat32分区<br>   mount -t ntfs -o nls=utf8,umask=000 /dev/hda3 /mnt/hda3         挂载ntfs分区<br>   Linux-NTFS Project: <a href="https://link.zhihu.com/?target=http%3A//linux-ntfs.sourceforge.net/" target="_blank" rel="noopener">Moved to http://www.linux-ntfs.org/</a><a href="https://link.zhihu.com/?target=http%3A//linux-ntfs.sourceforge.net/" target="_blank" rel="noopener">Moved to http://www.linux-ntfs.org/</a><br>   umount /mnt/hda3 缷载<br>   注:挂载设备前，请先fdisk -l 看一下.</p>
+<p>17.su在不退出登陆的情况下，切换到另一个身份<br>​    用法: su -l 用户名(如果用户名缺省,则切换到root状态)<br>　　eg:su -l netseek (切换到netseek这个用户，将提示输入密码),加上-表示切换到用户的环境变量.</p>
+<p>​    sudo 利用他可以执行root执行的权限 </p>
+<p>18.whoami,id,w,lastlog,users,groups<br>   w       查看用户登陆信息<br>   who     查看当前登陆用户<br>   last    最近一个月用户登陆情况<br>   lastlog 检查某特定用户上次登录的时间，并格式化输出上次登录日志/var/log/lastlog的内容<br>   whoami  确认自己身份.<br>   id      打印出自己的UID以及GID.(UID:用户身份唯一标识.GID:用户组身份唯一标识.每一个用户只能有一个唯一的UID和GID.)<br>   users<br>   groups  用户所归属的用户组查询；<br>   finger -l netseek root<br>   finger -s 或者直接finger<br>   可以让使用者查询一些其他使用者的资料<br>　 eg: finger //查看所用用户的使用资料<br>　 finger root //查看root的资料<br>19.用户用过的命令和执行历史执行的命令<br>   history 显示用户过去命用的命令<br>   !!执行最近一次的命令<br>20.uname 查看linux系统信息<br>   参数:-a 所有信息 -r 版本号 -n 主机名<br>21.建立软连接<br>   ln [-sf] source target</p>
+<p>   ln souce-file hard-link</p>
+<p>ln -sf source-file soft-link<br>   s表示软连接,f表示，若有同名文件在，则将它覆盖过去.<br>   注：硬链接不能为目录创建，只有文件才能创建硬链接。<br>22.查看目录<br>   du -sh   目录或者文件<br>   du -m    du系统默认输出是以KB,以参数-m表示以MB显示.<br>   cat /etc/fstab   查看分区列表<br>   fdisk -l<br>   df -h<br>   df -ah<br>23.查看linux系统占用的资源(top,free,uptime)<br>   top   查看后台程序，监控系统性能<br>   top -d 2 每两秒列新一次<br>   top -d -2 -p3690 查看某个PID<br>   top -b -n 2 &gt;/tmp/top.txt 将top的信息进行2次，然后将结果输出到/tmp/top.txt<br>   free -m 查看系统内存使用情况<br>   uptime  显示目前系统开机时间(查看开机多久，多少人登陆，过去1,5,15分钟系统的负载)<br>24.文件比软件:<br>   cmp  cmp（“compare”的缩写）命令用来简要指出两个文件是否存在差异，它的使用权限是所有用户</p>
+<p>   diff diff命令用于两个文件之间的比较，并指出两者的不同，它的使用权限是所有用户</p>
+<p>25.远程操作与文件传输<br>   ssh user@remote.machine<br>   scp user@remote.machine:/remote/path /local/path<br>   scp /local/path user@remote.machine:/remote/path<br>26.编译c/c++文件<br>   gcc<br>   gcc -v 查看GCC版本<br>   gcc -o test test.c 2&gt;errfile 编译test.c时若有错误信息，则将错误信息重定向到errfile<br>27.chattr +i filename 禁止删除，chattr -i filename 取消禁止<br>   lsattr 查看隐藏档属性<br>28.自动化执行<br>   at 执行一次<br>   crontab 定时循环执行程序<br>   crontab 介绍<br>   1 以root登录<br>   2 # crontab -e<br>   3 加入一行<br>   1 <em>/12 </em> <em> </em> /usr/sbin/ntpdate <a href="https://link.zhihu.com/?target=http%3A//pool.ntp.org" target="_blank" rel="noopener">http://pool.ntp.org</a><br>   分钟　（0-59）<br>   小時　（0-23）<br>   日 期　（1-31）</p>
+<p>   月份　（1-12）</p>
+<p> 星期　（0-6）//0代表星期天<br>29.关机和重启:<br>   shutwond [-t 秒数] [-rkhncff] 时间 [警告信息]<br>   -t 秒数:设置在切换至不同的runlevel之前，警告和删除两信号之彰间的延迟时间(秒)<br>   -k 发出警告信息，但不是真的要shutdown<br>   -r shutdown这后重新开机<br>   -h shutdown这后开机<br>   -n 不经过init,由shutdown命令本身来做开机工作(不建议你使用)<br>   -f 重新开机时，跳过fsck指令，不检查文件系统.<br>   -F 重新开机时，强迫做fsck检查.<br>   -c 将已经正在shutdown的动作取消<br>   shutdown -h now 立刻关机，其中now相当于时间为0,halt,poweroff也可以关机,或者直接init 0<br>   shutdown -h 20:30  系统将在今晚的8:30关机<br>   shutdown -h +10    系统再过十分钟后自动关机.<br>   shutdown -t3 -r now  立刻重新开机，但在警告和删除processes这间，<br>   shutdown -k now  ‘Hey! Go away! now…’ 发出警告信息，但没有真的关机.<br>   reboot:<br>   shutdown -r now 几乎与reboot相同，不关建议用reboot执行如下:<br>   shutdown -r +30 ‘The system wiil reboot’<br>   shutdown -r +10 ‘Hey!Go away!’  10分钟后系统重启.<br>   #sync; sync; sync; reboot   注：sync将数据同步写入硬盘<br>   halt命令相当于shutdown -h now ，表示立刻关机。</p>
+<p>   reboot命令相当于shutown -r now ，表示立刻重起。</p>
+<p>30.如何改变启动模式运行级别<br>   vi /etc/inittab<br>   将5改成3，启动后就可以变成字符模式。<br>   startx 或者 init 5 就可以进入图形化界面.<br>   runlevel 显示当前运行级别<br>  如何切换至单用户模式<br>  利用telinit或init(其实telinit只是一个synbol link to init)<br>  telinit 1 或者 init S 即可，当然telinit S也是可以的.<br>  如何使ctrl+alt+del 三键失效的方法<br>  #vi /etc/inittab<br>  在ca::ctrlaltdel:/sbin/shutdonw -t3 -r now之前加上注释#<br>  然后执行#telinit q ,参数q是要telinit重新检查一次/etc/inittab<br>31.TAB  巧用tab键，当你不知道文件或命令的全名是请连续按两下tab键.<br>32.clear 清屏<br>33.dmesg |more 显示开机信息(查看系统启动时硬件信息)<br>34.改变程序执行的优秀级<br>   nice    设置优先权 nice -n -5 vi &amp; 用root给一个nice值为-5,用于执行vi<br>   renice  调整已存在优先权<br>35.模块相关的命令</p>
+<p>   lsmod 显示已经载入系统的模块</p>
+<p>depmod 分析可载入系统的相依性<br>   modinfo 显示kernel模块的信息<br>   insmod  载入模块<br>   modprobe 自动处理可载入模块<br>   rmmod    删除模块</p>
+<p>36.chkconfig –list 显示各种服务的状态，利用chkconfig可以轻松管理init脚本.<br>37.linux的几种解压缩命令<br>   compress aaa  将aaa文件压缩成为aaa.Z<br>   compress -d aaa.z 将aaa.z文件压缩成aaa<br>   gzip aaa 压缩命令<br>   gzip -d aaa.gz  解压命令<br>   bzip2 -z filename 压缩,同上加-d参数解压<br>   bzcat filename.bz 查看压缩文件内容<br>   tar czvf aaa.tar.gz aaa 将目录aaa压缩成aaa.tar.gz<br>   tar -N ‘2007/03/01’ -zcvf home.tar.gz /home 在/home当中,比2007/03/01新的文件才备份.<br>   tar –exclude /home/cao -zxvf myfile.tar.gz /home/* /etc 要备份/home,/etc，但不要/home/cao<br>   cd /tmp; tar -cvf -/etc | tar -xvf - 将/etc/打包后直接解开/tmp底下，而不产生文件.<br>   tar zxvf aaa.tar.gz 解压缩命令.<br>   tar jxvf aaa.tar.bz2 解压命令</p>
+<p>   tar zxvf aaa.tar.gz -C /var/www 将aaa.tar.gz解压到/var/www目录下</p>
+<p>  cpio -covB &gt; [file|device] 备份<br>   cpio -icduv &lt; [file|device] 还原<br>38.网络命令<br>   ifconfig 显示或设置网络设备,可以查看当前ip,类似于windows里的ipconfig<br>   service network restart(/etc/rc.d/init.d/network restart) 重启网卡<br>   ifdown eth0 关闭网卡<br>   ifup eth0 开启网卡<br>   route -n 查看路由表<br>   route add -net 192.168.20.1 netmask 255.255.255.0 dev eth0<br>   netstat 查看网络连接情况<br>   netstat -i 显示网卡运行情况<br>   netstat -r 查看主机的路由列表<br>   traceroute<br>   hostname 显示主机名<br>   hostname -i 显示当前主机名的IP.<br>39.系统集成管理菜单.<br>   setup   系统服务管理命令<br>   ntsysv  设置系统服务<br>40.fdisk /mbr 删除GRUB</p>
+<p>41.数据库启动</p>
+<p>启动mysql：<br>service mysqld start(/etc/rc.d/init.d/mysqld start)<br>mysql -uroot -p 输入密码即可操作mysql数据库.<br>启动Oracle<br>su - oracle<br>$lsnrctl stop<br>$lsnrctl start<br>sqlplus /nolog<br>conn /as sysdba(connected)<br>startup<br>42.安装软件包<br>rpm包安装:<br>rpm -ivh xxx.rpm         安装rpm包<br>rpm -qa –last | less    根据安装日期显示已经安装的包<br>rpm -qa |grep mysql -i   查询系统是否安装mysql包(-i,忽略大小写)<br>rpm -e                   删除安装的软件包<br>rpm -e mysql* –nodpes   强制删除相关的软件包<br>rpm –test               测试安装<br>rpm -qi                  查询mysql套件的说明资料<br>rpm -qpl xxx.rpm         查看rpm包内含的内容.<br>rpm -qc[d]               设定档与说明档<br>rpm -Uvh                 升级安装<br>rpmbuild –bb SPECS/xxx.spec 重新装将xxx.spec编译成rpm包.</p>
+<p>rpmbuild –rebuild packagename.src.rpm 重新把.src.rpm编译成rpm包.   </p>
+<p>源码编译安装(经典)<br>./configure              检查系统信息(./configure –help | more 帮助信息，可以看到相关的参数设定)<br>make clean               清除之前留下的文件<br>make                     编译<br>make install             安装</p>
+<p>注:源码包安装，一般先将文件解压，安装过程大致上面几步，具体说明一般见解压后目录里的(INSTALL,READEME说明.)</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/02/08/Linux基础/">more >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-Kmeans-K均值算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -1518,398 +1700,9 @@
 
 
   
-    <article id="post-Adaboost算法详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/06/Adaboost算法详解/">Adaboost算法详解</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/06/Adaboost算法详解/" class="archive-article-date">
-  	<time datetime="2018-02-06T14:15:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一、AdaBoost<strong>简介</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">      Boosting, 也称为增强学习或提升法，是一种重要的集成学习技术， 能够将预测精度仅比随机猜度略高的弱学习器增强为预测精度高的强学习器，这在直接构造强学习器非常困难的情况下，为学习算法的设计提供了一种有效的新思路和新方法。其中最为成功应用的是，Yoav Freund和Robert Schapire在1995年提出的AdaBoost算法。</span><br><span class="line">      AdaBoost是英文&quot;Adaptive Boosting&quot;（自适应增强）的缩写，它的自适应在于：前一个基本分类器被错误分类的样本的权值会增大，而正确分类的样本的权值会减小，并再次用来训练下一个基本分类器。同时，在每一轮迭代中，加入一个新的弱分类器，直到达到某个预定的足够小的错误率或达到预先指定的最大迭代次数才确定最终的强分类器。</span><br><span class="line">Adaboost算法可以简述为三个步骤：</span><br><span class="line"> （1）首先，是初始化训练数据的权值分布D1。假设有N个训练样本数据，则每一个训练样本最开始时，都被赋予相同的权值：w1=1/N。</span><br><span class="line"> （2）然后，训练弱分类器hi。具体训练过程中是：如果某个训练样本点，被弱分类器hi准确地分类，那么在构造下一个训练集中，它对应的权值要减小；相反，如果某个训练样本点被错误分类，那么它的权值就应该增大。权值更新过的样本集被用于训练下一个分类器，整个训练过程如此迭代地进行下去。</span><br><span class="line"> （3）最后，将各个训练得到的弱分类器组合成一个强分类器。各个弱分类器的训练过程结束后，加大分类误差率小的弱分类器的权重，使其在最终的分类函数中起着较大的决定作用，而降低分类误差率大的弱分类器的权重，使其在最终的分类函数中起着较小的决定作用。</span><br><span class="line">  换而言之，误差率低的弱分类器在最终分类器中占的权重较大，否则较小。</span><br></pre></td></tr></table></figure>
-<p>二、<strong>AdaBoost算法过程</strong></p>
-<p>​    给定训练数据集：<img src="http://img.blog.csdn.net/20170430154506521?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img">，其中<img src="http://img.blog.csdn.net/20170430154520353?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img">用于表示训练样本的类别标签，<em>i=1,…,N</em>。Adaboost的目的就是从训练数据中学习一系列弱分类器或基本分类器，然后将这些弱分类器组合成一个强分类器。</p>
-<p>相关符号定义：</p>
-<p><img src="http://img.blog.csdn.net/20170430154644683?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>Adaboost<strong>的算法流程如下：</strong></p>
-<p><img src="http://img.blog.csdn.net/20170430110334533?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p><img src="http://img.blog.csdn.net/20170430110420495?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p><img src="http://img.blog.csdn.net/20170430130452444?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p><strong>相关说明：</strong></p>
-<p><img src="http://img.blog.csdn.net/20170430111700150?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>综合上面的推导，可得样本分错与分对时，其权值更新的公式为：</p>
-<p><img src="http://img.blog.csdn.net/20170430111937370?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>三、<strong>AdaBoost实例讲解</strong></p>
-<p> <strong>例：给定如图所示的</strong>训练<strong>样本，弱分类器采用平行于坐标轴的直线**</strong>，<strong>用Adaboost算法</strong>的实现**强分类过程。</p>
-<p><img src="http://img.blog.csdn.net/20170430112315726?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"><br><img src="http://img.blog.csdn.net/20170430112122605?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p><strong>数据分析：</strong></p>
-<p>   将这10个样本作为训练数据，根据 <em>X</em> 和<em>Y</em> 的对应关系，可把这10个数据分为两类，图中用“+”表示类别1，用“O”表示类别-1。本例使用水平或者垂直的直线作为分类器，图中已经给出了三个弱分类器，即：</p>
-<p><img src="http://img.blog.csdn.net/20170430112433888?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p><strong>初始化：</strong></p>
-<p>   首先需要初始化训练样本数据的权值分布，每一个训练样本最开始时都被赋予相同的权值：<em>wi</em>=1/<em>N</em>，这样训练样本集的初始权值分布<em>D</em>1(<em>i</em>)：</p>
-<p>   令每个权值<em>w</em>1<em>i</em> = 1/<em>N</em> = 0.1，其中，<em>N</em> = 10，<em>i</em> = 1,2, …, 10，然后分别对于<em>t</em>= 1,2,3, …等值进行迭代（<em>t</em>表示迭代次数，表示第<em>t</em>轮），下表已经给出训练样本的权值分布情况：</p>
-<p><img src="http://img.blog.csdn.net/20170430112658809?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p><strong>第1次迭代t=1：</strong></p>
-<p>  初试的权值分布<em>D1</em>为1/N（10个数据，每个数据的权值皆初始化为0.1），</p>
-<p>D1=[0.1,     0.1, 0.1, 0.1, 0.1, 0.1,0.1, 0.1, 0.1, 0.1]</p>
-<p>  在权值分布<em>D1</em>的情况下，取已知的三个弱分类器<em>h</em>1、<em>h</em>2和<em>h</em>3中误差率最小的分类器作为第1个基本分类器<em>H</em>1(<em>x</em>)（三个弱分类器的误差率都是0.3，那就取第1个吧）</p>
-<p><img src="http://img.blog.csdn.net/20170430113026330?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>​    在分类器<em>H</em>1(<em>x</em>)=<em>h</em>1情况下，样本点“5 7 8”被错分，因此基本分类器<em>H</em>1(<em>x</em>)的误差率为：</p>
-<p><img src="http://img.blog.csdn.net/20170430120004776?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>  可见，被误分类样本的权值之和影响误差率<em>e</em>，误差率<em>e</em>影响基本分类器在最终分类器中所占的权重<em>α</em>。<em>**</em></p>
-<p><img src="http://img.blog.csdn.net/20170430124818578?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>  然后，更新训练样本数据的权值分布，用于下一轮迭代，对于正确分类的训练样本“1 2 3 4 6 9 10”（共7个）的权值更新为：</p>
-<p>  这样，第1轮迭代后，最后得到各个样本数据新的权值分布：</p>
-<p>D2=[1/14,1/14,1/14,1/14,1/6,1/14,1/6,1/6,1/14,1/14]</p>
-<p>  由于样本数据“5 7 8”被<em>H</em>1(x)分错了，所以它们的权值由之前的0.1增大到1/6；反之，其它数据皆被分正确，所以它们的权值皆由之前的0.1减小到1/14，下表给出了权值分布的变换情况：</p>
-<p><img src="http://img.blog.csdn.net/20170430125047619?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>​    可得<strong>分类函数：*</strong>f<em>1(</em>x<em>)= </em>α<em>1</em>H<em>1(</em>x<em>) = 0.4236</em>H<em>1(</em>x<em>)。此时，组合一个基本分类器</em>sign<em>(</em>f1<em>(</em>x*))作为强分类器在训练数据集上有3个误分类点（即5 7 8），此时强分类器的训练错误为：0.3</p>
-<p><strong>第二次迭代t=2：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  在权值分布D2的情况下，再取三个弱分类器h1、h2和h3中误差率最小的分类器作为第2个基本分类器H2(x)：</span><br><span class="line">①　当取弱分类器h1=X1=2.5时，此时被错分的样本点为“5 7 8”：</span><br><span class="line">误差率e=1/6+1/6+1/6=3/6=1/2；</span><br><span class="line">②　当取弱分类器h2=X1=8.5时，此时被错分的样本点为“3 4 6”：</span><br><span class="line">误差率e=1/14+1/14+1/14=3/14；</span><br><span class="line">③　当取弱分类器h3=X2=6.5时，此时被错分的样本点为“1 2 9”：</span><br><span class="line">误差率e=1/14+1/14+1/14=3/14；</span><br><span class="line">   因此，取当前最小的分类器h2作为第2个基本分类器H2(x)：</span><br></pre></td></tr></table></figure>
-<p><img src="http://img.blog.csdn.net/20170430125502477?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img">                                                          </p>
-<p><img src="http://img.blog.csdn.net/20170430125557041?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>​    显然，<em>H</em>2(<em>x</em>)把样本“3 4 6”分错了，根据<em>D</em>2可知它们的权值为<em>D</em>2(3)=1/14，<em>D</em>2(4)=1/14， <em>D</em>2(6)=1/14，所以<em>H</em>2(<em>x</em>)在训练数据集上的误差率：</p>
-<p><img src="http://img.blog.csdn.net/20170430125711574?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>  这样，第2轮迭代后，最后得到各个样本数据新的权值分布：</p>
-<p>D3=[1/22,1/22,1/6,1/6,7/66,1/6,7/66,7/66,1/22,1/22]</p>
-<p>  下表给出了权值分布的变换情况：</p>
-<p>   可得<strong>分类函数：*</strong>f<em>2(</em>x<em>)=0.4236</em>H<em>1(x) + 0.6496</em>H<em>2(x)。此时，组合两个基本分类器</em>sign<em>(</em>f*2(x))作为强分类器在训练数据集上有3个误分类点（即3 4 6），此时强分类器的训练错误为：0.3</p>
-<p><strong>第三次迭代t=3:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  在权值分布D3的情况下，再取三个弱分类器h1、h2和h3中误差率最小的分类器作为第3个基本分类器H3(x)：</span><br><span class="line">①　当取弱分类器h1=X1=2.5时，此时被错分的样本点为“5 7 8”：</span><br><span class="line">误差率e=7/66+7/66+7/66=7/22；</span><br><span class="line">②　当取弱分类器h2=X1=8.5时，此时被错分的样本点为“3 4 6”：</span><br><span class="line">误差率e=1/6+1/6+1/6=1/2=0.5；</span><br><span class="line">③　当取弱分类器h3=X2=6.5时，此时被错分的样本点为“1 2 9”：</span><br><span class="line">误差率e=1/22+1/22+1/22=3/22；</span><br></pre></td></tr></table></figure>
-<p><strong><img src="http://img.blog.csdn.net/20170430131247378?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></strong></p>
-<p>   因此，取当前最小的分类器<em>h3</em>作为第3个基本分类器<em>H</em>3(<em>x</em>)：</p>
-<p>  这样，第3轮迭代后，得到各个样本数据新的权值分布为：</p>
-<p>D4=[1/6,1/6,11/114,11/114,7/114,11/114,7/114,7/114,1/6,1/38]</p>
-<p>  下表给出了权值分布的变换情况：</p>
-<p><img src="http://img.blog.csdn.net/20170430130207611?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p>​    可得<strong>分类函数：*</strong>f<em>3(</em>x<em>)=0.4236</em>H<em>1(</em>x<em>) + 0.6496</em>H<em>2(</em>x<em>)+0.9229</em>H<em>3(</em>x<em>)。此时，组合三个基本分类器</em>sign<em>(</em>f*3(x))作为强分类器，在训练数据集上有0个误分类点。至此，整个训练过程结束。</p>
-<p>  整合所有分类器，可得最终的强分类器为：</p>
-<p><img src="http://img.blog.csdn.net/20170430130316376?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ3V5dWVhbGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
-<p><strong>     这个强分类器Hfinal对训练样本的错误率为0！</strong></p>
-<p>Adaboost算法的某些特性是非常好的，这里主要介绍Adaboost的两个特性。（1）是训练的错误率上界，随着迭代次数的增加，会逐渐下降；（2）是Adaboost算法即使训练次数很多，也不会出现过拟合的问题。</p>
-<p><strong>四、AdaBoost的优点和缺点</strong></p>
-<p><strong>优点</strong></p>
-<p>​     （1）Adaboost提供一种框架，在框架内可以使用各种方法构建子分类器。可以使用简单的弱分类器，不用对特征进行筛选，也<strong>不存在过拟合的现象</strong>。</p>
-<p>​     （2）Adaboost算法不需要弱分类器的先验知识，最后得到的强分类器的分类精度依赖于所有弱分类器。无论是应用于人造数据还是真实数据，Adaboost都能显著的提高学习精度。</p>
-<p>​     （3）Adaboost算法不需要预先知道弱分类器的错误率上限，且最后得到的强分类器的分类精度依赖于所有弱分类器的分类精度，可以深挖分类器的能力。Adaboost可以根据弱分类器的反馈，自适应地调整假定的错误率，执行的效率高。</p>
-<p>​     （4）Adaboost对同一个训练样本集训练不同的弱分类器，按照一定的方法把这些弱分类器集合起来，构造一个分类能力很强的强分类器，即“三个臭皮匠赛过一个诸葛亮”。</p>
-<p><strong>缺点：</strong></p>
-<p>​     在Adaboost训练过程中，Adaboost会使得难于分类样本的权值呈指数增长，训练将会过于偏向这类困难的样本，导致Adaboost算法易受噪声干扰。此外，Adaboost依赖于弱分类器，而弱分类器的训练时间往往很长。</p>
-<p>转载：<a href="http://blog.csdn.net/guyuealian/article/details/70995333" target="_blank" rel="noopener">http://blog.csdn.net/guyuealian/article/details/70995333</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">集成学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/机器学习//" class="article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/06/Adaboost算法详解/">more >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-机器学习之优化1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/06/机器学习之优化1/">机器学习之优化1</a>
-    </h1>
-  
-
-        
-        <a href="/2018/02/06/机器学习之优化1/" class="archive-article-date">
-  	<time datetime="2018-02-06T11:53:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="计算复杂性与NP问题"><a href="#计算复杂性与NP问题" class="headerlink" title="计算复杂性与NP问题"></a>计算复杂性与NP问题</h2><p><strong>算法的复杂性：</strong>现实中大多数问题都是离散的数据集，为了反映统计规律，有时数据量很大，而且多数目标函数都不能简单地求得解析解。而为了记录在解决问题的算法的性能或者说好坏，就引入了算法的复杂性。</p>
-<p>算法理论被认为是解决各类现实问题的方法论。而衡量算法理论的计算复杂度可分为：<strong>时间复杂度和空间复杂度</strong>，这是对算法执行所需要的两类资源——时间和空间的估算。其中，算法的<strong>时间复杂度</strong>是一个函数，它定性描述了该算法的运行时间，<strong>空间复杂度</strong>是对一个算法在运行过程中临时占用存储空间大小的量度</p>
-<blockquote>
-<p>另为，一般的，衡量问题是否可解的重要指标是：该问题能否在<strong>多项式时间</strong>内求解，还是只能在<strong>指数时间</strong>内求解？在各类算法理论中，通常使用多项式时间算法即可解决的问题看作是易解问题，需要指数时间算法解决的问题看作是难解问题。<br>指数时间算法的计算时间随着问题规模的增长而呈指数化上升，这类问题虽然有解，但并不适用于大规模问题。所以当前算法研究的一个重要任务就是将指数时间算法变换为多项式时间算法。</p>
-</blockquote>
-<p><strong>确定性和非确定性</strong> ：除了问题规模与运算时间的比较，衡量一个算法还需要考虑确定性和非确定性的概念。</p>
-<p>先说说<strong>自动机：</strong>是有限状态机(FSM)的数学模型。实际上是指一种基于状态变化进行迭代的算法。也就是在给定输入和状态时，自动机的状态会发生改变的模型。在算法领域常把这类算法看作一个机器，比较知名的有图灵机、玻尔兹曼机、支持向量机等。或者，在日常生活中的自动售卖机就是一种有限状态机。</p>
-<p><strong>确定性：</strong>所谓确定性，是指针对各种自动机模型，根据当时的状态和输入，若自动机的状态转移是唯一确定的，则称具有确定性；</p>
-<p><strong>非确定性：</strong>若在某一时刻自动机有多个状态可供选择，并尝试执行每个可选择的状态，则称具有不确定性。</p>
-<blockquote>
-<p>换个说法就是：确定性是程序每次运行时产生下一步的结果是唯一的，因此返回的结果也是唯一的；非确定性是程序在每个运行时执行的路径是并行且随机的，所有路径都可能返回结果，也可能只有部分返回结果，也可能不返回结果，但是只要有一个路径返回结果，那么算法就结束。</p>
-</blockquote>
-<p><strong>NP问题：</strong>简单的说，存在多项式时间的算法的一类问题，称之为P类问题；在多项式时间内可由非确定机解决的一类问题，称之为NP问题。另外，很多人相信P类问题是NP问题的一个子集，但既没有人证明出有某个问题属于NP但不属于P，也没有人证明所有NP问题都能在多项式时间内有解，如图：</p>
-<p>来自百度百科</p>
-<p><strong>P类问题：</strong>就是能够以多项式时间的确定性算法来对问题进行判定或求解，实现它的算法在每个运行状态都是唯一的，最终一定能够确定一个唯一的结果——最优的结果。</p>
-<p><strong>NP问题：</strong>是指可以用多项式时间的非确定性算法来判定或求解，即这类问题求解的算法大多是非确定性的，但时间复杂度有可能是多项式级别的。</p>
-<blockquote>
-<p>对于上面的知识，我们只要了解知道他们的概念就好了，机器学习中多数算法都是针对NP问题（包括NP完全问题）的。</p>
-</blockquote>
-<h2 id="上溢和下溢"><a href="#上溢和下溢" class="headerlink" title="上溢和下溢"></a>上溢和下溢</h2><p><strong>下溢：</strong>当接近零的数被四舍五入为零时发生下溢。许多函数会在其参数为零而不是一个很小的正数时才会表现出质的不同。例如，我们通常要避免被零除。</p>
-<p><strong>上溢(overflow)：</strong>当大量级的数被近似为 <img src="https://www.zhihu.com/equation?tex=%2B%5Cinfty" alt="+\infty"> 或者 <img src="https://www.zhihu.com/equation?tex=-%5Cinfty" alt="-\infty"> 时发生上溢。进一步的运算通常将这些无限值变为非数字。</p>
-<p>为什么会下溢或者上溢：数字计算机上实现连续数学的基本困难是我们需要通过有限数量的位模式来表示无限多的实数，这意味着我们在计算机中表示实数时几乎都会引入一些近似误差。在许多情况下，这仅仅是舍入误差。如果在理论上可行的算法没有被设计为最小化舍入误差的累积，可能会在实践中失效，也就是可能产生下溢或者上溢</p>
-<p><strong>一个例子：</strong>必须对上溢和下溢进行数值稳定的一个例子是<strong>softmax 函数</strong>。softmax 函数经常用于预测与Multinoulli分布相关联的概率，定义为：</p>
-<p><img src="https://www.zhihu.com/equation?tex=softmax%28x%29_%7Bi%7D%3D%5Cfrac%7Bexp%28x_%7Bi%7D%29%7D%7B%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%7Bexp%28x_%7Bj%7D%29%7D%7D" alt="softmax(x)_{i}=\frac{exp(x_{i})}{\sum_{j=1}^{n}{exp(x_{j})}}"></p>
-<p>当式中的<img src="https://www.zhihu.com/equation?tex=x_%7Bi%7D+" alt="x_{i} ">都是很小的负数时，<img src="https://www.zhihu.com/equation?tex=exp%28x_%7Bi%7D+%29" alt="exp(x_{i} )">就会发生下溢，这意味着上面函数的分母会变成0，导致结果是未定的；同理，当式中的<img src="https://www.zhihu.com/equation?tex=x_%7Bi%7D+" alt="x_{i} ">是很大的正数时，<img src="https://www.zhihu.com/equation?tex=exp%28x_%7Bi%7D+%29" alt="exp(x_{i} )">就会发生上溢导致结果是未定的。</p>
-<blockquote>
-<p>这个概念是比较重要的，我们需要了解清除！</p>
-</blockquote>
-<h2 id="导数和偏导数"><a href="#导数和偏导数" class="headerlink" title="导数和偏导数"></a>导数和偏导数</h2><p><strong>导数</strong>： 当函数定义域和取值都在实数域中的时候，导数可以表示函数曲线上的切线斜率。 当然除了切线的斜率，导数还表示函数在该点的<strong>变化率</strong>。或者从物理意义来说，就是瞬时变化率。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-4b5a02dacae1aee07b2efa681d898616_hd.jpg" alt="img"></p>
-<blockquote>
-<p>上面是一维导数的定义式，其中涉及极限的知识，简单来说极限就是“无限靠近而永远不能到达”，当然，高中初中就学过导数，这个也可以用之前斜率的角度去理解，多维的话也就是在此之上的推广。</p>
-</blockquote>
-<p>将上面的公式转化为下面图像为：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-335fc4d3f9e2232e88dbdddc090018d2_hd.jpg" alt="img"></p>
-<blockquote>
-<p><strong>注意：</strong>在一元函数中，只有一个自变量变动，也就是说只存在一个方向的变化率，这也就是为什么一元函数没有偏导数的原因。</p>
-</blockquote>
-<p><strong>偏导数：</strong>偏导数是指对至少两个自变量或以上对其中一个变量进行的求导，以两个自变量为例， <img src="https://www.zhihu.com/equation?tex=z%3Df%28x%2Cy%29" alt="z=f(x,y)"> . 从导数到偏导数，也就是从曲线来到了曲面. 曲线上的一点，其切线只有一条。但是曲面的一点，切线有无数条。</p>
-<p>从几何意义来说，偏导数就是指的是多元函数沿坐标轴的变化率.其中， <img src="https://www.zhihu.com/equation?tex=f_%7Bx%7D%28x%2Cy%29" alt="f_{x}(x,y)"> 指的是函数在y方向不变，函数值沿着x轴方向的变化率。而 <img src="https://www.zhihu.com/equation?tex=f_%7By%7D%28x%2Cy%29" alt="f_{y}(x,y)"> 指的是函数在x方向不变，函数值沿着y轴方向的变化率。<br>对应的图像形象表达如下：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-25a9cb3cdce23081d235706f43c7f666_hd.jpg" alt="img"></p>
-<p><img src="https://www.zhihu.com/equation?tex=x_%7B0%7D%E2%88%88I" alt="x_{0}∈I"> 通过上图，一目了然的是： <img src="https://www.zhihu.com/equation?tex=f_%7Bx%7D%28x%2Cy%29" alt="f_{x}(x,y)"> 指的就是曲面被平面所截得的曲面在点处的切线对x轴的斜率， <img src="https://www.zhihu.com/equation?tex=f_%7By%7D%28x%2Cy%29" alt="f_{y}(x,y)"> 就是曲面被平面所截得的曲面在点处的切线对y轴的斜率。</p>
-<p><strong>Jacobian矩阵：</strong>有时我们需要计算输入和输出都为向量的函数的所有偏导数。 包含所有这样的偏导数的矩阵被称为Jacobian矩阵。 具体来说，如果我们有一个函数： <img src="https://www.zhihu.com/equation?tex=f%3AR%5Em%5Crightarrow+R%5En" alt="f:R^m\rightarrow R^n">， <img src="https://www.zhihu.com/equation?tex=f+" alt="f "> 的Jacobian矩阵 <img src="https://www.zhihu.com/equation?tex=J%5Cin+R%5E%7Bn%5Ctimes+m%7D" alt="J\in R^{n\times m}"> 定义为 <img src="https://www.zhihu.com/equation?tex=J_%7Bi%2Cj%7D%3D%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial+x_%7Bj%7D%7D+f%28x%29_i" alt="J_{i,j}=\frac{\partial}{\partial x_{j}} f(x)_i"></p>
-<p><strong>Hessian矩阵：</strong>当我们的函数具有多维输入时，二阶导数也有很多。 我们可以将这些导数合并成一个矩阵，称为Hessian矩阵。 Hessian矩阵 <img src="https://www.zhihu.com/equation?tex=H%28f%29%28x%29" alt="H(f)(x)"> 定义为</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-775a9c9d6ed451bf0916f5b2a7343eab_hd.jpg" alt="img"></p>
-<p><strong>注意：Hessian等价于梯度的Jacobian矩阵。</strong></p>
-<p>微分算子在任何二阶偏导连续的点处可交换，也就是它们的顺序可以互换：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-35f116bc110dc38861ea3d44879a2699_hd.jpg" alt="img"></p>
-<p>这意味着 <img src="https://www.zhihu.com/equation?tex=H_%7Bi%2Cj%7D+%3D+H_%7Bj%2Ci%7D" alt="H_{i,j} = H_{j,i}"> ， 因此也就是说Hessian矩阵在这些点上是对称的。</p>
-<blockquote>
-<p>这些知识是前置知识，下面都要用到，记住两个特殊矩阵指的是什么？然后偏导数是什么？</p>
-</blockquote>
-<h2 id="函数导数为零的二三事"><a href="#函数导数为零的二三事" class="headerlink" title="函数导数为零的二三事"></a>函数导数为零的二三事</h2><blockquote>
-<p>注意：为了便于理解，下面将详细分析导数为0在低维的情况，而在高维情况下都是类似的。下面先介绍一些概念：</p>
-</blockquote>
-<p><strong>极值的定义如下：</strong>若函数 <img src="https://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 在 <img src="https://www.zhihu.com/equation?tex=x_%7B0%7D" alt="x_{0}"> 的一个邻域D有定义，且对D中除 <img src="https://www.zhihu.com/equation?tex=x_%7B0%7D" alt="x_{0}"> 的所有点，都有 <img src="https://www.zhihu.com/equation?tex=f%28x%29%3Cf%28x_%7B0%7D%29" alt="f(x)&lt;f(x_{0})"> ，则称 <img src="https://www.zhihu.com/equation?tex=f%28x_%7B0%7D%29" alt="f(x_{0})"> 是函数 <img src="https://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 的一个极大值。同理，若对D的所有点，都有 <img src="https://www.zhihu.com/equation?tex=f%28x%29%3Ef%28x_%7B0%7D%29" alt="f(x)&gt;f(x_{0})"> ，则称f(x₀)是函数 <img src="https://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 的一个极小值。</p>
-<p>对应的，函数最值的定义如下：</p>
-<p><strong>最小值:</strong>设函数 <img src="https://www.zhihu.com/equation?tex=y%3Df%28x%29" alt="y=f(x)"> 的定义域为 <img src="https://www.zhihu.com/equation?tex=I" alt="I"> ，如果存在实数M满足：①对于任意实数 <img src="https://www.zhihu.com/equation?tex=x%E2%88%88+" alt="x∈ "><img src="https://www.zhihu.com/equation?tex=I" alt="I">，都有 <img src="https://www.zhihu.com/equation?tex=f%28x%29%E2%89%A5M" alt="f(x)≥M"> ，②存在 <img src="https://www.zhihu.com/equation?tex=x_%7B0%7D%E2%88%88I" alt="x_{0}∈I"> 。使得 <img src="https://www.zhihu.com/equation?tex=f+%28x_%7B0%7D%29%3DM" alt="f (x_{0})=M"> ，那么，我们称实数M 是函数 <img src="https://www.zhihu.com/equation?tex=y%3Df%28x%29" alt="y=f(x)"> 的最小值。</p>
-<p><strong>最大值:</strong>设函数 <img src="https://www.zhihu.com/equation?tex=y%3Df%28x%29" alt="y=f(x)"> 的定义域为 <img src="https://www.zhihu.com/equation?tex=I" alt="I"> ，如果存在实数M满足：①对于任意实数 <img src="https://www.zhihu.com/equation?tex=x%E2%88%88I" alt="x∈I">，都有 <img src="https://www.zhihu.com/equation?tex=f%28x%29%E2%89%A4M" alt="f(x)≤M"> ，②存在 <img src="https://www.zhihu.com/equation?tex=x_%7B0%7D%E2%88%88I" alt="x_{0}∈I"> 。使得 <img src="https://www.zhihu.com/equation?tex=f+%28x_%7B0%7D%29%3DM" alt="f (x_{0})=M"> ，那么，我们称实数M 是函数 <img src="https://www.zhihu.com/equation?tex=y%3Df%28x%29" alt="y=f(x)"> 的最大值</p>
-<p>以上都是在一元函数中的定义，如下图所示，而二维或以上可简单推之：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-b587e15d6d30529b302e19fd6f3db988_hd.jpg" alt="img"></p>
-<p><strong>鞍点 （saddle point）： </strong>目标函数在此点上的梯度（一阶导数）值为 0， 但从改点出发的一个方向是函数的极大值点，而在另一个方向是函数的极小值点。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-60f31498c17daef1c3a3aff296094b33_hd.jpg" alt="img"></p>
-<p><strong>为什么叫做鞍点？</strong>鞍点这词来自于不定二次型 <img src="https://www.zhihu.com/equation?tex=x%5E2-y%5E2" alt="x^2-y^2"> 的二维图形，它的形状就像马鞍，而鞍点就是中心那个点，图中x轴方向往上曲，在y轴方向往下曲。这样也让我们更容易理解。</p>
-<blockquote>
-<p>判断鞍点的一个充分条件是：函数在鞍点处的Hessian矩阵为不定矩阵。这样为什么在这里不做详细解释，有兴趣可以了解。</p>
-</blockquote>
-<p>进入正题：当 <img src="https://www.zhihu.com/equation?tex=f%5E%5Cprime%28x%29%3D0" alt="f^\prime(x)=0"> ，导数无法提供往哪个方向移动的信息。 <img src="https://www.zhihu.com/equation?tex=+f%5E%5Cprime%28x%29%3D0" alt=" f^\prime(x)=0"> 的点称为<strong>临界点或驻点</strong>。 一个局部极小点意味着这个点的 <img src="https://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 小于所有邻近点，因此不可能通过移动无穷小的步长来减小 <img src="https://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 。 一个局部极大点意味着这个点的 <img src="https://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 大于所有邻近点，因此不可能通过移动无穷小的步长来增大 <img src="https://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 。 有些临界点既不是极小点也不是极大点。这些点被称为鞍点。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-9bad2719412b3d90813cd4d189f857c8_hd.jpg" alt="img">图来自《deep learning》</p>
-<blockquote>
-<p>上图列出临界点的类型。在一维情况下,三种临界点的示例。临界点是斜率为零的点。这样的点可以是 局部极小点(local minimum),其值低于相邻点; 局部极大点(local maximum),其值高于相邻点; 或鞍点,同时存在更高和更低的相邻点</p>
-</blockquote>
-<p>使 <img src="https://www.zhihu.com/equation?tex=+f+%28x%29" alt=" f (x)"> 取得绝对的最小值(相对所有其他值)的点是 全局最小点(globalminimum)。函数可能有一个全局最小点或存在多个全局最小点,还可能存在不是全局最优的局部极小点。在机器学习和深度学习的背景下,我们要优化的函数可能含有许多不是最优的局部极小点,或者还有很多处于非常平坦的区域内的鞍点。尤其是当输入是多维的时候,所有这些都将使优化变得困难。因此,我们通常寻找使 <img src="https://www.zhihu.com/equation?tex=f+" alt="f "> 非常小的点,但这在任何形式意义下并不一定是最小。方向导数和梯度方向导数和梯度</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-e9bd73780839cbb07e59c98bda86db9f_hd.jpg" alt="img">图来自《deep learning》</p>
-<p>上图展示了近似最小化，当存在多个局部极小点或者平坦区域时，优化算法可能无法找到全局最小点，在机器学习和深度学习中,即使找到的解不是真正最小的,但只要它们对应于代价函数显著低的值,我们通常就能接受这样的解。</p>
-<blockquote>
-<p>这些知识点都是基本知识，不做过多解释，低维的我们理解了，高维的就类推就行了，比如高维也临界点也有局部最优或者鞍点的情况。但在深度学习中优化算法比如SGD往往可以避免鞍点，然后使得其效果不错，这也是深度学习为什么可行的一个原因吧。</p>
-</blockquote>
-<h2 id="方向导数和梯度："><a href="#方向导数和梯度：" class="headerlink" title="方向导数和梯度："></a>方向导数和梯度：</h2><p><strong>方向导数:</strong>在之前讲偏导数的时候，相信很多人已经看出，偏导数求的都是沿着坐标轴的变化率，不管多少维也好，都只是求的变化率，那现在问题来了，如果我想求在某个方向而不是沿着坐标轴方向的变化率怎么求呢？<strong>那方向导数，简单来说，就是我们指定任意一个方向，函数对对这个任意方向的变化率.</strong></p>
-<p>假设<img src="https://www.zhihu.com/equation?tex=z%3Df%28x%2Cy%29" alt="z=f(x,y)">为一个曲面，<img src="https://www.zhihu.com/equation?tex=p%28x_%7B0%7D+%2Cy_%7B0%7D+%29" alt="p(x_{0} ,y_{0} )">为<img src="https://www.zhihu.com/equation?tex=f" alt="f">定义域中一个点，单位向量<img src="https://www.zhihu.com/equation?tex=u+%3Dcos%5Ctheta+i%2Bsin%5Ctheta+j" alt="u =cos\theta i+sin\theta j">的斜率，其中<img src="https://www.zhihu.com/equation?tex=%5Ctheta+" alt="\theta ">是此向量与<img src="https://www.zhihu.com/equation?tex=x" alt="x">轴正向夹角.单位向量<img src="https://www.zhihu.com/equation?tex=u" alt="u">可以表示对任何方向导数的方向.如下图：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-b6731c23e00ce004594ee5c4638a63e7_hd.jpg" alt="img"></p>
-<p>那么我们来考虑如何求出<img src="https://www.zhihu.com/equation?tex=u+" alt="u ">方向的斜率，可以类比于前面导数定义，得出如下：</p>
-<p>设<img src="https://www.zhihu.com/equation?tex=f%28x%2Cy%29" alt="f(x,y)">为一个二元函数，<img src="https://www.zhihu.com/equation?tex=u+%3Dcos%5Ctheta+i%2Bsin%5Ctheta+j" alt="u =cos\theta i+sin\theta j">为一个单位向量，如果下列的极限值存在</p>
-<p><img src="https://www.zhihu.com/equation?tex=%5Clim_%7Bt+%5Crightarrow+0%7D%7B%5Cfrac%7Bf%28x_%7B0%7D%2Btcos%5Ctheta+%2Cy_%7B0%7D%2Btsin%5Ctheta+%29-f%28x_%7B0%7D%2Cy_%7B0%7D%29%7D%7Bt%7D+%7D+" alt="\lim_{t \rightarrow 0}{\frac{f(x_{0}+tcos\theta ,y_{0}+tsin\theta )-f(x_{0},y_{0})}{t} } ">此方向导数记为<img src="https://www.zhihu.com/equation?tex=D_%7Bu%7Df+" alt="D_{u}f "></p>
-<p>则称这个极限值是<img src="https://www.zhihu.com/equation?tex=f" alt="f">沿着<img src="https://www.zhihu.com/equation?tex=u" alt="u">方向的方向导数，那么随着<img src="https://www.zhihu.com/equation?tex=%5Ctheta+" alt="\theta ">的不同，我们可以求出任意方向的方向导数.这也表明了方向导数的用处，是为了给我们考虑函数对任意方向的变化率.</p>
-<p>或者说，如下图，我们知道在一维的时候，函数的导数就是在某点对应切线的斜率，那么对于函数<img src="https://www.zhihu.com/equation?tex=f%28x%2Cy%29" alt="f(x,y)"> 的<img src="https://www.zhihu.com/equation?tex=A" alt="A"> 点在这个方向上也是有切线的，其切线的斜率就是方向导数。当然，注意这个切线是任意的，这里我们要限定其方向，也就是图中中的矢量y的方向。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-e20bc6e22fb76620fd55b0df0f1a3d91_hd.jpg" alt="img"></p>
-<p><strong>梯度：</strong>是一个矢量或者说是一个向量，其方向上的方向导数最大，其大小正好是此最大方向导数。</p>
-<blockquote>
-<p><strong>梯度的理解很重要，很重要，很重要！</strong>下面解决两个问题，梯度怎么求和梯度有什么用？</p>
-</blockquote>
-<p><strong>怎么算？–</strong>（介绍一种比较简单之间的方法）</p>
-<p>方向导数可以如下的方法算：<img src="https://www.zhihu.com/equation?tex=D_%7Bu%7Df%28x%2Cy%29%3Df_%7Bx%7D%28x%2Cy%29cos%5Ctheta+%2Bf_%7By%7D%28x%2Cy%29sin%5Ctheta+" alt="D_{u}f(x,y)=f_{x}(x,y)cos\theta +f_{y}(x,y)sin\theta ">，对于该式子的推导，我们可以自行了解，这里不做过多讨论。</p>
-<p>回到正题：</p>
-<p><img src="https://www.zhihu.com/equation?tex=D_%7Bu%7Df%28x%2Cy%29%3Df_%7Bx%7D%28x%2Cy%29cos%5Ctheta+%2Bf_%7By%7D%28x%2Cy%29sin%5Ctheta+" alt="D_{u}f(x,y)=f_{x}(x,y)cos\theta +f_{y}(x,y)sin\theta "></p>
-<p>设<img src="https://www.zhihu.com/equation?tex=A%3D%28f_%7Bx%7D%28x%2Cy%29+%2Cf_%7By%7D%28x%2Cy%29%29" alt="A=(f_{x}(x,y) ,f_{y}(x,y))">,<img src="https://www.zhihu.com/equation?tex=I%3D%28cos%5Ctheta+%2Csin%5Ctheta+%29" alt="I=(cos\theta ,sin\theta )"></p>
-<p>则得：</p>
-<p><img src="https://www.zhihu.com/equation?tex=D_%7Bu%7Df%28x%2Cy%29%3DA%5Cbullet+I%3D%5Cleft%7C+A+%5Cright%7C+%2A%5Cleft%7C+I+%5Cright%7C+cos%5Calpha+" alt="D_{u}f(x,y)=A\bullet I=\left| A \right| *\left| I \right| cos\alpha ">(<img src="https://www.zhihu.com/equation?tex=%5Calpha+" alt="\alpha ">为向量<img src="https://www.zhihu.com/equation?tex=A" alt="A">与向量<img src="https://www.zhihu.com/equation?tex=I" alt="I">之间的夹角)</p>
-<p>则当<img src="https://www.zhihu.com/equation?tex=%5Calpha+" alt="\alpha ">为0度的时候，也就是向量<img src="https://www.zhihu.com/equation?tex=I" alt="I">（这个方向是一直在变，在寻找一个函数变化最快的方向）与向量<img src="https://www.zhihu.com/equation?tex=A" alt="A">（这个方向当点固定下来的时候，它就是固定的）平行的时候，那么此时如果<img src="https://www.zhihu.com/equation?tex=D_%7Bu%7Df%28x%2Cy%29" alt="D_{u}f(x,y)">要取得最大值。这个时候，我们也就求得梯度：A(这其中的A向量)</p>
-<p><strong>梯度有什么用？</strong></p>
-<p>简单的讲，假如你在一座山上，蒙着眼睛，但是你必须到达山谷中最低点的湖泊，你该怎么办？然后我们想到一个简单的方法，在每走一步时，都是走那个离谷底最近的那个方向，那怎么求才能使得每一步都下降更大的高度，这个时候我们就完全可以用梯度来帮助我们，就可以完成任务啦！</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-8a80bae3f74c5d4c2991a6fd350ba151_hd.jpg" alt="img"></p>
-<p>当然了，我们是在写机器学习数学基础呐，你会说下山有什么用，我们看这篇文章又不是为了下山的。Emmm…别急，下面我们就讲梯度的大用处</p>
-<blockquote>
-<p>不知道讲清楚没有，这两个概念非常重要，下面的优化算法的前提就是梯度，要重点理解</p>
-</blockquote>
-<h2 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h2><p>大多数机器学习或者深度学习算法都涉及某种形式的优化。 优化指的是改变 <img src="https://www.zhihu.com/equation?tex=x+" alt="x "> 以最小化或最大化某个函数 <img src="https://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 的任务。 我们通常以最小化 <img src="https://www.zhihu.com/equation?tex=f%28x%29" alt="f(x)"> 指代大多数最优化问题。 最大化可经由最小化算法最小化 <img src="https://www.zhihu.com/equation?tex=-f%28x%29" alt="-f(x)"> 来实现。</p>
-<p>我们把要最小化或最大化的函数称为<strong>目标函数或准则</strong>。 当我们对其进行最小化时，我们也把它称为<strong>代价函数、损失函数或误差函数</strong>。</p>
-<p>下面，我们假设一个损失函数为 <img src="https://www.zhihu.com/equation?tex=J%28%5Ctheta%29%3D%5Cfrac%7B1%7D%7B2%7D%5Csum_%7Bi%3D1%7D%5E%7Bm%7D%28%7Bh_%5Ctheta%28x%29-y%7D%29%5E2" alt="J(\theta)=\frac{1}{2}\sum_{i=1}^{m}({h_\theta(x)-y})^2"> ，其中 <img src="https://www.zhihu.com/equation?tex=h_%CE%B8%28x%29%3D%CE%B8_0%2B%CE%B8_1x_1%2B%CE%B8_%7B2%7Dx_2....%2B%CE%B8_%7Bn%7Dx_n" alt="h_θ(x)=θ_0+θ_1x_1+θ_{2}x_2....+θ_{n}x_n"> 然后要使得最小化它。</p>
-<blockquote>
-<p>注意：这里只是假设，不用知道这个目标函数就是平方损失函数等等，然后肯定有人问既然要最小化它，那求个导数，然后使得导数等于0求出不就好了吗？Emmmm…是的，有这样的解法，可以去了解正规方程组求解。说下这里不讲的原因，主要是那样的方式太难求解，然后在高维的时候，可能不可解，但机器学习或深度学习中，很多都是超高维的，所以也一般不用那种方法。总之，梯度下降是另一种优化的不错方式，比直接求导好很多。</p>
-</blockquote>
-<p><strong>梯度下降：</strong>我们知道曲面上方向导数的最大值的方向就代表了梯度的方向，因此我们在做梯度下降的时候，应该是沿着梯度的反方向进行权重的更新，可以有效的找到全局的最优解。这个 <img src="https://www.zhihu.com/equation?tex=%5Ctheta_i" alt="\theta_i"> 的更新过程可以描述为</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-b8845b3f88cb39bc2ecf2eabefa9d7b4_hd.jpg" alt="img"></p>
-<p>[a表示的是步长或者说是学习率（learning rate）]</p>
-<p>好了，怎么理解？在直观上，还是下山，我们可以这样理解，看下图，一开始的时候我们随机站在一个点，把他看成一座山，每一步，我们都以下降最多的路线来下山，那么，在这个过程中我们到达山底（最优点）是最快的，而上面的a，它决定了我们“向下山走”时每一步的大小，过小的话收敛太慢，过大的话可能错过最小值，扯到蛋…）。这是一种很自然的算法，每一步总是寻找使J下降最“陡”的方向（就像找最快下山的路一样）。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-77ab0b5fab734c998db19771ed81a0dc_hd.jpg" alt="img"></p>
-<p>当然了，我们直观上理解了之后，接下来肯定是从数学的角度，我们可以这样想，先想在低维的时候，比如二维，我们要找到最小值，其实可以是这样的方法，具体化到1元函数中时，梯度方向首先是沿着曲线的切线的，然后取切线向上增长的方向为梯度方向，2元或者多元函数中，梯度向量为函数值f对每个变量的导数，该向量的方向就是梯度的方向，当然向量的大小也就是梯度的大小。现在假设我们要求函数的最值，采用梯度下降法，结合如图所示：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-982a9e8f26297deff656990e049383b8_hd.jpg" alt="img"></p>
-<blockquote>
-<p>如图所示，我们假设函数是 <img src="https://www.zhihu.com/equation?tex=y%3Dx%5E2%2B1" alt="y=x^2+1"> ,那么如何使得这个函数达到最小值呢，简单的理解，就是对x求导，得到 <img src="https://www.zhihu.com/equation?tex=y%E2%80%98%3D%5Cfrac%7B1%7D%7B2%7Dx" alt="y‘=\frac{1}{2}x"> ，然后用梯度下降的方式，如果初始值是（0的左边）负值,那么这是导数也是负值，用梯度下降的公式，使得x更加的靠近0,如果是正值的时候同理。<strong>注意：这里的梯度也就是一元函数的导数，高维的可以直接类推之</strong></p>
-</blockquote>
-<ul>
-<li>批量梯度下降：在每次更新时用所有样本，要留意，在梯度下降中，对于 <img src="https://www.zhihu.com/equation?tex=%5Ctheta_i" alt="\theta_i"> 的更新，所有的样本都有贡献，也就是参与调整 <img src="https://www.zhihu.com/equation?tex=%5Ctheta" alt="\theta"> .其计算得到的是一个标准梯度，也肯定可以达到一个全局最优。因而理论上来说一次更新的幅度是比较大的。如果样本不多的情况下，当然是这样收敛的速度会更快啦。但是很多时候，样本很多，更新一次要很久，这样的方法就不合适啦。下图是其更新公式</li>
-</ul>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-5809743fd06c4ff804753d29e4b83935_hd.jpg" alt="img"></p>
-<ul>
-<li>随机梯度下降：在每次更新时用1个样本，可以看到多了随机两个字，随机也就是说我们用样本中的一个例子来近似我所有的样本，来调整<em>θ</em>，因而随机梯度下降是会带来一定的问题，因为计算得到的并不是准确的一个梯度，容易陷入到局部最优解中，但是相比于批量梯度，这样的方法更快，更快收敛，虽然是局部最优，但很多时候是我们可以接受的，所以这个方法用的也比上面的多。下图是其更新公式</li>
-</ul>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-b3f14a09ad27df9c66a3af208060f5d7_hd.jpg" alt="img"></p>
-<ul>
-<li>mini-batch梯度下降：在每次更新时用b个样本,其实批量的梯度下降就是一种折中的方法，他用了一些小样本来近似全部的，其本质就是我1个指不定不太准，那我用个30个50个样本那比随机的要准不少了吧，而且批量的话还是非常可以反映样本的一个分布情况的。在深度学习中，这种方法用的是最多的，因为这个方法收敛也不会很慢，收敛的局部最优也是更多的可以接受！</li>
-</ul>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-96181aa7bc39a7e5fb54cfdf2c42a7b9_hd.jpg" alt="img"></p>
-<p>}</p>
-<blockquote>
-<p>梯度下降算法是机器学习或者深度学习中经典算法，现在绝大部分算法都是这个，就算是改进，也是在此基础上做出的改进，所以，要知道这个算法是什么，了解它的思想，甚至推荐直接看论文。</p>
-</blockquote>
-<h2 id="牛顿法"><a href="#牛顿法" class="headerlink" title="牛顿法"></a>牛顿法</h2><p>先来讲怎么找一个函数的零点(也就是函数值为0的点)，我们提出如下公式。</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-4250ea111a7ef00aa4bd188dce9128f6_hd.jpg" alt="img"></p>
-<p>该公式的大概流程为：先做对 <img src="https://www.zhihu.com/equation?tex=%CE%B8" alt="θ"> 做一次猜测 <img src="https://www.zhihu.com/equation?tex=%CE%B8%3D%CE%B8_1" alt="θ=θ_1"> ，然后过 <img src="https://www.zhihu.com/equation?tex=f%28%CE%B8_1%29" alt="f(θ_1)"> 做 <img src="https://www.zhihu.com/equation?tex=f" alt="f"> 的切线，切线交横轴于点 <img src="https://www.zhihu.com/equation?tex=%CE%B8_2" alt="θ_2"> （也就是切线函数值的零点），此时更新 <img src="https://www.zhihu.com/equation?tex=%CE%B8_2" alt="θ_2"> ，再过 <img src="https://www.zhihu.com/equation?tex=f%28%CE%B8_2%29" alt="f(θ_2)"> 做 <img src="https://www.zhihu.com/equation?tex=f" alt="f"> 的切线，这样<em>θ</em>就可以逼近使函数值为零的θ取值，下面是牛顿法图解：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-fdcf880c4d7fc64a35f778a57fde1ebf_hd.jpg" alt="img"></p>
-<p>在最左的图中为函数 <img src="https://www.zhihu.com/equation?tex=f" alt="f"> 的图像，我们希望找到零 <img src="https://www.zhihu.com/equation?tex=f%28%CE%B8%29%3D0" alt="f(θ)=0"> 的点，从图中看这个点大约取在1.3附近。假设我们初始化算法时猜测 <img src="https://www.zhihu.com/equation?tex=%CE%B8%280%29%3D4.5" alt="θ(0)=4.5"> ，牛顿法会计算出函数 <img src="https://www.zhihu.com/equation?tex=f" alt="f"> 在 <img src="https://www.zhihu.com/equation?tex=%284.5%2C+f%284.5%29%29" alt="(4.5, f(4.5))"> 点的切线并解出切线的零点（即切线与 <img src="https://www.zhihu.com/equation?tex=y%3D0" alt="y=0"> 的焦点，如中图所示）。这就是第二次猜测的起点，在图中 <img src="https://www.zhihu.com/equation?tex=%CE%B8%281%29" alt="θ(1)"> 大约在2.8附近。而最右侧的图像显示了再一次迭代的结果，这使得 <img src="https://www.zhihu.com/equation?tex=%CE%B8%282%29" alt="θ(2)"> 取到了1.8附近。在几轮迭代之后，<em>θ</em>会快速向1.3附近收敛，得到零点</p>
-<p><strong>牛顿法：</strong>从之前讲的知道极值点就是导数为0的地方，但直接求导数等于0得到最优解在很多时候是不可行的，那我们现在试一下用就用上面的方式来求得极值点，也就是求导数的零点，也上面的方法应用到求导数为0时的点来求最值的方法就叫做牛顿法，对应的，牛顿方法的迭代规则如下：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-421bb95af90392125a04c82eb264d097_hd.jpg" alt="img"></p>
-<p>当参数θ不止一个时，牛顿方法的迭代规则：</p>
-<p><img src="http://p3ev46x16.bkt.clouddn.com/v2-6279cad2b968a834d49e66ee7c9f2c0f_hd.jpg" alt="img"></p>
-<p>其中H是一个n阶方阵（如果算上截距项应该是n+1阶方阵）的Hessian矩阵（两个特殊矩阵）。</p>
-<p>相较于批量梯度下降，牛顿方法通常来说有更快的收敛速度，只需要少得多的迭代次数就能得到很接近最小值的结果。但是当模型的参数很多时（参数个数为n）Hessian矩阵的计算成本将会很大，导致收敛速度变慢，所以在深度学习中也很少使用牛顿法，就是因为计算Hessian矩阵太麻烦了，但是当参数个数不多时，牛顿方法通常又是比梯度下降快得多的。这也是他的优势吧</p>
-<p><strong>伪牛顿法：</strong>上述的牛顿法需要计算Hessian矩阵的逆矩阵，运算复杂度太高。在动辄百亿、千亿量级特征的大数据时代，模型训练耗时太久。因此，很多牛顿算法的变形出现了，这类变形统称拟牛顿算法。拟牛顿算法的核心思想用一个近似矩阵B替代逆Hessian矩阵H−1。不同算法的矩阵B的计算有差异，但大多算法都是采用迭代更新的思想在tranning的没一轮更新矩阵B。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">优化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/机器学习//" class="article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/02/06/机器学习之优化1/">more >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1996,23 +1789,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">GBDT</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">集成学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">KNN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NLP</a>
+                <a href="javascript:void(0)" class="js-tag color5">GBDT</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2020,7 +1801,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">KNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NLP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">PCA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2032,19 +1829,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">决策树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">朴素贝叶斯</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">概率统计</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">特征工程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2052,11 +1837,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">概率统计</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">线性回归</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">线性代数</a>
+                <a href="javascript:void(0)" class="js-tag color5">特征工程</a>
               </li>
              
               <li class="article-tag-list-item">
